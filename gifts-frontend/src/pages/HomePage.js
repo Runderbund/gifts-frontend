@@ -1,6 +1,5 @@
 import React from "react";
-import styles from "./HomePage.module.css";
-import "../../App.css";
+import "../App.css";
 
 /**
  * HomePage is responsible for displaying the home page.

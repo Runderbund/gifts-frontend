@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import "./App.css";
 
 // Page Imports
-import HomePage from "./pages/HomePage/HomePage";
+import HomePage from "./pages/HomePage";
 
 // Util Imports
 // import PrivateRoute from "./utils/PrivateRoute";
