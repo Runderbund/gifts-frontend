@@ -10,7 +10,6 @@ const HomePage = () => {
   return (
     <div className="container">
       <h1>Welcome to The Page</h1>
-      <img src={logo} alt="Logo" className={styles.logo} />
     </div>
   );
 };
