@@ -8,7 +8,7 @@ import "../App.css";
 const HomePage = () => {
   return (
     <div className="container">
-      <h1>Welcome to The Page</h1>
+      <h1>Welcome to the Homepage</h1>
     </div>
   );
 };
