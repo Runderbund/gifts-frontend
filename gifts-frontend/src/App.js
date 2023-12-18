@@ -4,6 +4,7 @@ import "./App.css";
 
 // Page Imports
 import HomePage from "./pages/HomePage";
+import GiftListPage from "./pages/GiftListPage";
 
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
@@ -19,7 +20,7 @@ function App() {
       <Navbar />
       <div>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<GiftListPage />} />
         </Routes>
       </div>
     </div>
