@@ -1,47 +1,47 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import "../App.css";
+import React, { useState } from 'react';
+// import ViewAll from './ViewAll'; // Component for the "View All" tab content
+// import EditOther from './EditOther'; // Component for the "Edit Other" tab content
+// import EditSelf from './EditSelf'; // Component for the "Edit Self" tab content
+// import './GiftListPage.css';
 
-/**
- * GiftListPage is responsible for displaying a list of gifts.
- */
 const GiftListPage = () => {
-  /**
-   * State hook to store gifts.
-   * @type {Array} gifts - Array of gift objects.
-   */
-  const [gifts, setGifts] = useState([]);
+  const [activeTab, setActiveTab] = useState('all'); // State to track active tab
 
-  /**
-   * Effect hook to fetch gifts data when the component mounts.
-   */
-  // useEffect(() => {
-  //   /**
-  //    * Function to fetch gifts data from the API.
-  //    * @async
-  //    */
-  //   const fetchGifts = async () => {
-  //     const response = await axios.get("http://localhost:8000/gifts/");
-  //     setGifts(response.data.gifts);
-  //   };
-  //   fetchGifts();
-  // }, []);
+  // Function to switch tabs
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
 
-  /**
-   * Renders the component.
-   */
   return (
-    <div className="container">
-      <h1>Gifts</h1>
-      <div className="contentBox">
-        {gifts.map((gift) => (
-          <div key={gift.id}>
-              {gift.name}
-          </div>
-        ))}
+    <div>
+      <div className="tabs">
+        <button onClick={() => handleTabClick('all')}>View All</button>
+        <button onClick={() => handleTabClick('other')}>Edit Other</button>
+        <button onClick={() => handleTabClick('self')}>Edit Self</button>
+      </div>
+      <div className="tab-content">
+        {/* {activeTab === 'all' && <ViewAll />}
+        {activeTab === 'other' && <EditOther />}
+        {activeTab === 'self' && <EditSelf />} */}
       </div>
     </div>
   );
 };
 
 export default GiftListPage;
+
+  // /**
+  //  * Renders the component.
+  //  */
+  // return (
+  //   <div className="container">
+  //     <h1>Gifts</h1>
+  //     <div className="contentBox">
+  //       {gifts.map((gift) => (
+  //         <div key={gift.id}>
+  //             {gift.name}
+  //         </div>
+  //       ))}
+  //     </div>
+  //   </div>
+  // );
