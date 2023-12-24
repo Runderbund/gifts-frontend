@@ -10,7 +10,7 @@ li {
 }
 
 .navBar {
-  background: url("../../assets/images/Banner.jpg") no-repeat center
+  background: url("../../assets/images/Christmas.png") no-repeat center
       center/cover,
     rgb(204, 116, 57);
   box-shadow: 4px 2px 5px gray;
@@ -41,4 +41,10 @@ li {
   background: rgba(0, 0, 0, 0.8);
   padding: 2px 4px;
   text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.brand a:hover {
+  background: white;
+  color: steelblue;
+  cursor: pointer;
 }
