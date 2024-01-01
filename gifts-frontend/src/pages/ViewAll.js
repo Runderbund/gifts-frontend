@@ -2,10 +2,10 @@ import React from "react";
 import "../App.css";
 
 /**
- * HomePage is responsible for displaying the home page.
+ * ViewAll is responsible for displaying the view of all gifts.
  * @component
  */
-const HomePage = () => {
+const ViewAll = () => {
   return (
     <div className="container">
       <h1>Welcome to the Homepage</h1>
@@ -13,4 +13,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default ViewAll;

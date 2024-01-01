@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import "./App.css";
 
 // Page Imports
-import HomePage from "./pages/HomePage";
+import ViewAll from "./pages/ViewAll";
 import GiftListPage from "./pages/GiftListPage";
 
 // Component Imports
