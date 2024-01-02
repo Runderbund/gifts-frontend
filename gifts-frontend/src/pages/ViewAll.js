@@ -8,7 +8,7 @@ import "../App.css";
 const ViewAll = () => {
   return (
     <div className="container">
-      <h1>Welcome to the Homepage</h1>
+      <h1>Welcome to ViewAll</h1>
     </div>
   );
 };

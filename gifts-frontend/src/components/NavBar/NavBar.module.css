@@ -1,33 +1,36 @@
 .navBar {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   background: url("../../assets/images/Christmas.png") no-repeat center center/cover;
   box-shadow: 4px 4px 5px rgba(204, 116, 57, 0.5);
   color: white;
-  padding: 1.5rem 2rem;
+  height: 100px;
 }
 
 .navBar ul {
-  list-style-type: none;
   display: flex;
+  justify-content: space-evenly;
   align-items: center;
   padding: 0;
+  margin: 0 auto; /* Auto margins for horizontal centering */
 }
 
-.navBar ul li {
-  margin-right: 20px;
+
+.navBar li {
+  background: gray;
+  border-radius: 5px;
+  margin: 0 10px;
 }
 
 .navBar a {
   color: white;
   text-decoration: none;
-  font-size: 1.25rem;
   padding: 0.5rem 1rem;
-  transition: color 0.3s ease;
+  display: block;
 }
 
 .navBar a:hover {
-  color: #1E90FF; /* SteelBlue */
-  cursor: pointer;
+  background-color: #b0b0b0;
+  color: #1E90FF;
 }
