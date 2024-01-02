@@ -5,7 +5,7 @@ import "../App.css";
  * ViewOther is responsible for displaying the view of all gifts.
  * @component
  */
-const ViewOther = () => {
+const ViewOtherPage = () => {
   return (
     <div className="container">
       <h1>Welcome to ViewOther</h1>
@@ -13,4 +13,4 @@ const ViewOther = () => {
   );
 };
 
-export default ViewOther;
+export default ViewOtherPage;

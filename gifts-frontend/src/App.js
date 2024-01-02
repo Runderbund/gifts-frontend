@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import "./App.css";
 
 // Page Imports
-import ViewAll from "./pages/ViewAll";
+import ViewAll from "./pages/ViewAllPage";
 import GiftListPage from "./pages/GiftListPage";
 
 // Component Imports
@@ -20,7 +20,9 @@ function App() {
       <Navbar />
       <div>
         <Routes>
-          <Route path="/" element={<GiftListPage />} />
+          <Route path="/" element={<ViewAllPage />} />
+          <Route path="/viewother" element={<ViewOtherPage />} />
+          <Route path="/viewself" element={<ViewSelfPage />} />
         </Routes>
       </div>
     </div>
