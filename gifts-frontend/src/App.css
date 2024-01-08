@@ -7,3 +7,8 @@
   background: linear-gradient(to bottom, #54e7e0, rgb(135, 195, 222));
   font-family: Arial, sans-serif;
 }
+
+.buttonContainer {
+  display: flex;
+  gap: 1em;
+}

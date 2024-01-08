@@ -8,7 +8,7 @@ const NavBar = () => {
       <ul>
         {/* Each list item <li> is a navigation link */}
         <li className={styles.navItem}>
-          <Link to="/all">
+          <Link to="/">
             View All
           </Link>
         </li>

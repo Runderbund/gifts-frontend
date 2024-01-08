@@ -3,8 +3,9 @@ import { Routes, Route } from "react-router-dom";
 import "./App.css";
 
 // Page Imports
-import ViewAll from "./pages/ViewAllPage";
-import GiftListPage from "./pages/GiftListPage";
+import ViewAllPage from "./pages/ViewAllPage";
+import ViewOtherPage from "./pages/ViewOtherPage";
+import ViewSelfPage from "./pages/ViewSelfPage";
 
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
