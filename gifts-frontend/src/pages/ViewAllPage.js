@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "../App.css";
 
 /**
@@ -6,9 +7,49 @@ import "../App.css";
  * @component
  */
 const ViewAllPage = () => {
+
+  const [giftData, setGiftData] = useState(null); // State to store the gift data
+
+  // Effect to fetch the gift data from the server
+  useEffect(() => {
+    const fetchGiftData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/get_all_gifts`);
+        setGiftData(response.data.gifts);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+    fetchGiftData();
+  }, []);
+
   return (
-    <div className="container">
-      <h1>Welcome to ViewAll</h1>
+    <div>
+      {/* Do loop for each user. Name at top, centered and bold, then table for each */}
+      <h1>
+        Name
+      </h1>
+      <table>
+        <thead>
+          <tr>
+            {/* Make hovertext for explanations */}
+            <th>Item</th>
+            <th>Exact?</th>
+            <th>Multiple?</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          {giftData.map((gift) => (
+            <tr key={gift.gift_id}>  
+              <td>{gift.name}</td>
+              <td>{gift.exact}</td>
+              <td>{gift.multiple}</td>
+              <td>{gift.notes}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
