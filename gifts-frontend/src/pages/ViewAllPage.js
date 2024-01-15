@@ -41,6 +41,8 @@ const ViewAllPage = () => {
         </thead>
         <tbody>
           {giftData.map((gift) => (
+            // Add conditional to match each user in turn
+            // Add conditional to only show visibility = All
             <tr key={gift.gift_id}>  
               <td>{gift.name}</td>
               <td>{gift.exact}</td>
