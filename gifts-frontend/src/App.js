@@ -10,6 +10,8 @@ import ViewSelfPage from "./pages/ViewSelfPage";
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
 
+// Context Imports
+import { ViewProvider } from './ViewContext'; 
 
 // Util Imports
 // import PrivateRoute from "./utils/PrivateRoute";
@@ -17,7 +19,8 @@ import Navbar from "./components/NavBar/NavBar";
 
 function App() {
   return (
-    <div>
+    <ViewProvider>
+      <div>
       <Navbar />
       <div>
         <Routes>
@@ -27,6 +30,7 @@ function App() {
         </Routes>
       </div>
     </div>
+    </ViewProvider>
   );
 }
 
