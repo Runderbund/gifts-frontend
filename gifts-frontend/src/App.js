@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import "./App.css";
 
 // Page Imports
-import ViewAllPage from "./pages/ViewAllPage";
 import ViewOtherPage from "./pages/ViewOtherPage";
 import ViewSelfPage from "./pages/ViewSelfPage";
 
@@ -11,7 +10,7 @@ import ViewSelfPage from "./pages/ViewSelfPage";
 import Navbar from "./components/NavBar/NavBar";
 
 // Context Imports
-import { ViewProvider } from './ViewContext'; 
+import { MemberProvider } from './context/MemberContext'; 
 
 // Util Imports
 // import PrivateRoute from "./utils/PrivateRoute";
@@ -19,18 +18,19 @@ import { ViewProvider } from './ViewContext';
 
 function App() {
   return (
-    <ViewProvider>
+    
       <div>
+      <MemberProvider>
       <Navbar />
       <div>
         <Routes>
-          <Route path="/" element={<ViewAllPage />} />
-          <Route path="/viewother" element={<ViewOtherPage />} />
-          <Route path="/viewself" element={<ViewSelfPage />} />
+          <Route path="/other" element={<ViewOtherPage />} />
+          <Route path="/self" element={<ViewSelfPage />} />
         </Routes>
       </div>
+      </MemberProvider>
     </div>
-    </ViewProvider>
+    
   );
 }
 
