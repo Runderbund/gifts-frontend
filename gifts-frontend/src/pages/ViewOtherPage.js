@@ -1,44 +1,34 @@
-import React from "react";
-import "../App.css";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "../App.css";
+import GiftBox from "../components/GiftBox";
 
 /**
  * ViewOther is responsible for displaying the view of all gifts.
  * @component
  */
 const ViewOtherPage = () => {
-  // Render the form for adding a gift object
+  const [giftData, setGiftData] = useState(null); // State to store the gift data
 
-  // Function to handle form submission
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  // Effect to fetch the gift data from the server
+  useEffect(() => {
+    const fetchGiftData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/get_all_gifts`);
+        setGiftData(response.data.gifts);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+    fetchGiftData();
+  }, []);
 
-    // Form data for file upload
-    const formData = new FormData();
-    formData.append("itemName", event.target.meetName.value);
-    formData.append("exactItem", event.target.exactItem.value);
-    formData.append("multiple", event.target.multiple.value);
-    formData.append("user", event.target.user.value);
-    formData.append("notes", event.target.notes.value);
-
-
-    // Axios post request to upload the fields to the backend as a Gift object
-    axios
-      .post("http://localhost:8000/upload/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-
-      // Clear the fields and say Gift Updated beneath
-      .then((response) => {
-        console.log("Gift uploaded successfully");
-      })
-      .catch((error) => {
-        console.log("Gift upload failed");
-        console.log(error);
-      });
-  };
+  return (
+    <h1>View All</h1>
+    // For each user, display their name, then a table of their gifts
+    // Name at top, centered and bold
+    // Call GiftBox for each user 
+  );
 };
 
 export default ViewOtherPage;

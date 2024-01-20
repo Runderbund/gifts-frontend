@@ -1,29 +1,7 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import "../App.css";
+import AddGift from "../components/AddGift/AddGift";
 
-/**
- * ViewAll is responsible for displaying the view of all gifts.
- * @component
- */
-const ViewAllPage = () => {
 
-  const [giftData, setGiftData] = useState(null); // State to store the gift data
-
-  // Effect to fetch the gift data from the server
-  useEffect(() => {
-    const fetchGiftData = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8000/get_all_gifts`);
-        setGiftData(response.data.gifts);
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      }
-    };
-    fetchGiftData();
-  }, []);
-
-  return (
+return (
     <div>
       {/* Do loop for each user. Name at top, centered and bold, then table for each */}
       <h1>
@@ -54,6 +32,3 @@ const ViewAllPage = () => {
       </table>
     </div>
   );
-};
-
-export default ViewAllPage;

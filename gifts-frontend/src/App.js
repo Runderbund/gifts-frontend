@@ -5,12 +5,12 @@ import "./App.css";
 // Page Imports
 import ViewOtherPage from "./pages/ViewOtherPage";
 import ViewSelfPage from "./pages/ViewSelfPage";
+import MemberSelectPage from "./pages/MemberSelectPage";
 
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
 
 // Context Imports
-import { MemberProvider } from './context/MemberContext'; 
 
 // Util Imports
 // import PrivateRoute from "./utils/PrivateRoute";
@@ -18,17 +18,15 @@ import { MemberProvider } from './context/MemberContext';
 
 function App() {
   return (
-    
-      <div>
-      <MemberProvider>
+    <div>
       <Navbar />
       <div>
         <Routes>
+          <Route path="/select" element={<MemberSelectPage />} />
           <Route path="/other" element={<ViewOtherPage />} />
           <Route path="/self" element={<ViewSelfPage />} />
         </Routes>
       </div>
-      </MemberProvider>
     </div>
     
   );
