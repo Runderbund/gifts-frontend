@@ -1,7 +1,8 @@
 import AddGift from "../components/AddGift/AddGift";
 
-
-return (
+const GiftBox = ({ member }) => {
+  // Use the member prop to display member-specific information
+  return (
     <div>
       {/* Do loop for each user. Name at top, centered and bold, then table for each */}
       <h1>
@@ -32,3 +33,6 @@ return (
       </table>
     </div>
   );
+}
+
+export default GiftBox;

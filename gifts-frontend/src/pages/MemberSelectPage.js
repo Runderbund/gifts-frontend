@@ -5,7 +5,7 @@ import { MemberContext } from '../context/MemberContext';
 const MemberSelectPage = () => {
   const [members, setMembers] = useState([]);
   const [selectedMember, setSelectedMember] = useState('');
-  const { setMember } = useContext(MemberContext);
+  const { setSelfMember, setOtherMembers } = useContext(MemberContext);
 
   useEffect(() => {
     // Function to fetch members
@@ -27,10 +27,16 @@ const MemberSelectPage = () => {
   }, []);
 
   const handleSelectMember = (event) => {
-    setSelectedMember(event.target.value);
-    // Find the member object by member_name
-    const member = members.find(m => m.member_name === event.target.value);
-    setMember(member); // Update the context with the selected member object
+    const value = event.target.value;
+    setSelectedMember(value);
+
+    // Find the member object by member.name
+    const self = members.find(m => m.member_name === value);
+    setSelfMember(self); // Update the context with the selected member object
+
+    // Filter out the self member to get other members
+    const others = members.filter(m => m.member_name !== value);
+    setOtherMembers(others); // Update the context with the other members
   };
 
   return (
@@ -48,3 +54,5 @@ const MemberSelectPage = () => {
 };
 
 export default MemberSelectPage;
+
+// Add redirect to ViewOtherPage after selecting a member
