@@ -18,11 +18,11 @@ const GiftBox = ({ member, gifts }) => {
         <tbody>
           {gifts.map((gift) => (
             <tr key={gift.gift_id}>
-            <td>{gift.item_name}</td>
-            <td>{gift.exact_item ? 'Yes' : 'No'}</td>
-            <td>{gift.multiple ? 'Yes' : 'No'}</td>
-            <td>{gift.notes}</td>
-          </tr>
+              <td>{gift.item_name}</td>
+              <td>{gift.exact_item ? 'Yes' : 'No'}</td>
+              <td>{gift.multiple ? 'Yes' : 'No'}</td>
+              <td>{gift.notes}</td>
+            </tr>
           ))}
         </tbody>
       </table>
