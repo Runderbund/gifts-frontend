@@ -19,7 +19,6 @@ const ViewOtherPage = () => {
         // Update the `allGifts` state with the fetched data.
         setAllGifts(response.data);
       } catch (error) {
-        // If there's an error during the fetch, log it to the console.
         console.error("Error fetching all gifts: ", error);
       }
     };
