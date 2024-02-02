@@ -1,9 +1,11 @@
 import React from 'react';
-import styles from './AddGift.module.css';
+import axios from 'axios';
+import { MemberContext } from '../../context/MemberContext'; 
+// Compare member to selfmember to determine visibility option
 
-const AddGift = () => {
+const AddGift = ({ member, closePopup }) => {
 
-  const handleSubmit = (event, emailAfterUpload = false) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     // Form data for file upload
@@ -16,10 +18,10 @@ const AddGift = () => {
 
 
     // Axios post request to upload the file
-    axios
-      .post("http://localhost:8000/create_gift/", formData)
+    axios.post("http://localhost:8000/create_gift/", formData)
       .then((response) => {
         console.log("Gift added successfully");
+        closePopup(); // Close the popup on successful add
       })
       .catch((error) => {
         console.log("Gift add failed");
@@ -29,7 +31,7 @@ const AddGift = () => {
 
   return (
       <div className="container">
-        <h1>Add gift for (clicked on user)</h1> 
+        <h1>Add gift for {member.member_name}</h1> 
         <form onSubmit={handleSubmit}>
           <label>
             Gift Name:
@@ -51,6 +53,10 @@ const AddGift = () => {
             Single item:
             <input type="radio" name="multiple" value="no" required />
           </label>
+          <label>
+          Notes:
+          <textarea name="notes" required></textarea>
+        </label>
           Visibile to:
           {/* {users.map((user, index) => (
             <label key={index}>
@@ -58,18 +64,9 @@ const AddGift = () => {
               <input type="checkbox" name="user" value={user.id} />
             </label>
           ))} */}
-          <label>
-            Notes:
-            {/* Control the size of the textarea by using the rows and cols attributes, or use CSS to set a specific width and height. */}
-            <input type="textarea" name="itemName" required />
-          </label>
-          <div className="buttonContainer">
-            <button type="submit">Add Gift</button>
-            <button
-              type="submit"
-              onClick={(e) => handleSubmit(e, true)}
-            >
-            </button>
+        <div className="buttonContainer">
+          <button type="submit">Add Gift</button>
+          <button type="button" onClick={closePopup}>Cancel</button> {/* Changed to `type="button"` and use `closePopup` to close */}
           </div>
         </form>
       </div>

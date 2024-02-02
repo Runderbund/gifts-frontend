@@ -1,4 +1,7 @@
 import React, { useContext } from 'react';
+import { MemberContext } from '../../context/MemberContext';
+import AddGift from './AddGift';
+
 
 // The GiftBox component takes in two props: 
 // `member` - an object containing information about a member,
@@ -7,6 +10,11 @@ import React, { useContext } from 'react';
 const GiftBox = ({ member, gifts }) => {
 
   const { selfMember } = useContext(MemberContext);
+  const [showAddGift, setShowAddGift] = useState(false);
+
+  const toggleAddGiftPopup = () => {
+    setShowAddGift(!showAddGift);
+  };
 
   return (
     <div>
@@ -39,6 +47,8 @@ const GiftBox = ({ member, gifts }) => {
           ))}
         </tbody>
       </table>
+      <button onClick={toggleAddGiftPopup}>Add Gift</button>
+      {showAddGift && <AddGift member={member} closePopup={toggleAddGiftPopup} />}
     </div>
   );
 };
