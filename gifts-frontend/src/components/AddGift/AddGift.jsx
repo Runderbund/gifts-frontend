@@ -1,9 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import { MemberContext } from '../../context/MemberContext'; 
-// Compare member to selfmember to determine visibility option
 
-const AddGift = ({ member, closePopup }) => {
+const AddGift = ({ member, isSelfMember, closePopup }) => {
+
+  const { otherMembers } = useContext(MemberContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -66,7 +67,7 @@ const AddGift = ({ member, closePopup }) => {
           ))} */}
         <div className="buttonContainer">
           <button type="submit">Add Gift</button>
-          <button type="button" onClick={closePopup}>Cancel</button> {/* Changed to `type="button"` and use `closePopup` to close */}
+          <button type="button" onClick={closePopup}>Cancel</button>
           </div>
         </form>
       </div>
