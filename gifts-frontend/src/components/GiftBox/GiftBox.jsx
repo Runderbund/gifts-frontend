@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { MemberContext } from '../../context/MemberContext';
-import AddGift from './AddGift';
+import AddGift from '../AddGift/AddGift';
 
 
 // The GiftBox component takes in two props: 

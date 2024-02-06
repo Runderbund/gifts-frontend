@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import GiftBox from '../components/GiftBox'; 
+import GiftBox from '../components/GiftBox/GiftBox'; 
 import { MemberContext } from '../context/MemberContext'; 
 
 // ViewOtherPage component is responsible for rendering the gift boxes for all non-self members
