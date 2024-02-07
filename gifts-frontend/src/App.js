@@ -10,19 +10,13 @@ import MemberSelectPage from "./pages/MemberSelectPage";
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
 
-// Context Imports
-
-// Util Imports
-// import PrivateRoute from "./utils/PrivateRoute";
-// Add later, once I understand chain better
-
 function App() {
   return (
     <div>
       <Navbar />
       <div>
         <Routes>
-          <Route path="/select" element={<MemberSelectPage />} />
+          <Route path="/" element={<MemberSelectPage />} />
           <Route path="/other" element={<ViewOtherPage />} />
           <Route path="/self" element={<ViewSelfPage />} />
         </Routes>

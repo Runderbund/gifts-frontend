@@ -1,8 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import { MemberProvider } from './context/MemberContext'; 
 import { BrowserRouter as Router } from "react-router-dom";
+
+// Context Import
+import { MemberProvider } from './context/MemberContext';
 
 ReactDOM.render(
   <React.StrictMode>

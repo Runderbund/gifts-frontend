@@ -9,7 +9,7 @@ const NavBar = () => {
         {/* Each list item <li> is a navigation link */}
         <li className={styles.navItem}>
           <Link to="/">
-            View All
+            View As
           </Link>
         </li>
         <li className={styles.navItem}>
