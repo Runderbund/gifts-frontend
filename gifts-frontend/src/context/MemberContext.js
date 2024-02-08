@@ -12,7 +12,9 @@ export const MemberProvider = ({ children }) => {
 
   const contextValue = {
     selfMember,
+    setSelfMember, 
     otherMembers,
+    setOtherMembers
   };
 
   return (

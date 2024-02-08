@@ -5,7 +5,9 @@ import { MemberContext } from '../context/MemberContext';
 const MemberSelectPage = () => {
   const [members, setMembers] = useState([]);
   const [selectedMember, setSelectedMember] = useState('');
-  const { setSelfMember, setOtherMembers } = useContext(MemberContext);
+  const {selfMember, setSelfMember} = useContext(MemberContext);
+  const {otherMembers, setOtherMembers} = useContext(MemberContext);
+
 
   useEffect(() => {
     // Function to fetch members
@@ -14,10 +16,12 @@ const MemberSelectPage = () => {
         const response = await axios.get(`http://localhost:8000/get_all_members/`);
         // Sort members alphabetically by member_name
         // localCompare makes sure sorting varies by locale, probably not important for just a few people, but good practice
-        const sortedMembers = response.data.sort((a, b) => 
+        // console.log('Response:', response.data);
+        const sortedMembers = response.data.members.sort((a, b) => 
           a.member_name.localeCompare(b.member_name)
         );
         setMembers(sortedMembers);
+        // console.log('Members:', sortedMembers);
       } catch (error) {
         console.error('Error fetching members:', error);
       }
