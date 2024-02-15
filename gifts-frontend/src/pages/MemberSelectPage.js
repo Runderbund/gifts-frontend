@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { MemberContext } from '../context/MemberContext';
 
 const MemberSelectPage = () => {
   const [members, setMembers] = useState([]);
   const [selectedMember, setSelectedMember] = useState('');
-  const {selfMember, setSelfMember} = useContext(MemberContext);
-  const {otherMembers, setOtherMembers} = useContext(MemberContext);
+  const {setSelfMember} = useContext(MemberContext);
+  const {setOtherMembers} = useContext(MemberContext);
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -41,13 +43,15 @@ const MemberSelectPage = () => {
     // Filter out the self member to get other members
     const others = members.filter(m => m.member_name !== value);
     setOtherMembers(others); // Update the context with the other members
+
+    navigate('/self'); // Redirect to the ViewSelfPage after selecting a member
   };
 
   return (
     <div>
       <select value={selectedMember} onChange={handleSelectMember}>
         <option value="">Select a family member</option>
-        {members.map((member) => (
+        {members.map((member,) => (
           <option key={member.member_id} value={member.member_name}>
             {member.member_name}
           </option>

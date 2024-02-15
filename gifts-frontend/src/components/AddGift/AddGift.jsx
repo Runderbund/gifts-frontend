@@ -1,6 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import { MemberContext } from '../../context/MemberContext'; 
+import { useContext } from 'react';
+import "../../App.css";
+
+
 
 const AddGift = ({ member, isSelfMember, closePopup }) => {
 
@@ -31,7 +35,7 @@ const AddGift = ({ member, isSelfMember, closePopup }) => {
   };
 
   return (
-      <div className="container">
+      <div className="giftBox">
         <h1>Add gift for {member.member_name}</h1> 
         <form onSubmit={handleSubmit}>
           <label>
@@ -39,11 +43,11 @@ const AddGift = ({ member, isSelfMember, closePopup }) => {
             <input type="text" name="itemName" required />
           </label>
           <label>
-            Yes:
+            Exact Item Please:
             <input type="radio" name="exactItem" value="yes" required />
           </label>
           <label>
-            No:
+            Similar Items Okay:
             <input type="radio" name="exactItem" value="no" required />
           </label>
           <label>
