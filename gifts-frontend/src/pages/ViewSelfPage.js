@@ -9,13 +9,15 @@ import { MemberContext } from '../context/MemberContext';
  * @component
  */
 const ViewSelfPage = () => {
+  // Destructure `selfMember` from the context
   const { selfMember } = useContext(MemberContext);
+  // State for storing all the gifts fetched from the database.
   const [allGifts, setAllGifts] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!selfMember) {
-      navigate('/');
+      navigate('/select');
     }
 
   }, [selfMember, navigate])

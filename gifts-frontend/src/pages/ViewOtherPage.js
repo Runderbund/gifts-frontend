@@ -1,15 +1,24 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import GiftBox from '../components/GiftBox/GiftBox'; 
+import { useNavigate } from 'react-router-dom';
 import { MemberContext } from '../context/MemberContext'; 
 
 // ViewOtherPage component is responsible for rendering the gift boxes for all non-self members
 const ViewOtherPage = () => {
   // Destructure `otherMembers` from the context which contains all members except the current user.
   const { otherMembers } = useContext(MemberContext);
-
   // State for storing all the gifts fetched from the database.
   const [allGifts, setAllGifts] = useState([]);
+  const navigate = useNavigate();
+  
+  // Redirect to the select page if the selfMember is not set.
+  useEffect(() => {
+    if (!otherMembers) {
+      navigate('/select');
+    }
+
+  }, [otherMembers, navigate])
 
   // Fetches all gift data when the component mounts.
   useEffect(() => {
