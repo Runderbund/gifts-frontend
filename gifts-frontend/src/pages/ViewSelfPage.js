@@ -15,25 +15,22 @@ const ViewSelfPage = () => {
   const [allGifts, setAllGifts] = useState([]);
   const navigate = useNavigate();
 
+  const fetchAllGifts = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/get_all_gifts/');
+      setAllGifts(response.data.gifts);
+    } catch (error) {
+      console.error('Error fetching all gifts: ', error);
+    }
+  };
+
   useEffect(() => {
     if (!selfMember) {
       navigate('/select');
+      console.log('No selfMember');
     }
-
-  }, [selfMember, navigate])
-
-  useEffect(() => {
-    const fetchAllGifts = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/get_all_gifts');
-        setAllGifts(response.data.gifts);
-      } catch (error) {
-        console.error('Error fetching all gifts: ', error);
-      }
-    };
-
     fetchAllGifts();
-  }, []);
+  }, [selfMember, navigate])
 
   // Filter the gifts for selfMember from allGifts
   const selfGifts = allGifts.filter(gift => gift.gift_receiver === selfMember.member_id);

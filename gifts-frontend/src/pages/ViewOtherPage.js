@@ -24,7 +24,7 @@ const ViewOtherPage = () => {
   useEffect(() => {
     const fetchAllGifts = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/get_all_gifts');
+        const response = await axios.get('http://localhost:8000/get_all_gifts/');
         // Update the `allGifts` state with the fetched data.
         setAllGifts(response.data);
       } catch (error) {
