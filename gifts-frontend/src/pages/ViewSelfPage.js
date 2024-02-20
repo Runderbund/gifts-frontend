@@ -27,13 +27,14 @@ const ViewSelfPage = () => {
   useEffect(() => {
     if (!selfMember) {
       navigate('/select');
-      console.log('No selfMember');
     }
     fetchAllGifts();
   }, [selfMember, navigate])
 
   // Filter the gifts for selfMember from allGifts
   const selfGifts = allGifts.filter(gift => gift.gift_receiver === selfMember.member_id);
+  // Adding one for each person the gift is visible to. Need to filter to unique gift_id's.
+
 
   return (
     <div>
