@@ -1,5 +1,5 @@
 // General Imports
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 
 // Page Imports
@@ -16,9 +16,10 @@ function App() {
       <Navbar />
       <div>
         <Routes>
-          <Route path="/" element={<MemberSelectPage />} />
+          <Route path="/select" element={<MemberSelectPage />} />
           <Route path="/other" element={<ViewOtherPage />} />
           <Route path="/self" element={<ViewSelfPage />} />
+          <Route path="/" element={<Navigate replace to="/select" />} /> {/* Redirects from / to /select */}
         </Routes>
       </div>
     </div>
