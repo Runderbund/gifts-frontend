@@ -32,8 +32,15 @@ const ViewSelfPage = () => {
   }, [selfMember, navigate])
 
   // Filter the gifts for selfMember from allGifts
-  const selfGifts = allGifts.filter(gift => gift.gift_receiver === selfMember.member_id);
-  // Adding one for each person the gift is visible to. Need to filter to unique gift_id's.
+  const uniqueGiftIds = new Set();
+  const selfGifts = allGifts.filter(gift => {
+    // Checks if the gift is for the selfMember and if the gift_id is unique
+    if (gift.gift_receiver === selfMember.member_id && !uniqueGiftIds.has(gift.gift_id)) {
+      uniqueGiftIds.add(gift.gift_id);
+      return true;
+    }
+    return false;
+  })
 
 
   return (
