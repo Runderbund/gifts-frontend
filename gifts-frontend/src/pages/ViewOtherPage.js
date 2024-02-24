@@ -27,6 +27,7 @@ const ViewOtherPage = () => {
         const response = await axios.get('http://localhost:8000/get_all_gifts/');
         // Update the `allGifts` state with the fetched data.
         setAllGifts(response.data);
+        console.log("allgifts1", allGifts);
       } catch (error) {
         console.error("Error fetching all gifts: ", error);
       }
@@ -39,6 +40,8 @@ const ViewOtherPage = () => {
     <div>
       {/* Map over `otherMembers` to render a GiftBox for each member */}
       {otherMembers.map((member) => {
+       console.log("allgifts2", allGifts);
+
         // Filter `allGifts` to only include gifts where `gift_receiver` matches `member.member_id`
         const memberGifts = allGifts.filter(gift => gift.gift_receiver === member.member_id);
         // Render the `GiftBox` component passing the `member` and their specific `gifts`
