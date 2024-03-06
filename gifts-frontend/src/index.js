@@ -13,7 +13,6 @@ const container = document.getElementById("root");
 const root = createRoot(container);
 
 // Initial render: Renders the app to the root (in public/index.html)
-console.log("hello");
 root.render(
   <React.StrictMode>
     <Router>

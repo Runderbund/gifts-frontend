@@ -26,7 +26,7 @@ const ViewOtherPage = () => {
       try {
         const response = await axios.get('http://localhost:8000/get_all_gifts/');
         // Update the `allGifts` state with the fetched data.
-        setAllGifts(response.data);
+        setAllGifts(response.data.gifts);
         console.log("allgifts1", allGifts);
       } catch (error) {
         console.error("Error fetching all gifts: ", error);
