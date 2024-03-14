@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { MemberContext } from '../context/MemberContext';
+import "../App.css";
 
 const MemberSelectPage = () => {
   const [members, setMembers] = useState([]);
@@ -48,7 +49,7 @@ const MemberSelectPage = () => {
   };
 
   return (
-    <div>
+    <div className='memberSelectBox'>
       <select value={selectedMember} onChange={handleSelectMember}>
         <option value="">Select a family member</option>
         {members.map((member,) => (

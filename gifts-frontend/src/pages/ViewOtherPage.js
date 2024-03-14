@@ -49,6 +49,3 @@ const ViewOtherPage = () => {
 };
 
 export default ViewOtherPage;
-
-// For each member, I need to filter out duplicates from the join table, only allow unique, like in ViewSelfPage.
-// Also need to figure out why the gifts aren't rendering on the page. I'd expect multiples, not none

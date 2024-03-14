@@ -43,8 +43,8 @@ const GiftBox = ({ member, gifts }) => {
                 <td>{gift.notes}</td>
                 {isSelfMember && (
                   <td>
-                    {/* Render visibility options of all Members here. Probably checkboxes in add/edit, but just list here. Cap on width, probably. Maybe 4 names/row. 
-                    Default, and probably most common, will be All. */}
+                    {gift.visible_to.join(', ')}
+                    {/* Showing 1, 1. Should show Sean, Sasha, or at least 1, 2 */}
                   </td>
                 )}
               </tr>

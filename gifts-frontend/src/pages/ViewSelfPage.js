@@ -18,7 +18,33 @@ const ViewSelfPage = () => {
   const fetchAllGifts = async () => {
     try {
       const response = await axios.get('http://localhost:8000/get_all_gifts/');
-      setAllGifts(response.data.gifts);
+      const giftsData = response.data.gifts;
+
+      const selfGifts = giftsData.filter(gift => {
+        // Checks if the gift is for the selfMember and if the gift_id is unique
+        if (gift.gift_receiver === selfMember.member_id) {
+          return true;
+        }
+        return false;
+      })
+    
+    // Create an object to hold gifts by ID with their visibility
+      const giftsById = {};
+
+      selfGifts.forEach((gift) => {
+        if (!giftsById[gift.gift_id]) {
+          // If the gift hasn't been added yet, add it with the member who can see it
+          giftsById[gift.gift_id] = {
+            ...gift,
+            visible_to: [gift.gift_receiver], // Start with the receiver as the first member who can see it
+          };
+        } else {
+          // If it has been added, just push the new member into the `visible_to` array
+          giftsById[gift.gift_id].visible_to.push(gift.gift_receiver);
+        }
+      });
+
+      setAllGifts(Object.values(giftsById)); // Now this will be an array of objects, each object including a visible_to array
     } catch (error) {
       console.error('Error fetching all gifts: ', error);
     }
@@ -31,22 +57,10 @@ const ViewSelfPage = () => {
     fetchAllGifts();
   }, [selfMember, navigate])
 
-  // Filter the gifts for selfMember from allGifts
-  const uniqueGiftIds = new Set();
-  const selfGifts = allGifts.filter(gift => {
-    // Checks if the gift is for the selfMember and if the gift_id is unique
-    if (gift.gift_receiver === selfMember.member_id && !uniqueGiftIds.has(gift.gift_id)) {
-      uniqueGiftIds.add(gift.gift_id);
-      return true;
-    }
-    return false;
-  })
-
-
   return (
     <div>
       {selfMember && (
-        <GiftBox member={selfMember} gifts={selfGifts} />
+        <GiftBox member={selfMember} gifts={allGifts} />
       )}
     </div>
   );
