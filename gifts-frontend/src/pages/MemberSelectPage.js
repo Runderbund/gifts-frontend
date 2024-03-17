@@ -9,6 +9,7 @@ const MemberSelectPage = () => {
   const [selectedMember, setSelectedMember] = useState('');
   const {setSelfMember} = useContext(MemberContext);
   const {setOtherMembers} = useContext(MemberContext);
+  const {setAllMembers} = useContext(MemberContext);
   const navigate = useNavigate();
 
 
@@ -34,6 +35,8 @@ const MemberSelectPage = () => {
   }, []);
 
   const handleSelectMember = (event) => {
+    setAllMembers(members);
+
     const value = event.target.value;
     setSelectedMember(value);
 

@@ -11,6 +11,7 @@ import { MemberContext } from '../context/MemberContext';
 const ViewSelfPage = () => {
   // Destructure `selfMember` from the context
   const { selfMember } = useContext(MemberContext);
+  const { allMembers } = useContext(MemberContext);
   // State for storing all the gifts fetched from the database.
   const [allGifts, setAllGifts] = useState([]);
   const navigate = useNavigate();
@@ -30,17 +31,23 @@ const ViewSelfPage = () => {
     
     // Create an object to hold gifts by ID with their visibility
       const giftsById = {};
+      console.log('selfGifts: ', selfGifts)
+      console.log('giftsById: ', giftsById)
 
       selfGifts.forEach((gift) => {
+        const memberObject = allMembers.find(member => member.member_id === gift.visible_to);
+        const memberName = memberObject.member_name;
+
+        
         if (!giftsById[gift.gift_id]) {
           // If the gift hasn't been added yet, add it with the member who can see it
           giftsById[gift.gift_id] = {
             ...gift,
-            visible_to: [gift.gift_receiver], // Start with the receiver as the first member who can see it
+            visible_to: [memberName],
           };
         } else {
           // If it has been added, just push the new member into the `visible_to` array
-          giftsById[gift.gift_id].visible_to.push(gift.gift_receiver);
+          giftsById[gift.gift_id].visible_to.push(memberName);
         }
       });
 

@@ -9,8 +9,11 @@ export const MemberContext = createContext({
 export const MemberProvider = ({ children }) => {
   const [selfMember, setSelfMember] = useState(null);
   const [otherMembers, setOtherMembers] = useState([]);
+  const [allMembers, setAllMembers] = useState([]);
 
   const contextValue = {
+    allMembers,
+    setAllMembers,
     selfMember,
     setSelfMember, 
     otherMembers,
