@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { MemberContext } from '../../context/MemberContext'; 
 import { useContext } from 'react';
@@ -8,7 +8,25 @@ import "../../App.css";
 
 const AddGift = ({ member, isSelfMember, closePopup }) => {
 
-  const { otherMembers } = useContext(MemberContext);
+  const { allMembers } = useContext(MemberContext);
+  const [allSelected, setAllSelected] = useState(true); // Default visibility is all members
+  const [selectedMembers, setSelectedMembers] = useState({}); 
+
+  const handleAllChange = () => {
+    setAllSelected(!allSelected);
+    // Reset individual member selections
+    setSelectedMembers({});
+  };
+
+  const handleMemberChange = (memberId) => {
+    // If any member is selected, uncheck 'All'
+    setAllSelected(false);
+    // Update the selected members state
+    setSelectedMembers(prevSelectedMembers => ({
+      ...prevSelectedMembers,
+      [memberId]: !prevSelectedMembers[memberId]
+    }));
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -20,6 +38,7 @@ const AddGift = ({ member, isSelfMember, closePopup }) => {
     formData.append("multiple", event.target.multiple.value);
     formData.append("user", event.target.user.value);
     formData.append("notes", event.target.notes.value);
+    // How do I append visibility?
 
 
     // Axios post request to upload the file
@@ -43,16 +62,21 @@ const AddGift = ({ member, isSelfMember, closePopup }) => {
           <input type="text" name="itemName" required />
         </div>
         <div className="addGiftGroup">
-          <label>Exact Item Please:</label>
+          <label>Exact Item
           <input type="radio" name="exactItem" value="yes" required />
-          <label>Similar Items Okay:</label>
+          </label>
+          {/* Inputs nested in labels to make the text clickable for the radio button */}
+          <label>Similar Items Okay
           <input type="radio" name="exactItem" value="no" required />
+          </label>
         </div>
         <div className="addGiftGroup">
-          <label>Multiple Items:</label>
+          <label>Multiple Items
           <input type="radio" name="multiple" value="yes" required />
-          <label>Single item:</label>
+          </label>
+          <label>Single Item
           <input type="radio" name="multiple" value="no" required />
+          </label>
         </div>
         <div className="addGiftGroup">
           <label>Notes:</label>
@@ -60,14 +84,26 @@ const AddGift = ({ member, isSelfMember, closePopup }) => {
         </div>
         <div className="addGiftGroup">
           <label>Visibile to:</label>
-          {/* {users.map((user, index) => (
-          <label key={index}>
-            {user.name}:
-            <input type="checkbox" name="user" value={user.id} />
+          <label>All
+          <input type="checkbox" name="allMembers" checked={allSelected} onChange={handleAllChange} />
           </label>
-        ))} */}
-          <textarea name="notes" required></textarea>
+          {allMembers.map((member) => (
+          <div key={member.member_id} className="addGiftGroup">
+            <label>
+              {member.member_name}:
+              <input
+                type="checkbox"
+                name="user"
+                value={member.member_id}
+                disabled={allSelected} // Disable if 'All' is selected
+                checked={selectedMembers[member.member_id] || false}
+                onChange={() => handleMemberChange(member.member_id)}
+              />
+            </label>
+          </div>
+        ))}
         </div>
+
         
         
         <div className="buttonContainer">
