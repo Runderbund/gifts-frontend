@@ -35,44 +35,45 @@ const AddGift = ({ member, isSelfMember, closePopup }) => {
   };
 
   return (
-      <div className="giftBox">
-        <h1>Add gift for {member.member_name}</h1> 
-        <form onSubmit={handleSubmit}>
-          <label>
-            Gift Name:
-            <input type="text" name="itemName" required />
-          </label>
-          <label>
-            Exact Item Please:
-            <input type="radio" name="exactItem" value="yes" required />
-          </label>
-          <label>
-            Similar Items Okay:
-            <input type="radio" name="exactItem" value="no" required />
-          </label>
-          <label>
-            Multiple Items:
-            <input type="radio" name="multiple" value="yes" required />
-          </label>
-          <label>
-            Single item:
-            <input type="radio" name="multiple" value="no" required />
-          </label>
-          <label>
-          Notes:
+    <div className="addGiftBox">
+      <h1>Add gift for {member.member_name}</h1>
+      <form onSubmit={handleSubmit}>
+        <div className="addGiftGroup">
+          <label>Gift Name:</label>
+          <input type="text" name="itemName" required />
+        </div>
+        <div className="addGiftGroup">
+          <label>Exact Item Please:</label>
+          <input type="radio" name="exactItem" value="yes" required />
+          <label>Similar Items Okay:</label>
+          <input type="radio" name="exactItem" value="no" required />
+        </div>
+        <div className="addGiftGroup">
+          <label>Multiple Items:</label>
+          <input type="radio" name="multiple" value="yes" required />
+          <label>Single item:</label>
+          <input type="radio" name="multiple" value="no" required />
+        </div>
+        <div className="addGiftGroup">
+          <label>Notes:</label>
           <textarea name="notes" required></textarea>
-        </label>
-          Visibile to:
+        </div>
+        <div className="addGiftGroup">
+          <label>Visibile to:</label>
           {/* {users.map((user, index) => (
-            <label key={index}>
-              {user.name}:
-              <input type="checkbox" name="user" value={user.id} />
-            </label>
-          ))} */}
+          <label key={index}>
+            {user.name}:
+            <input type="checkbox" name="user" value={user.id} />
+          </label>
+        ))} */}
+          <textarea name="notes" required></textarea>
+        </div>
+        
+        
         <div className="buttonContainer">
           <button type="submit">Add Gift</button>
           <button type="button" onClick={closePopup}>Cancel</button>
-          </div>
+        </div>
         </form>
       </div>
     );

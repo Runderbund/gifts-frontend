@@ -11,6 +11,7 @@
 .buttonContainer {
   display: flex;
   gap: 1em;
+  justify-content: center;
 }
 
 .giftBox {
@@ -28,6 +29,31 @@
   outline: black solid 1px;
 }
 
+.addGiftBox {
+  margin-top: 3em;
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 1em;
+  background-color: rgb(49, 113, 170);
+  padding: 1em;
+  border-radius: 1em;
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0px 4px 6px -2px rgba(0, 0, 0, 0.05);
+  outline: black solid 1px;
+}
+
+.addGiftGroup {
+  display: flex;
+  flex-direction:row;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
 .memberSelectBox {
   width: 30%;
   margin: 0 auto;
@@ -42,5 +68,4 @@
   box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1),
     0px 4px 6px -2px rgba(0, 0, 0, 0.05);
   outline: black solid 1px;
-  
 }
