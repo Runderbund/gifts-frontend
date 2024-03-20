@@ -14,7 +14,7 @@ const AddGift = ({ member, isSelfMember, closePopup }) => {
 
   const handleAllChange = () => {
     setAllSelected(!allSelected);
-    // Reset individual member selections
+    // When All is selected, uncheck  individual member selections
     setSelectedMembers({});
   };
 
@@ -95,7 +95,6 @@ const AddGift = ({ member, isSelfMember, closePopup }) => {
                 type="checkbox"
                 name="user"
                 value={member.member_id}
-                disabled={allSelected} // Disable if 'All' is selected
                 checked={selectedMembers[member.member_id] || false}
                 onChange={() => handleMemberChange(member.member_id)}
               />
