@@ -88,9 +88,9 @@ const AddGift = ({ member, isSelfMember, closePopup }) => {
           <input type="checkbox" name="allMembers" checked={allSelected} onChange={handleAllChange} />
           </label>
           {allMembers.map((member) => (
-          <div key={member.member_id} className="addGiftGroup">
+          <div key={member.member_id}>
             <label>
-              {member.member_name}:
+              {member.member_name}
               <input
                 type="checkbox"
                 name="user"
