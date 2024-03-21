@@ -35,6 +35,14 @@ const ViewOtherPage = () => {
     fetchAllGifts();
   }, []);
 
+  // Need to sort gifts by id to avoid duplicates from join table.
+  // const uniqueGifts = allGifts.filter((gift) =>
+    
+
+  console.log(otherMembers);
+  console.log(allGifts);
+
+
   return (
     <div>
       {/* Map over `otherMembers` to render a GiftBox for each member */}
@@ -42,7 +50,7 @@ const ViewOtherPage = () => {
         // Filter `allGifts` to only include gifts where `gift_receiver` matches `member.member_id`
         const memberGifts = allGifts.filter(gift => gift.gift_receiver === member.member_id);
         // Render the `GiftBox` component passing the `member` and their specific `gifts`
-        return <GiftBox member={member} gifts={memberGifts} />;
+        return <GiftBox key={member.member_id} member={member} gifts={memberGifts} />;
       })}
     </div>
   );

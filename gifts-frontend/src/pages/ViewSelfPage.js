@@ -31,8 +31,6 @@ const ViewSelfPage = () => {
     
     // Create an object to hold gifts by ID with their visibility
       const giftsById = {};
-      console.log('selfGifts: ', selfGifts)
-      console.log('giftsById: ', giftsById)
 
       selfGifts.forEach((gift) => {
         const memberObject = allMembers.find(member => member.member_id === gift.visible_to);
