@@ -44,7 +44,6 @@ const GiftBox = ({ member, gifts }) => {
                 {isSelfMember && (
                   <td>
                     {gift.visible_to.join(', ')}
-                    {/* Showing 1, 1. Should show Sean, Sasha, or at least 1, 2 */}
                   </td>
                 )}
               </tr>
@@ -58,3 +57,6 @@ const GiftBox = ({ member, gifts }) => {
   );
 };
 export default GiftBox;
+
+// Only showing 1 person. Why?
+// Also showing multiple of the same gift, thought I took care of the visibility doubling thing.

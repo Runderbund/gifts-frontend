@@ -33,7 +33,7 @@ const AddGift = ({ member, isSelfMember, closePopup }) => {
 
     // Form data for file upload
     const formData = new FormData();
-    formData.append("itemName", event.target.meetName.value);
+    formData.append("itemName", event.target.itemName.value);
     formData.append("exactItem", event.target.exactItem.value);
     formData.append("multiple", event.target.multiple.value);
     formData.append("user", event.target.user.value);
