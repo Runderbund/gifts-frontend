@@ -36,7 +36,7 @@ const AddGift = ({ member, isSelfMember, closePopup }) => {
     formData.append("itemName", event.target.itemName.value);
     formData.append("exactItem", event.target.exactItem.value);
     formData.append("multiple", event.target.multiple.value);
-    formData.append("user", event.target.user.value);
+    // formData.append("user", event.target.user.value); // Need to pull from Giftbox? Not sure how to select
     formData.append("notes", event.target.notes.value);
     // How do I append visibility?
 
