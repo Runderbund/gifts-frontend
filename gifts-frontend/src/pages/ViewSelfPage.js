@@ -10,15 +10,14 @@ import { MemberContext } from '../context/MemberContext';
  */
 const ViewSelfPage = () => {
   // Destructure `selfMember` from the context
-  const { selfMember } = useContext(MemberContext);
-  const { allMembers } = useContext(MemberContext);
+  const { selfMember, allMembers } = useContext(MemberContext);
   // State for storing all the gifts fetched from the database.
   const [allGifts, setAllGifts] = useState([]);
   const navigate = useNavigate();
 
-  const fetchAllGifts = async () => {
+  const fetchAllGifts = async (selfMember) => {
     try {
-      const response = await axios.get('http://localhost:8000/get_all_gifts/');
+      const response = await axios.get('http://localhost:8000/get_all_gifts_self/');
       const giftsData = response.data.gifts;
 
       const selfGifts = giftsData.filter(gift => {

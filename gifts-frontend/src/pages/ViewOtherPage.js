@@ -7,7 +7,7 @@ import { MemberContext } from '../context/MemberContext';
 // ViewOtherPage component is responsible for rendering the gift boxes for all non-self members
 const ViewOtherPage = () => {
   // Destructure `otherMembers` from the context which contains all members except the current user.
-  const { otherMembers } = useContext(MemberContext);
+  const { otherMembers, selfMember } = useContext(MemberContext);
   // State for storing all the gifts fetched from the database.
   const [allGifts, setAllGifts] = useState([]);
   const navigate = useNavigate();
@@ -24,7 +24,8 @@ const ViewOtherPage = () => {
   useEffect(() => {
     const fetchAllGifts = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/get_all_gifts/');
+        const response = await axios.get('http://localhost:8000/get_all_gifts_other/');
+        // Change to pass selfMember to filter visible gifts
         // Update the `allGifts` state with the fetched data.
         setAllGifts(response.data.gifts);
       } catch (error) {
