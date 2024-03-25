@@ -19,12 +19,12 @@ const ViewSelfPage = () => {
     try {
       const response = await axios.get('http://localhost:8000/get_all_gifts_self/', {
         params: {
-          member_id: selfMember.member_id // Using member_id from selfMember object
+          member_id: selfMember.member_id
         }
       });
       const giftsData = response.data.gifts;
     
-      setAllGifts(Object.values(giftsData)); // Now this will be an array of objects, each object including a visible_to array
+      setAllGifts(Object.values(giftsData));
     } catch (error) {
       console.error('Error fetching all gifts: ', error);
     }
