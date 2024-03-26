@@ -15,6 +15,13 @@ const ViewSelfPage = () => {
   const [allGifts, setAllGifts] = useState([]);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!selfMember) {
+      navigate('/select');
+    }
+
+  }, [selfMember, navigate])
+
   const fetchAllGifts = async () => {
     try {
       console.log('Fetching all gifts for self member: ', selfMember);
