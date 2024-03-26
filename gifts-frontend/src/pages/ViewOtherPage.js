@@ -14,17 +14,21 @@ const ViewOtherPage = () => {
   
   // Redirect to the select page if the selfMember is not set.
   useEffect(() => {
-    if (!otherMembers) {
+    if (!selfMember) {
       navigate('/select');
     }
 
-  }, [otherMembers, navigate])
+  }, [selfMember, navigate])
 
   // Fetches all gift data when the component mounts.
   useEffect(() => {
     const fetchAllGifts = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/get_all_gifts_other/');
+        const response = await axios.get('http://localhost:8000/get_all_gifts_other/', {
+        params: {
+          member_id: selfMember.member_id
+        }
+      });
         // Change to pass selfMember to filter visible gifts
         // Update the `allGifts` state with the fetched data.
         setAllGifts(response.data.gifts);
@@ -33,16 +37,13 @@ const ViewOtherPage = () => {
       }
     };
 
-    fetchAllGifts();
-  }, []);
+    if (selfMember) { // Only call fetchAllGifts if selfMember is not null
+      fetchAllGifts();
+    }
+  }, [selfMember]);
 
-  // Need to sort gifts by id to avoid duplicates from join table.
-  // const uniqueGifts = allGifts.filter((gift) =>
-    
-
-  console.log(otherMembers);
-  console.log(allGifts);
-
+  // console.log(otherMembers);
+  // console.log(allGifts);
 
   return (
     <div>
