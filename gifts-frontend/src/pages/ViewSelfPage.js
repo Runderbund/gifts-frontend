@@ -10,19 +10,12 @@ import { MemberContext } from '../context/MemberContext';
  */
 const ViewSelfPage = () => {
   // Destructure `selfMember` from the context
-  const { selfMember, allMembers } = useContext(MemberContext);
+  const { selfMember } = useContext(MemberContext);
   // State for storing all the gifts fetched from the database.
   const [allGifts, setAllGifts] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!selfMember) {
-      navigate('/select');
-    }
-
-  }, [selfMember, navigate])
-
-  const fetchAllGifts = async () => {
+  const fetchSelfGifts = async () => {
     try {
       console.log('Fetching all gifts for self member: ', selfMember);
       const response = await axios.get('http://localhost:8000/get_all_gifts_self/', {
@@ -41,9 +34,11 @@ const ViewSelfPage = () => {
 
   useEffect(() => {
     if (!selfMember) {
-      navigate('/select');
+      navigate('/select'); // If selfMember is not set, navigate to the select page
     }
-    fetchAllGifts();
+    else {
+      fetchSelfGifts(); // Otherwise, fetch all gifts for selfMembers
+    }
   }, [selfMember, navigate])
 
   return (

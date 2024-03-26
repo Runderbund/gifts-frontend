@@ -12,35 +12,31 @@ const ViewOtherPage = () => {
   const [allGifts, setAllGifts] = useState([]);
   const navigate = useNavigate();
   
-  // Redirect to the select page if the selfMember is not set.
-  useEffect(() => {
-    if (!selfMember) {
-      navigate('/select');
-    }
-
-  }, [selfMember, navigate])
-
-  // Fetches all gift data when the component mounts.
-  useEffect(() => {
-    const fetchAllGifts = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/get_all_gifts_other/', {
+  const fetchOtherGifts = async () => {
+    try {
+      console.log('Fetching all gifts for other member: ', otherMembers);
+      const response = await axios.get('http://localhost:8000/get_all_gifts_other/', {
         params: {
           member_id: selfMember.member_id
         }
       });
-        // Change to pass selfMember to filter visible gifts
-        // Update the `allGifts` state with the fetched data.
-        setAllGifts(response.data.gifts);
-      } catch (error) {
-        console.error("Error fetching all gifts: ", error);
-      }
-    };
-
-    if (selfMember) { // Only call fetchAllGifts if selfMember is not null
-      fetchAllGifts();
+      console.log('All gifts fetched: ', response.data.gifts);
+      const giftsData = response.data.gifts;
+    
+      setAllGifts(Object.values(giftsData));
+    } catch (error) {
+      console.error('Error fetching all gifts: ', error);
     }
-  }, [selfMember]);
+  };
+
+  useEffect(() => {
+    if (!selfMember) {
+      navigate('/select'); // If selfMember is not set, navigate to the select page
+    }
+    else {
+      fetchOtherGifts(); // Otherwise, fetch all gifts for otherMembers
+    }
+  }, [selfMember, navigate])
 
   // console.log(otherMembers);
   // console.log(allGifts);
