@@ -15,7 +15,7 @@ const ViewOtherPage = () => {
   const fetchOtherGifts = async () => {
     try {
       console.log('Fetching all gifts for other member: ', otherMembers);
-      const response = await axios.get('http://localhost:8000/get_all_gifts_other/', {
+      const response = await axios.get('http://localhost:8000/get_gifts_other/', {
         params: {
           member_id: selfMember.member_id
         }
