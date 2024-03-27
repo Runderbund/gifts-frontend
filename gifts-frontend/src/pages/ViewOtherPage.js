@@ -9,7 +9,7 @@ const ViewOtherPage = () => {
   // Destructure `otherMembers` from the context which contains all members except the current user.
   const { otherMembers, selfMember } = useContext(MemberContext);
   // State for storing all the gifts fetched from the database.
-  const [allGifts, setAllGifts] = useState([]);
+  const [otherGifts, setOtherGifts] = useState([]);
   const navigate = useNavigate();
   
   const fetchOtherGifts = async () => {
@@ -23,7 +23,7 @@ const ViewOtherPage = () => {
       console.log('All gifts fetched: ', response.data.gifts);
       const giftsData = response.data.gifts;
     
-      setAllGifts(Object.values(giftsData));
+      setOtherGifts(Object.values(giftsData));
     } catch (error) {
       console.error('Error fetching all gifts: ', error);
     }
@@ -39,14 +39,14 @@ const ViewOtherPage = () => {
   }, [selfMember, navigate])
 
   // console.log(otherMembers);
-  // console.log(allGifts);
+  // console.log(otherGifts);
 
   return (
     <div>
       {/* Map over `otherMembers` to render a GiftBox for each member */}
       {otherMembers.map((member) => {
-        // Filter `allGifts` to only include gifts where `gift_receiver` matches `member.member_id`
-        const memberGifts = allGifts.filter(gift => gift.gift_receiver === member.member_id);
+        // Filter `otherGifts` to only include gifts where `gift_receiver` matches `member.member_id`
+        const memberGifts = otherGifts.filter(gift => gift.gift_receiver === member.member_id);
         // Render the `GiftBox` component passing the `member` and their specific `gifts`
         return <GiftBox key={member.member_id} member={member} gifts={memberGifts} />;
       })}
