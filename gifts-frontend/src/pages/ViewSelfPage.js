@@ -17,13 +17,11 @@ const ViewSelfPage = () => {
 
   const fetchSelfGifts = async () => {
     try {
-      console.log('Fetching all gifts for self member: ', selfMember);
       const response = await axios.get('http://localhost:8000/get_gifts_self/', {
         params: {
           member_id: selfMember.member_id
         }
       });
-      console.log('All gifts fetched: ', response.data.gifts);
       const giftsData = response.data.gifts;
     
       setAllGifts(Object.values(giftsData));

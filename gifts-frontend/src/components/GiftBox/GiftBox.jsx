@@ -57,6 +57,3 @@ const GiftBox = ({ member, gifts }) => {
   );
 };
 export default GiftBox;
-
-// Only showing 1 person. Why?
-// Also showing multiple of the same gift, thought I took care of the visibility doubling thing.
