@@ -40,7 +40,7 @@ const ViewSelfPage = () => {
   }, [selfMember, navigate])
 
   return (
-    <div>
+    <div className="container">
       {selfMember && (
         <GiftBox member={selfMember} gifts={allGifts} />
       )}

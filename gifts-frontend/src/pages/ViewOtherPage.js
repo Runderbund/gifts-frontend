@@ -37,7 +37,7 @@ const ViewOtherPage = () => {
   }, [selfMember, navigate])
 
   return (
-    <div>
+    <div  className="container">
       {/* Map over `otherMembers` to render a GiftBox for each member */}
       {console.log('Rendering GiftBoxes for members:', otherMembers)}
       {otherMembers.map((member) => {

@@ -20,7 +20,7 @@ const GiftBox = ({ member, gifts }) => {
   };
 
   return (
-    <div className="container">
+    <div>
       <h1>{member.member_name}'s Gifts</h1>
       <div className="giftBox">
         <table>
