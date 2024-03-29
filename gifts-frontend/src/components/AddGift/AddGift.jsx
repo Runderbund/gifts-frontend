@@ -6,7 +6,7 @@ import "../../App.css";
 
 
 
-const AddGift = ({ member, isSelfMember, closePopup }) => {
+const AddGift = ({ member, isSelfView, closePopup }) => {
 
   const { allMembers } = useContext(MemberContext);
   const [allSelected, setAllSelected] = useState(true); // Default visibility is all members
@@ -82,27 +82,28 @@ const AddGift = ({ member, isSelfMember, closePopup }) => {
           <label>Notes:</label>
           <textarea name="notes" required></textarea>
         </div>
-        <div className="addGiftGroup">
-          <label>Visibile to:</label>
-          <label>All
-          <input type="checkbox" name="allMembers" checked={allSelected} onChange={handleAllChange} />
-          </label>
-          {allMembers.map((member) => (
-          <div key={member.member_id}>
-            <label>
-              {member.member_name}
-              <input
-                type="checkbox"
-                name="user"
-                value={member.member_id}
-                checked={selectedMembers[member.member_id] || false}
-                onChange={() => handleMemberChange(member.member_id)}
-              />
+        {isSelfView && (
+          <div className="addGiftGroup">
+            <label>Visibile to:</label>
+            <label>All
+            <input type="checkbox" name="allMembers" checked={allSelected} onChange={handleAllChange} />
             </label>
-          </div>
+            {allMembers.map((member) => (
+            <div key={member.member_id}>
+              <label>
+                {member.member_name}
+                <input
+                  type="checkbox"
+                  name="user"
+                  value={member.member_id}
+                  checked={selectedMembers[member.member_id] || false}
+                  onChange={() => handleMemberChange(member.member_id)}
+                />
+              </label>
+            </div>
         ))}
         </div>
-
+      )}
         
         
         <div className="buttonContainer">
