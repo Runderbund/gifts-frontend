@@ -10,7 +10,7 @@ import "../../App.css";
 // Creates a table structure for displaying gifts for each member
 const GiftBox = ({ member, gifts }) => {
 
-  const { selfMember } = useContext(MemberContext);
+  const { selfMember, allMembers } = useContext(MemberContext);
   const [ showAddGift, setShowAddGift ] = useState(false);
 
   const isSelfMember = selfMember && selfMember === member
@@ -43,7 +43,8 @@ const GiftBox = ({ member, gifts }) => {
                 <td>{gift.notes}</td>
                 {isSelfMember && (
                   <td>
-                    {gift.visible_to.join(', ')}
+                    {/* Shows All if visible to every member, otherwise lists member names */}
+                  {gift.visible_to.length === allMembers.length ? 'All' : gift.visible_to.join(', ')}
                   </td>
                 )}
               </tr>
