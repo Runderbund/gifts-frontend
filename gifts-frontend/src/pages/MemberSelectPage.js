@@ -66,5 +66,3 @@ const MemberSelectPage = () => {
 };
 
 export default MemberSelectPage;
-
-// Add redirect to ViewOtherPage after selecting a member

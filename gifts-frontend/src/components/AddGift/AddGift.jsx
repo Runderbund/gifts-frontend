@@ -4,8 +4,6 @@ import { MemberContext } from '../../context/MemberContext';
 import { useContext } from 'react';
 import "../../App.css";
 
-
-
 const AddGift = ({ member, isSelfView, closePopup }) => {
 
   const { selfMember, allMembers } = useContext(MemberContext);
@@ -54,7 +52,6 @@ const AddGift = ({ member, isSelfView, closePopup }) => {
     formData.append("visibility", JSON.stringify(visibleTo));
     // Change this to be a list
       // May want to change allMembers to passing ids before moving on
-
 
     // Axios post request to upload the file
     axios.post("http://localhost:8000/create_gift/", formData)
