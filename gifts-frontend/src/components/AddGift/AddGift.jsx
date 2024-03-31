@@ -39,7 +39,21 @@ const AddGift = ({ member, isSelfView, closePopup }) => {
     formData.append("exactItem", event.target.exactItem.value);
     formData.append("multiple", event.target.multiple.value);
     formData.append("notes", event.target.notes.value);
-    // How do I append visibility?
+
+    let visibleTo;
+    if (allSelected) {
+      visibleTo = 'All';
+    } else if (selfMember !== member) {
+      visibleTo = 'All'; // If it's a ViewOther, assign 'All' automatically
+    } else {
+      visibleTo = Object.entries(selectedMembers)
+        .filter(([_, isSelected]) => isSelected)
+        .map(([id, _]) => id);
+    }
+    
+    formData.append("visibility", JSON.stringify(visibleTo));
+    // Change this to be a list
+      // May want to change allMembers to passing ids before moving on
 
 
     // Axios post request to upload the file
