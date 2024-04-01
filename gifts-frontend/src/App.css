@@ -30,6 +30,16 @@
   outline: black solid 1px;
 }
 
+.giftBox table {
+    border-collapse: collapse; /* Makes box borders merge into a single border */
+}
+
+.giftBox th, .giftBox td {
+    border-collapse: collapse;
+    border: 1px solid white; /* Sets a white border around each cell */
+    padding: 8px;
+}
+
 .addGiftBox {
   margin-top: 3em;
   width: 60%;

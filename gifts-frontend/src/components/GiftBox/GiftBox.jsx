@@ -26,7 +26,9 @@ const GiftBox = ({ member, gifts }) => {
         <table>
           <thead>
               <tr>
+                <th></th>
                 <th>Item</th>
+                 {/*Maybe Gift name instead? Gift requested?  */}
                 <th>Exact?</th>
                 <th>Multiple?</th>
                 <th>Notes</th>
@@ -37,6 +39,9 @@ const GiftBox = ({ member, gifts }) => {
           <tbody>
             {gifts.map((gift) => (
               <tr key={gift.gift_id}>
+                <td>
+                  <button>Edit</button>
+                </td>
                 <td>{gift.item_name}</td>
                 <td>{gift.exact_item ? 'Yes' : 'No'}</td>
                 <td>{gift.multiple ? 'Yes' : 'No'}</td>
