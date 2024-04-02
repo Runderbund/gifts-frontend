@@ -1,9 +1,12 @@
 .navBar {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-around; 
+  /* I see no difference with center or nothing at all. */
   align-items: center;
+  /* Same without */
   background: url("../../assets/images/Christmas.png") no-repeat center center/cover;
   box-shadow: 4px 4px 5px rgba(204, 116, 57, 0.5);
+  /* Barely visible change, need to understand better */
   color: white;
   height: 100px;
 }

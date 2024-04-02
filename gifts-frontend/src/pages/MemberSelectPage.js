@@ -52,17 +52,21 @@ const MemberSelectPage = () => {
   };
 
   return (
-    <div className='memberSelectBox'>
-      <select value={selectedMember} onChange={handleSelectMember}>
-        <option value="">Select a family member</option>
-        {members.map((member,) => (
-          <option key={member.member_id} value={member.member_name}>
-            {member.member_name}
-          </option>
-        ))}
-      </select>
+    <div className="container">
+      <h1>Please Choose Your Name</h1>
+      <div className='memberSelectBox'>
+        <select value={selectedMember} onChange={handleSelectMember}>
+          <option value="">Select a family member</option>
+          {members.map((member,) => (
+            <option key={member.member_id} value={member.member_name}>
+              {member.member_name}
+            </option>
+          ))}
+        </select>
+      </div>
     </div>
   );
+  
 };
 
 export default MemberSelectPage;
