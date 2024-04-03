@@ -59,6 +59,8 @@ const GiftBox = ({ member, gifts }) => {
         </div>
       <button onClick={toggleAddGiftPopup}>Add Gift</button>
       {showAddGift && <AddGift member={member} isSelfView={isSelfView} closePopup={toggleAddGiftPopup} />}
+      {/* Here, I can send member+ids instead of Members.
+          Saves bandwidth */}
     </div>
   );
 };

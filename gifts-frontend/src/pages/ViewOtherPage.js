@@ -14,11 +14,8 @@ const ViewOtherPage = () => {
   
   const fetchOtherGifts = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/get_gifts_other/', {
-        params: {
-          member_id: selfMember.member_id
-        }
-      });
+      const response = await axios.get(`http://localhost:8000/get_gifts_other/${selfMember.member_id}/`, {
+      }, [selfMember]);
       const giftsData = response.data.gifts;
     
       setOtherGifts(Object.values(giftsData));

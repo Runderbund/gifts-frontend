@@ -12,16 +12,13 @@ const ViewSelfPage = () => {
   // Destructure `selfMember` from the context
   const { selfMember } = useContext(MemberContext);
   // State for storing all the gifts fetched from the database.
-  const [allGifts, setAllGifts] = useState([]);
+  const [selfGifts, setAllGifts] = useState([]);
   const navigate = useNavigate();
 
   const fetchSelfGifts = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/get_gifts_self/', {
-        params: {
-          member_id: selfMember.member_id
-        }
-      });
+      const response = await axios.get(`http://localhost:8000/get_gifts_self/${selfMember.member_id}/`, {
+      }, [selfMember]);
       const giftsData = response.data.gifts;
     
       setAllGifts(Object.values(giftsData));
@@ -31,6 +28,7 @@ const ViewSelfPage = () => {
   };
 
   useEffect(() => {
+    console.log('Self Member:', selfMember);
     if (!selfMember) {
       navigate('/select'); // If selfMember is not set, navigate to the select page
     }
@@ -42,7 +40,7 @@ const ViewSelfPage = () => {
   return (
     <div className="container">
       {selfMember && (
-        <GiftBox member={selfMember} gifts={allGifts} />
+        <GiftBox member={selfMember} gifts={selfGifts} />
       )}
     </div>
   );
