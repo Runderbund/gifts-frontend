@@ -36,9 +36,7 @@ const ViewOtherPage = () => {
   return (
     <div  className="container">
       {/* Map over `otherMembers` to render a GiftBox for each member */}
-      {console.log('Rendering GiftBoxes for members:', otherMembers)}
       {otherMembers.map((member) => {
-      console.log(`Rendering GiftBox for member: ${member.member_name}`);
         // Filter `otherGifts` to only include gifts where `gift_receiver` matches `member.member_id`
         const memberGifts = otherGifts.filter(gift => gift.gift_receiver === member.member_name);
         // Render the `GiftBox` component passing the `member` and their specific `gifts`

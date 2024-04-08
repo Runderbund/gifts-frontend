@@ -28,7 +28,6 @@ const ViewSelfPage = () => {
   };
 
   useEffect(() => {
-    console.log('Self Member:', selfMember);
     if (!selfMember) {
       navigate('/select'); // If selfMember is not set, navigate to the select page
     }
