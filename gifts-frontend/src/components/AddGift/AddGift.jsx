@@ -31,12 +31,14 @@ const AddGift = ({ member, isSelfView, closePopup }) => {
 
     // Form data for file upload
     const formData = new FormData();
-    formData.append("giftAdder", selfMember);
-    formData.append("giftReceiver", member);
+    formData.append("giftAdder", selfMember.member_id);
+    formData.append("giftReceiver", member.member_id);
     formData.append("itemName", event.target.itemName.value);
     formData.append("exactItem", event.target.exactItem.value);
     formData.append("multiple", event.target.multiple.value);
     formData.append("notes", event.target.notes.value);
+    formData.append("dateToRemove", null);
+    formData.append("bought", 0);
 
     let visibleTo;
     if (allSelected) {
