@@ -37,8 +37,8 @@ const AddGift = ({ member, isSelfView, closePopup }) => {
     formData.append("exactItem", event.target.exactItem.value);
     formData.append("multiple", event.target.multiple.value);
     formData.append("notes", event.target.notes.value);
-    formData.append("dateToRemove", null);
-    formData.append("bought", 0);
+    // formData.append("dateToRemove", null);
+    // formData.append("bought", 0);
 
     let visibleTo;
     if (allSelected) {
@@ -52,8 +52,7 @@ const AddGift = ({ member, isSelfView, closePopup }) => {
     }
     
     formData.append("visibility", JSON.stringify(visibleTo));
-    // Change this to be a list
-      // May want to change allMembers to passing ids before moving on
+    //formData can't handle lists. Turn back into a list on backend.
 
     // Axios post request to upload the file
     axios.post("http://localhost:8000/create_gift/", formData)
@@ -77,19 +76,19 @@ const AddGift = ({ member, isSelfView, closePopup }) => {
         </div>
         <div className="addGiftGroup">
           <label>Exact Item
-          <input type="radio" name="exactItem" value="yes" required />
+          <input type="radio" name="exactItem" value="exact" required />
           </label>
           {/* Inputs nested in labels to make the text clickable for the radio button */}
           <label>Similar Items Okay
-          <input type="radio" name="exactItem" value="no" required />
+          <input type="radio" name="exactItem" value="similar" required />
           </label>
         </div>
         <div className="addGiftGroup">
           <label>Multiple Items
-          <input type="radio" name="multiple" value="yes" required />
+          <input type="radio" name="multiple" value="multiple" required />
           </label>
           <label>Single Item
-          <input type="radio" name="multiple" value="no" required />
+          <input type="radio" name="multiple" value="single" required />
           </label>
         </div>
         <div className="addGiftGroup">
