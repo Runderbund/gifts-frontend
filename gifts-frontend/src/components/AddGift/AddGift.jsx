@@ -42,9 +42,9 @@ const AddGift = ({ member, isSelfView, closePopup }) => {
 
     let visibleTo;
     if (allSelected) {
-      visibleTo = 'All';
+      visibleTo = '0';
     } else if (selfMember !== member) {
-      visibleTo = 'All'; // If it's a ViewOther, assign 'All' automatically
+      visibleTo = '0'; // If it's a ViewOther, assign '0' (no match to member_id) automatically to signal Visible to All
     } else {
       visibleTo = Object.entries(selectedMembers)
         .filter(([_, isSelected]) => isSelected)
