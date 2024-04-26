@@ -37,6 +37,8 @@ const AddGift = ({ member, isSelfView, closePopup }) => {
     formData.append("exactItem", event.target.exactItem.value);
     formData.append("multiple", event.target.multiple.value);
     formData.append("notes", event.target.notes.value);
+    formData.append("linkURL", event.target.linkURL.value);
+    formData.append("linkName", event.target.linkName.value);
     // formData.append("dateToRemove", null);
     // formData.append("bought", 0);
 
@@ -94,6 +96,12 @@ const AddGift = ({ member, isSelfView, closePopup }) => {
         <div className="addGiftGroup">
           <label>Notes:</label>
           <textarea name="notes" required></textarea>
+        </div>
+        <div className="addGiftGroup">
+          <label>Link URL:</label>
+          <textarea name="linkURL"></textarea>
+          <label>Link Label:</label>
+          <textarea name="linkName"></textarea>
         </div>
         {isSelfView && (
           <div className="addGiftGroup">

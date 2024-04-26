@@ -30,6 +30,7 @@ html, body {
 
 .giftBox {
   width: 40%;
+  min-width: 500px;   /* Interim solution to keep background > table width */
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 10px;
@@ -57,6 +58,7 @@ html, body {
 .addGiftBox {
   margin-top: 3em;
   width: 60%;
+  min-width: 500px;   /* Interim solution to keep background > table width */
   margin-left: auto;
   margin-right: auto;
   display: flex;

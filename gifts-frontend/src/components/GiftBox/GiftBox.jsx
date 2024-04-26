@@ -32,6 +32,7 @@ const GiftBox = ({ member, gifts }) => {
                 <th>Exact?</th>
                 <th>Multiple?</th>
                 <th>Notes</th>
+                <th>Link(s)</th>
                 {isSelfView && <th>Visibility</th>}
                 {/* Only shows this column if the selfMember is the same as the member the giftBox is being called for. This should only be called from the selfView  */}
               </tr>
@@ -46,6 +47,14 @@ const GiftBox = ({ member, gifts }) => {
                 <td>{gift.exact_item ? 'Yes' : 'No'}</td>
                 <td>{gift.multiple ? 'Yes' : 'No'}</td>
                 <td>{gift.notes}</td>
+                <th>
+                {gift.links && gift.links.length > 0 && (
+                  <a href={gift.links[0].url} target="_blank" rel="noopener noreferrer">
+                    {gift.links[0].name || 'View Link'}
+                  </a>
+                )}
+                {/* Not displaying. Treating as array, but not assing that way yet */}
+                </th>
                 {isSelfView && (
                   <td>
                     {/* Shows All if visible to every member, otherwise lists member names */}
