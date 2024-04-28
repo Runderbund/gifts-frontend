@@ -28,9 +28,9 @@ const GiftBox = ({ member, gifts }) => {
               <tr>
                 <th></th>
                 <th>Gift Name</th>
-                <th>Exact or Similar Item?</th>
-                <th>Multiple Copies</th>
-                <th className="linksAndNotes">Notes</th>
+                <th title="Do you want the exact model you're listing (e.g. Sony WF-1000XM5 Earbuds) or any similar item (e.g. any wireless earbuds)?">Exact or Similar Item?</th>
+                <th title="Do you mind multiple people getting you the same thing?">Multiple Copies </th>
+                <th className="linksAndNotes" title="Any additional notes you want people to see.">Notes</th>
                 <th className="linksAndNotes">Link(s)</th>
                 {isSelfView && <th>Visibility</th>}
                 {/* Only shows this column if the selfMember is the same as the member the giftBox is being called for. This should only be called from the selfView  */}
