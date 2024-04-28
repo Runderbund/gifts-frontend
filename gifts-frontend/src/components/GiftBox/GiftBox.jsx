@@ -27,10 +27,9 @@ const GiftBox = ({ member, gifts }) => {
           <thead>
               <tr>
                 <th></th>
-                <th>Item</th>
-                 {/*Maybe Gift name instead? Gift requested?  */}
-                <th>Exact?</th>
-                <th>Multiple?</th>
+                <th>Gift Name</th>
+                <th>Exact/Similar Item</th>
+                <th>Multiple Copies</th>
                 <th>Notes</th>
                 <th>Link(s)</th>
                 {isSelfView && <th>Visibility</th>}
@@ -41,20 +40,21 @@ const GiftBox = ({ member, gifts }) => {
             {gifts.map((gift) => (
               <tr key={gift.gift_id}>
                 <td>
-                  <button>Edit</button>
+                  <button>Edit</button> {/* Add onClick to open edit popup */}
                 </td>
                 <td>{gift.item_name}</td>
-                <td>{gift.exact_item ? 'Yes' : 'No'}</td>
+                <td>{gift.exact_item ? 'Exact' : 'Similar'}</td>
                 <td>{gift.multiple ? 'Yes' : 'No'}</td>
                 <td>{gift.notes}</td>
-                <th>
+                <td>
                 {gift.links && gift.links.length > 0 && (
                   <a href={gift.links[0].url} target="_blank" rel="noopener noreferrer">
+                    {/* Opens link in new window, without sending URL of current page */}
                     {gift.links[0].name || 'View Link'}
                   </a>
                 )}
                 {/* Not displaying. Treating as array, but not assing that way yet */}
-                </th>
+                </td>
                 {isSelfView && (
                   <td>
                     {/* Shows All if visible to every member, otherwise lists member names */}
