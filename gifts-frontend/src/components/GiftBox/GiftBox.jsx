@@ -28,10 +28,10 @@ const GiftBox = ({ member, gifts }) => {
               <tr>
                 <th></th>
                 <th>Gift Name</th>
-                <th>Exact/Similar Item</th>
+                <th>Exact or Similar Item?</th>
                 <th>Multiple Copies</th>
-                <th>Notes</th>
-                <th>Link(s)</th>
+                <th className="linksAndNotes">Notes</th>
+                <th className="linksAndNotes">Link(s)</th>
                 {isSelfView && <th>Visibility</th>}
                 {/* Only shows this column if the selfMember is the same as the member the giftBox is being called for. This should only be called from the selfView  */}
               </tr>
