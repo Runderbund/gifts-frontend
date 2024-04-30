@@ -4,7 +4,7 @@ import { MemberContext } from '../../context/MemberContext';
 import { useContext } from 'react';
 import "../../App.css";
 
-const AddGift = ({ member, isSelfView, closePopup }) => {
+const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
 
   const { selfMember, allMembers } = useContext(MemberContext);
   const [allSelected, setAllSelected] = useState(true); // Default visibility is all members
@@ -57,9 +57,10 @@ const AddGift = ({ member, isSelfView, closePopup }) => {
     //formData can't handle lists. Turn back into a list on backend.
 
     // Axios post request to upload the file
-    axios.post("http://localhost:8000/create_gift/", formData)
+    axios.post("http://localhost:8000/add_gift/", formData)
       .then((response) => {
         console.log("Gift added successfully");
+        fetchGifts(); // Fetch gifts again to update the list
         closePopup(); // Close the popup on successful add
       })
       .catch((error) => {

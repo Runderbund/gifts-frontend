@@ -12,7 +12,7 @@ const ViewSelfPage = () => {
   // Destructure `selfMember` from the context
   const { selfMember } = useContext(MemberContext);
   // State for storing all the gifts fetched from the database.
-  const [selfGifts, setAllGifts] = useState([]);
+  const [selfGifts, setSelfGifts] = useState([]);
   const navigate = useNavigate();
 
   const fetchSelfGifts = async () => {
@@ -21,7 +21,7 @@ const ViewSelfPage = () => {
       }, [selfMember]);
       const giftsData = response.data.gifts;
     
-      setAllGifts(Object.values(giftsData));
+      setSelfGifts(Object.values(giftsData));
     } catch (error) {
       console.error('Error fetching all gifts: ', error);
     }
@@ -39,7 +39,7 @@ const ViewSelfPage = () => {
   return (
     <div className="container">
       {selfMember && (
-        <GiftBox member={selfMember} gifts={selfGifts} />
+        <GiftBox member={selfMember} gifts={selfGifts} fetchGifts={fetchSelfGifts}/>
       )}
     </div>
   );

@@ -8,7 +8,7 @@ import "../../App.css";
 // `member` - an object containing information about a member,
 // `gifts` - an array of gifts related to that member.
 // Creates a table structure for displaying gifts for each member
-const GiftBox = ({ member, gifts }) => {
+const GiftBox = ({ member, gifts, fetchGifts }) => {
 
   const { selfMember, allMembers } = useContext(MemberContext);
   const [ showAddGift, setShowAddGift ] = useState(false);
@@ -67,7 +67,7 @@ const GiftBox = ({ member, gifts }) => {
         </table>
         </div>
       <button onClick={toggleAddGiftPopup}>Add Gift</button>
-      {showAddGift && <AddGift member={member} isSelfView={isSelfView} closePopup={toggleAddGiftPopup} />}
+      {showAddGift && <AddGift member={member} isSelfView={isSelfView} closePopup={toggleAddGiftPopup} fetchGifts={fetchGifts}/>}
       {/* Here, I can send member+ids instead of Members.
           Saves bandwidth */}
     </div>
