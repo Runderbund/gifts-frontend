@@ -40,7 +40,7 @@ const ViewOtherPage = () => {
         // Filter `otherGifts` to only include gifts where `gift_receiver` matches `member.member_id`
         const memberGifts = otherGifts.filter(gift => gift.gift_receiver === member.member_name);
         // Render the `GiftBox` component passing the `member` and their specific `gifts`
-        return <GiftBox key={member.member_id} member={member} gifts={memberGifts} />;
+        return <GiftBox key={member.member_id} member={member} gifts={memberGifts} fetchGifts={fetchOtherGifts}/>;
       })}
     </div>
   );

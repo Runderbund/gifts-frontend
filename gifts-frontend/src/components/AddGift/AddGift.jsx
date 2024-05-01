@@ -96,7 +96,7 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
         </div>
         <div className="addGiftGroup">
           <label>Notes:</label>
-          <textarea name="notes" required></textarea>
+          <textarea name="notes"></textarea>
         </div>
         <div className="addGiftGroup">
           <label>Link URL:</label>
