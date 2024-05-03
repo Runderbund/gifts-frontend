@@ -1,6 +1,6 @@
 import React, { useContext, useState} from 'react';
 import { MemberContext } from '../../context/MemberContext';
-import AddGift from '../AddGift/AddGift';
+import ManageGift from '../ManageGift/ManageGift';
 import "../../App.css";
 
 
@@ -11,12 +11,12 @@ import "../../App.css";
 const GiftBox = ({ member, gifts, fetchGifts }) => {
 
   const { selfMember, allMembers } = useContext(MemberContext);
-  const [ showAddGift, setShowAddGift ] = useState(false);
+  const [ showManageGift, setShowManageGift ] = useState(false);
 
   const isSelfView = selfMember && selfMember === member
 
-  const toggleAddGiftPopup = () => {
-    setShowAddGift(!showAddGift);
+  const toggleManageGiftPopup = () => {
+    setShowManageGift(!showManageGift);
   };
 
   return (
@@ -66,8 +66,8 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
           </tbody>
         </table>
         </div>
-      <button onClick={toggleAddGiftPopup}>Add Gift</button>
-      {showAddGift && <AddGift member={member} isSelfView={isSelfView} closePopup={toggleAddGiftPopup} fetchGifts={fetchGifts}/>}
+      <button onClick={toggleManageGiftPopup}>Add Gift</button>
+      {showManageGift && <ManageGift member={member} isSelfView={isSelfView} closePopup={toggleManageGiftPopup} fetchGifts={fetchGifts}/>}
       {/* Here, I can send member+ids instead of Members.
           Saves bandwidth */}
     </div>
