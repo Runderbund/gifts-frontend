@@ -4,7 +4,7 @@ import { MemberContext } from '../../context/MemberContext';
 import { useContext } from 'react';
 import "../../App.css";
 
-const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
+const ManageGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit}) => {
 
   const { selfMember, allMembers } = useContext(MemberContext);
   const [allSelected, setAllSelected] = useState(true); // Default visibility is all members
@@ -57,7 +57,8 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
     //formData can't handle lists. Turn back into a list on backend.
 
     // Axios post request to upload the file
-    axios.post("http://localhost:8000/manage_gift/", formData)
+    if (addOrEdit === "add") {
+      axios.post("http://localhost:8000/manage_gift/", formData)
       .then((response) => {
         console.log("Gift added successfully");
         fetchGifts(); // Fetch gifts again to update the list
@@ -67,6 +68,20 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
         console.log("Gift add failed");
         console.log(error);
       });
+    
+    } else if (addOrEdit === "edit") {
+      axios.put("http://localhost:8000/manage_gift/", formData)
+      .then((response) => {
+        console.log("Gift edited successfully");
+        fetchGifts(); // Fetch gifts again to update the list
+        closePopup(); // Close the popup on successful edit
+      })
+      .catch((error) => {
+        console.log("Gift edit failed");
+        console.log(error);
+      });
+    }
+    
   };
 
   return (
@@ -137,4 +152,4 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
     );
 };
 
-export default AddGift;
+export default ManageGift;

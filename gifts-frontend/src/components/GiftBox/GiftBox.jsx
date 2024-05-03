@@ -13,9 +13,11 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
   const { selfMember, allMembers } = useContext(MemberContext);
   const [ showManageGift, setShowManageGift ] = useState(false);
 
+  const [ addOrEdit, setAddOrEdit ] = useState("");
   const isSelfView = selfMember && selfMember === member
 
-  const toggleManageGiftPopup = () => {
+  const toggleManageGiftPopup = (operation) => {
+    setAddOrEdit(operation);
     setShowManageGift(!showManageGift);
   };
 
@@ -40,7 +42,9 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
             {gifts.map((gift) => (
               <tr key={gift.gift_id}>
                 <td>
-                  <button>Edit</button> {/* Add onClick to open edit popup */}
+                <button key={gift.id} onClick={() => toggleManageGiftPopup('edit')}>
+                Edit
+                </button>
                 </td>
                 <td>{gift.item_name}</td>
                 <td>{gift.exact_item ? 'Exact' : 'Similar'}</td>
@@ -66,9 +70,9 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
           </tbody>
         </table>
         </div>
-      <button onClick={toggleManageGiftPopup}>Add Gift</button>
-      {showManageGift && <ManageGift member={member} isSelfView={isSelfView} closePopup={toggleManageGiftPopup} fetchGifts={fetchGifts}/>}
-      {/* Here, I can send member+ids instead of Members.
+      <button onClick={() => toggleManageGiftPopup('add')}>Add Gift</button>
+      {showManageGift && <ManageGift member={member} isSelfView={isSelfView} closePopup={toggleManageGiftPopup} fetchGifts={fetchGifts} addOrEdit={addOrEdit}/>}
+      {/* Here, I can send member_ids instead of Members.
           Saves bandwidth */}
     </div>
   );
