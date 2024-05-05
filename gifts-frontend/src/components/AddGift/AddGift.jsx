@@ -4,7 +4,7 @@ import { MemberContext } from '../../context/MemberContext';
 import { useContext } from 'react';
 import "../../App.css";
 
-const ManageGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit}) => {
+const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
 
   const { selfMember, allMembers } = useContext(MemberContext);
   const [allSelected, setAllSelected] = useState(true); // Default visibility is all members
@@ -57,31 +57,32 @@ const ManageGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit}) =>
     //formData can't handle lists. Turn back into a list on backend.
 
     // Axios post request to upload the file
-    if (addOrEdit === "add") {
-      axios.post("http://localhost:8000/manage_gift/", formData)
-      .then((response) => {
-        console.log("Gift added successfully");
-        fetchGifts(); // Fetch gifts again to update the list
-        closePopup(); // Close the popup on successful add
-      })
-      .catch((error) => {
-        console.log("Gift add failed");
-        console.log(error);
-      });
-    
-    } else if (addOrEdit === "edit") {
-      axios.put("http://localhost:8000/manage_gift/", formData)
-      .then((response) => {
-        console.log("Gift edited successfully");
-        fetchGifts(); // Fetch gifts again to update the list
-        closePopup(); // Close the popup on successful edit
-      })
-      .catch((error) => {
-        console.log("Gift edit failed");
-        console.log(error);
-      });
-    }
-    
+    // POST
+    axios.post("http://localhost:8000/add_gift/", formData)
+    .then((response) => {
+      console.log("Gift added successfully");
+      fetchGifts(); // Fetch gifts again to update the list
+      closePopup(); // Close the popup on successful add
+    })
+    .catch((error) => {
+      console.log("Gift add failed");
+      console.log(error);
+    });
+  
+   
+    // PUT
+    //   else if (addOrEdit === "edit") {
+    //   axios.put("http://localhost:8000/manage_gift/", formData)
+    //   .then((response) => {
+    //     console.log("Gift edited successfully");
+    //     fetchGifts(); // Fetch gifts again to update the list
+    //     closePopup(); // Close the popup on successful edit
+    //   })
+    //   .catch((error) => {
+    //     console.log("Gift edit failed");
+    //     console.log(error);
+    // }
+    // };
   };
 
   return (
@@ -152,4 +153,4 @@ const ManageGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit}) =>
     );
 };
 
-export default ManageGift;
+export default AddGift;

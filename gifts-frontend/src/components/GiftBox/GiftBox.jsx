@@ -1,6 +1,7 @@
 import React, { useContext, useState} from 'react';
 import { MemberContext } from '../../context/MemberContext';
-import ManageGift from '../ManageGift/ManageGift';
+import EditGift from '../EditGift/EditGift';
+import AddGift from '../AddGift/AddGift';
 import "../../App.css";
 
 
@@ -11,14 +12,19 @@ import "../../App.css";
 const GiftBox = ({ member, gifts, fetchGifts }) => {
 
   const { selfMember, allMembers } = useContext(MemberContext);
-  const [ showManageGift, setShowManageGift ] = useState(false);
+  const [ showAddGift, setShowAddGift ] = useState(false);
+  const [ showEditGift, setShowEditGift ] = useState(false);
+  const [ giftId, setGiftId ] = useState(0);
 
-  const [ addOrEdit, setAddOrEdit ] = useState("");
   const isSelfView = selfMember && selfMember === member
 
-  const toggleManageGiftPopup = (operation) => {
-    setAddOrEdit(operation);
-    setShowManageGift(!showManageGift);
+  const toggleAddGiftPopup = (operation) => {
+    setShowAddGift(!showAddGift);
+  };
+
+  const toggleEditGiftPopup = (giftId) => {
+    setGiftId(giftId)
+    setShowEditGift(!showEditGift);
   };
 
   return (
@@ -42,7 +48,7 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
             {gifts.map((gift) => (
               <tr key={gift.gift_id}>
                 <td>
-                <button key={gift.id} onClick={() => toggleManageGiftPopup('edit')}>
+                <button key={gift.id} onClick={ () => toggleEditGiftPopup(gift.gift_id)}>
                 Edit
                 </button>
                 </td>
@@ -70,8 +76,9 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
           </tbody>
         </table>
         </div>
-      <button onClick={() => toggleManageGiftPopup('add')}>Add Gift</button>
-      {showManageGift && <ManageGift member={member} isSelfView={isSelfView} closePopup={toggleManageGiftPopup} fetchGifts={fetchGifts} addOrEdit={addOrEdit}/>}
+      <button onClick={toggleAddGiftPopup}>Add Gift</button>
+      {showAddGift && <AddGift member={member} isSelfView={isSelfView} closePopup={toggleAddGiftPopup} fetchGifts={fetchGifts}/>}
+      {showEditGift && <EditGift member={member} isSelfView={isSelfView} closePopup={toggleEditGiftPopup} fetchGifts={fetchGifts} gift_id={giftId}/>}
       {/* Here, I can send member_ids instead of Members.
           Saves bandwidth */}
     </div>
