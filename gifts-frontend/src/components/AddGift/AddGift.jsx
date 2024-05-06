@@ -51,6 +51,9 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
       visibleTo = Object.entries(selectedMembers)
         .filter(([_, isSelected]) => isSelected)
         .map(([id, _]) => id);
+      // Always add selfMember to the list of visible members
+      if (!visibleTo.includes(selfMember.member_id))
+        visibleTo.push(selfMember.member_id);
     }
     
     formData.append("visibility", JSON.stringify(visibleTo));

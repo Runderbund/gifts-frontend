@@ -55,6 +55,10 @@ html, body {
     padding: 8px;
 }
 
+.giftBox table .editColumn {
+  border: none; /* Removes border around edit buttons */
+}
+
 .linksAndNotes{
   width: 30%;
 }

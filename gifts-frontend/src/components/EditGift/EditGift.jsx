@@ -63,6 +63,9 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
       visibleTo = Object.entries(selectedMembers)
         .filter(([_, isSelected]) => isSelected)
         .map(([id, _]) => id);
+      // Always add selfMember to the list of visible members
+      if (!visibleTo.includes(selfMember.member_id))
+        visibleTo.append(selfMember.member_id);
     }
     
     formData.append("visibility", JSON.stringify(visibleTo));
@@ -70,14 +73,14 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
 
     // Axios post request to upload the file
     // POST
-    axios.post("http://localhost:8000/add_gift/", formData)
+    axios.post(`http://localhost:8000/get_gift_by_id/${gift_id}/`, formData)
     .then((response) => {
-      console.log("Gift added successfully");
+      console.log("Gift edited successfully");
       fetchGifts(); // Fetch gifts again to update the list
       closePopup(); // Close the popup on successful add
     })
     .catch((error) => {
-      console.log("Gift add failed");
+      console.log("Gift edit failed");
       console.log(error);
     });
   
@@ -157,7 +160,7 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
         
         
         <div className="buttonContainer">
-          <button type="submit">Add Gift</button>
+          <button type="submit">Edit Gift</button>
           <button type="button" onClick={closePopup}>Cancel</button>
         </div>
         </form>

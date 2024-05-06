@@ -4,7 +4,6 @@ import EditGift from '../EditGift/EditGift';
 import AddGift from '../AddGift/AddGift';
 import "../../App.css";
 
-
 // The GiftBox component takes in two props: 
 // `member` - an object containing information about a member,
 // `gifts` - an array of gifts related to that member.
@@ -34,7 +33,7 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
         <table>
           <thead>
               <tr>
-                <th></th>
+                <th className="editColumn"></th>
                 <th>Gift Name</th>
                 <th title="Do you want the exact model you're listing (e.g. Sony WF-1000XM5 Earbuds) or any similar item (e.g. any wireless earbuds)?">Exact or Similar Item?</th>
                 <th title="Do you mind multiple people getting you the same thing?">Multiple Copies </th>
@@ -47,7 +46,7 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
           <tbody>
             {gifts.map((gift) => (
               <tr key={gift.gift_id}>
-                <td>
+                <td className="editColumn">
                 <button key={gift.id} onClick={ () => toggleEditGiftPopup(gift.gift_id)}>
                 Edit
                 </button>
