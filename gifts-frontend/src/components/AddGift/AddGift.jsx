@@ -39,8 +39,6 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
     formData.append("notes", event.target.notes.value);
     formData.append("linkURL", event.target.linkURL.value);
     formData.append("linkName", event.target.linkName.value);
-    // formData.append("dateToRemove", null);
-    // formData.append("bought", 0);
 
     let visibleTo;
     if (allSelected) {
@@ -71,21 +69,6 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
       console.log("Gift add failed");
       console.log(error);
     });
-  
-   
-    // PUT
-    //   else if (addOrEdit === "edit") {
-    //   axios.put("http://localhost:8000/manage_gift/", formData)
-    //   .then((response) => {
-    //     console.log("Gift edited successfully");
-    //     fetchGifts(); // Fetch gifts again to update the list
-    //     closePopup(); // Close the popup on successful edit
-    //   })
-    //   .catch((error) => {
-    //     console.log("Gift edit failed");
-    //     console.log(error);
-    // }
-    // };
   };
 
   return (

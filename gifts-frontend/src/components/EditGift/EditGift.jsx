@@ -4,7 +4,7 @@ import { MemberContext } from '../../context/MemberContext';
 import { useContext } from 'react';
 import "../../App.css";
 
-const AddGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
+const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
 
   const { selfMember, allMembers } = useContext(MemberContext);
   const [allSelected, setAllSelected] = useState(true); // Default visibility is all members
@@ -28,11 +28,7 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
 
   const fetchGift = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/get_gift_by_id/${gift_id}`);
-      // Sort members alphabetically by member_name
-      // localCompare makes sure sorting varies by locale, probably not important for just a few people, but good practice
-      // console.log('Response:', response.data);
-      
+      const response = await axios.get(`http://localhost:8000/get_gift_by_id/${gift_id}`);     
     } catch (error) {
       console.error('Error fetching gift:', error);
     }
@@ -51,8 +47,6 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
     formData.append("notes", event.target.notes.value);
     formData.append("linkURL", event.target.linkURL.value);
     formData.append("linkName", event.target.linkName.value);
-    // formData.append("dateToRemove", null);
-    // formData.append("bought", 0);
 
     let visibleTo;
     if (allSelected) {
@@ -83,21 +77,6 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
       console.log("Gift edit failed");
       console.log(error);
     });
-  
-   
-    // PUT
-    //   else if (addOrEdit === "edit") {
-    //   axios.put("http://localhost:8000/manage_gift/", formData)
-    //   .then((response) => {
-    //     console.log("Gift edited successfully");
-    //     fetchGifts(); // Fetch gifts again to update the list
-    //     closePopup(); // Close the popup on successful edit
-    //   })
-    //   .catch((error) => {
-    //     console.log("Gift edit failed");
-    //     console.log(error);
-    // }
-    // };
   };
 
   return (
@@ -168,4 +147,4 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
     );
 };
 
-export default AddGift;
+export default EditGift;
