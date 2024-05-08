@@ -2,6 +2,7 @@ import React, { useContext, useState} from 'react';
 import { MemberContext } from '../../context/MemberContext';
 import EditGift from '../EditGift/EditGift';
 import AddGift from '../AddGift/AddGift';
+import DeleteGift from '../DeleteGift/DeleteGift';
 import "../../App.css";
 
 // The GiftBox component takes in two props: 
@@ -13,6 +14,7 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
   const { selfMember, allMembers } = useContext(MemberContext);
   const [ showAddGift, setShowAddGift ] = useState(false);
   const [ showEditGift, setShowEditGift ] = useState(false);
+  const [ showDeleteGift, setShowDeleteGift ] = useState(false);
   const [ giftId, setGiftId ] = useState(0);
 
   const isSelfView = selfMember && selfMember === member
@@ -26,6 +28,11 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
     setShowEditGift(!showEditGift);
   };
 
+  const toggleDeleteGiftPopup = (giftId) => {
+    setGiftId(giftId)
+    setShowDeleteGift(!showDeleteGift);
+  };
+
   return (
     <div>
       <h1>{member.member_name}'s Gifts</h1>
@@ -33,6 +40,7 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
         <table>
           <thead>
               <tr>
+                <th className="editColumn"></th>
                 <th className="editColumn"></th>
                 <th>Gift Name</th>
                 <th title="Do you want the exact model you're listing (e.g. Sony WF-1000XM5 Earbuds) or any similar item (e.g. any wireless earbuds)?">Exact or Similar Item?</th>
@@ -46,6 +54,11 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
           <tbody>
             {gifts.map((gift) => (
               <tr key={gift.gift_id}>
+                <td className="editColumn">
+                <button key={gift.id} onClick={ () => toggleDeleteGiftPopup(gift.gift_id)}>
+                Delete
+                </button>
+                </td>
                 <td className="editColumn">
                 <button key={gift.id} onClick={ () => toggleEditGiftPopup(gift.gift_id)}>
                 Edit
@@ -62,7 +75,6 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
                     {gift.links[0].name || 'View Link'}
                   </a>
                 )}
-                {/* Not displaying. Treating as array, but not assing that way yet */}
                 </td>
                 {isSelfView && (
                   <td>
@@ -78,8 +90,7 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
       <button onClick={toggleAddGiftPopup}>Add Gift</button>
       {showAddGift && <AddGift member={member} isSelfView={isSelfView} closePopup={toggleAddGiftPopup} fetchGifts={fetchGifts}/>}
       {showEditGift && <EditGift member={member} isSelfView={isSelfView} closePopup={toggleEditGiftPopup} fetchGifts={fetchGifts} gift_id={giftId}/>}
-      {/* Here, I can send member_ids instead of Members.
-          Saves bandwidth */}
+      {showDeleteGift && <DeleteGift member={member} closePopup={toggleDeleteGiftPopup} fetchGifts={fetchGifts} gift_id={giftId}/>}
     </div>
   );
 };

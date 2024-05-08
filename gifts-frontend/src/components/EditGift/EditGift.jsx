@@ -20,8 +20,6 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
 
   const handleAllChange = () => {
     setAllSelected(!allSelected);
-    // These aren't great names. Change to setCheckedBoxes or similar.
-      // Just switching a boolean, whether visibility is all or not.
     // When All is selected, uncheck  individual member selections
     setSelectedMembers({});
   };
@@ -41,9 +39,8 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
       const response = await axios.get(`http://localhost:8000/get_gift_by_id/${gift_id}`);
       const giftData = response.data.gift;
       setItemName(giftData.item_name);
-      setExactItem(giftData.exact_item === true);
-      setMultiple(giftData.multiple === true);
-      console.log("multiple", multiple)
+      setExactItem(giftData.exact_item);
+      setMultiple(giftData.multiple);
       setNotes(giftData.notes);
       if (giftData.links && giftData.links.length > 0) {
         setLinkURL(giftData.links[0].url);
@@ -76,12 +73,13 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
       visibleTo = '0';
     } else if (selfMember !== member) {
       visibleTo = '0'; // If it's a ViewOther, assign '0' (no match to member_id) automatically to signal Visible to All
+      // Probably a smoother/clearer way to do this.
     } else {
       visibleTo = Object.entries(selectedMembers)
         .filter(([_, isSelected]) => isSelected)
         .map(([id, _]) => id);
-      // Always add selfMember to the list of visible members
-      if (!visibleTo.includes(selfMember.member_id)) // Include not working
+      // Always adds selfMember to the list of visible members
+      if (!visibleTo.includes(selfMember.member_id))
         visibleTo.push(selfMember.member_id);
     }
     
@@ -121,7 +119,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
             type="radio"
             name="exactItem"
             checked={exactItem === true}
-            onChange={(e) => setExactItem(true)}
+            onChange={() => setExactItem(true)}
             required
           />
           </label>
