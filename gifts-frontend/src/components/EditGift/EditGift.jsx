@@ -3,15 +3,25 @@ import axios from 'axios';
 import { MemberContext } from '../../context/MemberContext'; 
 import { useContext } from 'react';
 import "../../App.css";
+import { useEffect } from 'react';
 
 const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
 
   const { selfMember, allMembers } = useContext(MemberContext);
   const [allSelected, setAllSelected] = useState(true); // Default visibility is all members
-  const [selectedMembers, setSelectedMembers] = useState({}); 
+  const [selectedMembers, setSelectedMembers] = useState({});
+  const [itemName, setItemName] = useState('');
+  const [exactItem, setExactItem] = useState(false);
+  const [multiple, setMultiple] = useState(false);
+  const [notes, setNotes] = useState('');
+  const [linkURL, setLinkURL] = useState('');
+  const [linkName, setLinkName] = useState('');
+
 
   const handleAllChange = () => {
     setAllSelected(!allSelected);
+    // These aren't great names. Change to setCheckedBoxes or similar.
+      // Just switching a boolean, whether visibility is all or not.
     // When All is selected, uncheck  individual member selections
     setSelectedMembers({});
   };
@@ -28,25 +38,38 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
 
   const fetchGift = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/get_gift_by_id/${gift_id}`);     
+      const response = await axios.get(`http://localhost:8000/get_gift_by_id/${gift_id}`);
+      const giftData = response.data.gift;
+      setItemName(giftData.item_name);
+      setExactItem(giftData.exact_item === true);
+      setMultiple(giftData.multiple === true);
+      console.log("multiple", multiple)
+      setNotes(giftData.notes);
+      if (giftData.links && giftData.links.length > 0) {
+        setLinkURL(giftData.links[0].url);
+        setLinkName(giftData.links[0].name);
+      }
     } catch (error) {
       console.error('Error fetching gift:', error);
     }
   };
+  
+  useEffect(() => {
+    fetchGift();
+  }, [gift_id]); // Re-fetch if gift_id changes
+  
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     // Form data for file upload
     const formData = new FormData();
-    formData.append("giftAdder", selfMember.member_id);
-    formData.append("giftReceiver", member.member_id);
-    formData.append("itemName", event.target.itemName.value);
-    formData.append("exactItem", event.target.exactItem.value);
-    formData.append("multiple", event.target.multiple.value);
-    formData.append("notes", event.target.notes.value);
-    formData.append("linkURL", event.target.linkURL.value);
-    formData.append("linkName", event.target.linkName.value);
+    formData.append("itemName", itemName);
+    formData.append("exactItem", exactItem);
+    formData.append("multiple", multiple);
+    formData.append("notes", notes);
+    formData.append("linkURL", linkURL);
+    formData.append("linkName", linkName);
 
     let visibleTo;
     if (allSelected) {
@@ -58,16 +81,15 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
         .filter(([_, isSelected]) => isSelected)
         .map(([id, _]) => id);
       // Always add selfMember to the list of visible members
-      if (!visibleTo.includes(selfMember.member_id))
-        visibleTo.append(selfMember.member_id);
+      if (!visibleTo.includes(selfMember.member_id)) // Include not working
+        visibleTo.push(selfMember.member_id);
     }
     
     formData.append("visibility", JSON.stringify(visibleTo));
     //formData can't handle lists. Turn back into a list on backend.
 
-    // Axios post request to upload the file
-    // POST
-    axios.post(`http://localhost:8000/get_gift_by_id/${gift_id}/`, formData)
+    // Axios put request to upload the gift
+    axios.put(`http://localhost:8000/edit_gift_by_id/${gift_id}/`, formData)
     .then((response) => {
       console.log("Gift edited successfully");
       fetchGifts(); // Fetch gifts again to update the list
@@ -81,70 +103,113 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
 
   return (
     <div className="addGiftBox">
-      <h1>Edit gift for {member.member_name}</h1>
+      <h1>Edit gift for {member.name}</h1>
       <form onSubmit={handleSubmit}>
         <div className="addGiftGroup">
           <label>Gift Name:</label>
-          <input type="text" name="itemName" required />
+          <input
+            type="text"
+            name="itemName"
+            value={itemName}
+            onChange={e => setItemName(e.target.value)}
+            required
+          />
         </div>
         <div className="addGiftGroup">
           <label>Exact Item
-          <input type="radio" name="exactItem" value="exact" required />
+          <input
+            type="radio"
+            name="exactItem"
+            checked={exactItem === true}
+            onChange={(e) => setExactItem(true)}
+            required
+          />
           </label>
-          {/* Inputs nested in labels to make the text clickable for the radio button */}
           <label>Similar Items Okay
-          <input type="radio" name="exactItem" value="similar" required />
+          <input
+            type="radio"
+            name="exactItem"
+            checked={exactItem === false}
+            onChange={() => setExactItem(false)}
+            required
+          />
           </label>
         </div>
         <div className="addGiftGroup">
           <label>Multiple Items
-          <input type="radio" name="multiple" value="multiple" required />
+          <input
+            type="radio"
+            name="multiple"
+            checked={multiple === true}
+            onChange={() => setMultiple(true)}
+            required
+          />
           </label>
           <label>Single Item
-          <input type="radio" name="multiple" value="single" required />
+          <input
+            type="radio"
+            name="multiple"
+            checked={multiple === false}
+            onChange={() => setMultiple(false)}
+            required
+          />
           </label>
         </div>
         <div className="addGiftGroup">
           <label>Notes:</label>
-          <textarea name="notes"></textarea>
+          <textarea
+            name="notes"
+            value={notes}
+            onChange={e => setNotes(e.target.value)}
+          ></textarea>
         </div>
         <div className="addGiftGroup">
           <label>Link URL:</label>
-          <textarea name="linkURL"></textarea>
-          <label>Link Label:</label>
-          <textarea name="linkName"></textarea>
+          <input
+            type="text"
+            name="linkURL"
+            value={linkURL}
+            onChange={e => setLinkURL(e.target.value)}
+          />
+          <label>Link Name:</label>
+          <input
+            type="text"
+            name="linkName"
+            value={linkName}
+            onChange={e => setLinkName(e.target.value)}
+          />
         </div>
         {isSelfView && (
           <div className="addGiftGroup">
-            <label>Visibile to:</label>
+            <label>Visible to:</label>
             <label>All
             <input type="checkbox" name="allMembers" checked={allSelected} onChange={handleAllChange} />
             </label>
-            {allMembers.map((member) => (
-            <div key={member.member_id}>
-              <label>
-                {member.member_name}
-                <input
-                  type="checkbox"
-                  name="user"
-                  value={member.member_id}
-                  checked={selectedMembers[member.member_id] || false}
-                  onChange={() => handleMemberChange(member.member_id)}
-                />
-              </label>
+            <div>
+              {allMembers.map(member => (
+                <label key={member.member_id}>
+                  {member.member_name}
+                  <input
+                    type="checkbox"
+                    name="user"
+                    value={member.member_id}
+                    checked={selectedMembers[member.member_id] || false}
+                    onChange={() => handleMemberChange(member.member_id)}
+                  />
+                </label>
+              ))}
             </div>
-        ))}
-        </div>
-      )}
-        
+          </div>
+        )}
         
         <div className="buttonContainer">
           <button type="submit">Edit Gift</button>
           <button type="button" onClick={closePopup}>Cancel</button>
         </div>
-        </form>
-      </div>
-    );
+      </form>
+    </div>
+  );
+  
 };
 
 export default EditGift;
