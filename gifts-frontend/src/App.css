@@ -116,3 +116,53 @@ html, body {
     0px 4px 6px -2px rgba(0, 0, 0, 0.05);
   outline: black solid 1px;
 }
+
+/* New Box Radio Buttons */
+.boughtStatus {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.boughtOption {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px; /* Spacing between options */
+}
+
+.boughtOption input[type="radio"] {
+  display: none; /* Hide the default radio button */
+}
+
+.boughtOption span {
+  display: block;
+  width: 20px;
+  height: 20px;
+  color: white;
+  line-height: 50px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.boughtOption label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.boughtOption.none span {
+  background-color: green;
+}
+
+.boughtOption.moreOk span {
+  background-color: yellow;
+}
+
+.boughtOption.noMore span {
+  background-color: red;
+}
+
+.boughtOption input[type="radio"]:checked + span {
+  border-color: black; /* Highlight the selected option */
+}

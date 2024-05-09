@@ -16,6 +16,7 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
   const [otherNotes, setOtherNotes] = useState('');
   const [linkURL, setLinkURL] = useState('');
   const [linkName, setLinkName] = useState('');
+  const [boughtStatus, setBoughtStatus] = useState('none');
 
   const handleAllChange = () => {
     setAllSelected(!allSelected);
@@ -47,6 +48,7 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
     formData.append("otherNotes", otherNotes);
     formData.append("linkURL", linkURL);
     formData.append("linkName", linkName);
+    formData.append("boughtStatus", boughtStatus);
 
     let visibleTo;
     if (allSelected) {
@@ -169,6 +171,43 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
             onChange={e => setLinkName(e.target.value)}
           />
         </div>
+        {!isSelfView && (
+          <div className="boughtStatus">
+            <label className="boughtOption none"> None Bought
+              <input
+                type="radio"
+                name="boughtStatus"
+                title="none"
+                checked={boughtStatus === 'none'}
+                onChange={() => setBoughtStatus('none')}
+              />
+              <span>
+              </span>
+            </label>
+            <label className="boughtOption moreOk"> Bought, More Okay
+              <input
+                type="radio"
+                name="boughtStatus"
+                title="moreOk"
+                checked={boughtStatus === 'moreOk'}
+                onChange={() => setBoughtStatus('moreOk')}
+              />
+              <span>
+              </span>
+            </label>
+            <label className="boughtOption noMore"> Bought, No More
+              <input
+                type="radio"
+                name="boughtStatus"
+                value="noMore"
+                checked={boughtStatus === 'noMore'}
+                onChange={() => setBoughtStatus('noMore')}
+              />
+              <span>
+              </span>
+            </label>
+          </div>
+        )}
         {isSelfView && (
           <div className="addGiftGroup">
             <label>Visible to:</label>

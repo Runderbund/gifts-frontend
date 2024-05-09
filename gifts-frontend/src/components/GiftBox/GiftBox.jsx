@@ -51,6 +51,9 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
                 )}
                 <th className="linksAndNotes">Link(s)</th>
                 {isSelfView && <th>Visibility</th>}
+                {!isSelfView && ( 
+                  <th title="Mark as not bought (green), bought but more okay (yellow), or bought and no more should be (red).">Bought</th>
+                )}
                 <th className="noBorderColumn"></th>
                 {/* Only shows this column if the selfMember is the same as the member the giftBox is being called for. This should only be called from the selfView  */}
               </tr>
@@ -89,10 +92,9 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
                   {gift.visible_to.length === allMembers.length ? 'All' : gift.visible_to.join(', ')}
                   </td>
                 )}
-              <td className="noBorderColumn">
-                <button>Mark Bought</button>
-                {/* On click, change row based on CSS. Green/other for bought w/multi or single */}
-              </td>
+                {!isSelfView && ( 
+                  <td>Bought Status</td>
+                )}
               </tr>
             ))}
           </tbody>
