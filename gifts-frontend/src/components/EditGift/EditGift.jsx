@@ -209,7 +209,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
               <span>
               </span>
             </label>
-            <label className="boughtOption moreOk"> Bought, More Okay
+            <label className="boughtOption moreOk"> Bought - More Okay
               <input
                 type="radio"
                 name="boughtStatus"
@@ -220,7 +220,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
               <span>
               </span>
             </label>
-            <label className="boughtOption noMore"> Bought, No More
+            <label className="boughtOption noMore"> Bought - No More
               <input
                 type="radio"
                 name="boughtStatus"

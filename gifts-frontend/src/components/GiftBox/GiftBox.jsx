@@ -92,8 +92,17 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
                   {gift.visible_to.length === allMembers.length ? 'All' : gift.visible_to.join(', ')}
                   </td>
                 )}
-                {!isSelfView && ( 
-                  <td>Bought Status</td>
+                {!isSelfView && (
+                  <td>
+                    <div 
+                    className={`boughtBox ${gift.bought}`} 
+                    title={
+                      gift.bought === 'none' ? "None bought" :
+                      gift.bought === 'moreOk' ? "More OK" :
+                      gift.bought === 'noMore' ? "No more" : ""
+                    }>
+                    </div>
+                  </td>
                 )}
               </tr>
             ))}

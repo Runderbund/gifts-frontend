@@ -166,3 +166,23 @@ html, body {
 .boughtOption input[type="radio"]:checked + span {
   border-color: black; /* Highlight the selected option */
 }
+
+.boughtBox {
+  display: block;
+  size: fill;
+  height: 30px;
+  color: white;
+  line-height: 50px;
+  cursor: pointer;
+}
+.boughtBox.none {
+  background-color: green;
+}
+
+.boughtBox.moreOk {
+  background-color: yellow;
+}
+
+.boughtBox.noMore {
+  background-color: red;
+}
