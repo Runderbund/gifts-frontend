@@ -13,6 +13,7 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
   const [exactItem, setExactItem] = useState(false);
   const [multiple, setMultiple] = useState(false);
   const [notes, setNotes] = useState('');
+  const [otherNotes, setOtherNotes] = useState('');
   const [linkURL, setLinkURL] = useState('');
   const [linkName, setLinkName] = useState('');
 
@@ -43,6 +44,7 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
     formData.append("exactItem", exactItem);
     formData.append("multiple", multiple);
     formData.append("notes", notes);
+    formData.append("otherNotes", otherNotes);
     formData.append("linkURL", linkURL);
     formData.append("linkName", linkName);
 
@@ -139,6 +141,18 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
             onChange={e => setNotes(e.target.value)}
           ></textarea>
         </div>
+        {!isSelfView && (
+          <div>
+            <div className="addGiftGroup">
+              <label>Notes (not visible to {member.member_name}):</label>
+              <textarea
+                name="otherNotes"
+                value={otherNotes}
+                onChange={e => setOtherNotes(e.target.value)}
+              ></textarea>
+            </div>
+          </div>
+        )}
         <div className="addGiftGroup">
           <label>Link URL:</label>
           <textarea

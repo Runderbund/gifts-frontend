@@ -39,27 +39,31 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
       <div className="giftBox">
         <table>
           <thead>
-              <tr>
-                <th className="editColumn"></th>
-                <th className="editColumn"></th>
+              <tr className="header">
+                <th className="noBorderColumn"></th>
+                <th className="noBorderColumn"></th>
                 <th>Gift Name</th>
                 <th title="Do you want the exact model you're listing (e.g. Sony WF-1000XM5 Earbuds) or any similar item (e.g. any wireless earbuds)?">Exact or Similar Item?</th>
                 <th title="Do you mind multiple people getting you the same thing?">Multiple Copies </th>
                 <th className="linksAndNotes" title="Any additional notes you want people to see.">Notes</th>
+                {!isSelfView && ( 
+                  <th className="linksAndNotes" title="These notes are not available to the gift receiver. E.g., if you want to tell people which type of fuzzy socks you got the person, so you don't overlap, without telling the person getting the socks.">Notes (Not visible to receiver)</th>
+                )}
                 <th className="linksAndNotes">Link(s)</th>
                 {isSelfView && <th>Visibility</th>}
+                <th className="noBorderColumn"></th>
                 {/* Only shows this column if the selfMember is the same as the member the giftBox is being called for. This should only be called from the selfView  */}
               </tr>
             </thead>
           <tbody>
             {gifts.map((gift) => (
-              <tr key={gift.gift_id}>
-                <td className="editColumn">
+              <tr key={gift.gift_id} className="row">
+                <td className="noBorderColumn">
                 <button key={gift.id} onClick={ () => toggleDeleteGiftPopup(gift.gift_id)}>
                 Delete
                 </button>
                 </td>
-                <td className="editColumn">
+                <td className="noBorderColumn">
                 <button key={gift.id} onClick={ () => toggleEditGiftPopup(gift.gift_id)}>
                 Edit
                 </button>
@@ -68,6 +72,9 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
                 <td>{gift.exact_item ? 'Exact' : 'Similar'}</td>
                 <td>{gift.multiple ? 'Yes' : 'No'}</td>
                 <td>{gift.notes}</td>
+                {!isSelfView && (
+                  <td>{gift.other_notes}</td>
+                )}
                 <td>
                 {gift.links && gift.links.length > 0 && (
                   <a href={gift.links[0].url} target="_blank" rel="noopener noreferrer">
@@ -82,6 +89,10 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
                   {gift.visible_to.length === allMembers.length ? 'All' : gift.visible_to.join(', ')}
                   </td>
                 )}
+              <td className="noBorderColumn">
+                <button>Mark Bought</button>
+                {/* On click, change row based on CSS. Green/other for bought w/multi or single */}
+              </td>
               </tr>
             ))}
           </tbody>

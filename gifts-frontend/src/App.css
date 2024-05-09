@@ -55,8 +55,19 @@ html, body {
     padding: 8px;
 }
 
-.giftBox table .editColumn {
-  border: none; /* Removes border around edit buttons */
+.giftBox .header {
+    background-color: rgb(62, 162, 202);
+    color: white;
+}
+
+.giftBox .row {
+  background-color: rgb(46, 126, 158);
+  color: white;
+}
+
+.giftBox table .noBorderColumn {
+  border: none;
+  background-color: rgb(49, 113, 170);
 }
 
 .linksAndNotes{
