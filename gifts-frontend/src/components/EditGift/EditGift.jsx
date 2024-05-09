@@ -46,6 +46,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
       setNotes(giftData.notes);
       setOtherNotes(giftData.other_notes);
       setBoughtStatus(giftData.bought);
+      console.log("bought:", giftData.bought);
       if (giftData.links && giftData.links.length > 0) {
         setLinkURL(giftData.links[0].url);
         setLinkName(giftData.links[0].name);
