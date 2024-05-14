@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import GiftBox from '../components/GiftBox/GiftBox'; 
+import GiftBox from '../components/GiftBox'; 
 import { useNavigate } from 'react-router-dom';
 import { MemberContext } from '../context/MemberContext'; 
 

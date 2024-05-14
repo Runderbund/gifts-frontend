@@ -1,5 +1,5 @@
 import axios from 'axios';
-import "../../App.css";
+import "../App.css";
 
 const DeleteGift = ({ member, closePopup, fetchGifts, gift_id }) => {
     

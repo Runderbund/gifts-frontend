@@ -1,23 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styles from './NavBar.module.css';
+import "../App.css";
 
 const NavBar = () => {
   return (
-    <div className={styles.navBar}>
+    <div className="navBar">
       <ul>
         {/* Each list item <li> is a navigation link */}
-        <li className={styles.navItem}>
+        <li className="navItem">
           <Link to="/">
             View As
           </Link>
         </li>
-        <li className={styles.navItem}>
+        <li className="navItem">
           <Link to="/other">
             View Other
           </Link>
         </li>
-        <li className={styles.navItem}>
+        <li className="navItem">
           <Link to="/self">
             View Self
           </Link>

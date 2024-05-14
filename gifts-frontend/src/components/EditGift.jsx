@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { MemberContext } from '../../context/MemberContext'; 
+import { MemberContext } from '../context/MemberContext'; 
 import { useContext } from 'react';
-import "../../App.css";
+import "../App.css";
 import { useEffect } from 'react';
 
 const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {

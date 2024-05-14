@@ -1,9 +1,9 @@
 import React, { useContext, useState} from 'react';
-import { MemberContext } from '../../context/MemberContext';
-import EditGift from '../EditGift/EditGift';
-import AddGift from '../AddGift/AddGift';
-import DeleteGift from '../DeleteGift/DeleteGift';
-import "../../App.css";
+import { MemberContext } from '../context/MemberContext';
+import EditGift from './EditGift';
+import AddGift from './AddGift';
+import DeleteGift from './DeleteGift';
+import "../App.css";
 
 // The GiftBox component takes in two props: 
 // `member` - an object containing information about a member,

@@ -8,7 +8,7 @@ import ViewSelfPage from "./pages/ViewSelfPage";
 import MemberSelectPage from "./pages/MemberSelectPage";
 
 // Component Imports
-import Navbar from "./components/NavBar/NavBar";
+import Navbar from "./components/NavBar";
 
 function App() {
   return (
