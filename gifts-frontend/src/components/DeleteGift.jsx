@@ -16,13 +16,15 @@ const DeleteGift = ({ member, closePopup, fetchGifts, gift_id }) => {
   };
 
   return (
-    <div className="addGiftBox">
-      <h1>Delete gift? {member.name}</h1>
-      <div className="buttonContainer">
-          <button type="submit" onClick={deleteGift}>Delete Gift</button>
-          <button type="button" onClick={closePopup}>Cancel</button>
+    <div className="modalBackground">
+      <div className="handleGiftBox">
+        <h1>Delete gift for {member.member_name}?</h1>
+        <div className="buttonContainer">
+            <button type="submit" onClick={deleteGift}>Delete Gift</button>
+            <button type="button" onClick={closePopup}>Cancel</button>
+        </div>
       </div>
-    </div>
+      </div>
   );
     
   };

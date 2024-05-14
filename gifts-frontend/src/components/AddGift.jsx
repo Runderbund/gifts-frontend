@@ -82,161 +82,163 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
   };
 
   return (
-    <div className="addGiftBox">
-      <h1>Add gift for {member.member_name}</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="addGiftGroup">
-        <label>Gift Name:</label>
-          <input
-            type="text"
-            name="itemName"
-            value={itemName}
-            onChange={e => setItemName(e.target.value)}
-            required
-          />
-        </div>
-        <div className="addGiftGroup">
-          <label>Exact Item
-          <input
-            type="radio"
-            name="exactItem"
-            checked={exactItem === true}
-            onChange={() => setExactItem(true)}
-            required
-          />
-          </label>
-          <label>Similar Items Okay
-          <input
-            type="radio"
-            name="exactItem"
-            checked={exactItem === false}
-            onChange={() => setExactItem(false)}
-            required
-          />
-          </label>
-        </div>
-        <div className="addGiftGroup">
-          <label>Multiple Items
-          <input
-            type="radio"
-            name="multiple"
-            checked={multiple === true}
-            onChange={() => setMultiple(true)}
-            required
-          />
-          </label>
-          <label>Single Item
-          <input
-            type="radio"
-            name="multiple"
-            checked={multiple === false}
-            onChange={() => setMultiple(false)}
-            required
-          />
-          </label>
-        </div>
-        <div className="addGiftGroup">
-          <label>Notes:</label>
-          <textarea
-            name="notes"
-            value={notes}
-            onChange={e => setNotes(e.target.value)}
-          ></textarea>
-        </div>
-        {!isSelfView && (
-          <div>
-            <div className="addGiftGroup">
-              <label>Notes (not visible to {member.member_name}):</label>
-              <textarea
-                name="otherNotes"
-                value={otherNotes}
-                onChange={e => setOtherNotes(e.target.value)}
-              ></textarea>
-            </div>
-          </div>
-        )}
-        <div className="addGiftGroup">
-          <label>Link URL:</label>
-          <textarea
-            type="text"
-            name="linkURL"
-            value={linkURL}
-            onChange={e => setLinkURL(e.target.value)}
-          />
-          <label>Link Name:</label>
-          <textarea
-            type="text"
-            name="linkName"
-            value={linkName}
-            onChange={e => setLinkName(e.target.value)}
-          />
-        </div>
-        {!isSelfView && (
-          <div className="boughtStatus">
-            <label className="boughtOption none"> None Bought
-              <input
-                type="radio"
-                name="boughtStatus"
-                title="none"
-                checked={boughtStatus === 'none'}
-                onChange={() => setBoughtStatus('none')}
-              />
-              <span>
-              </span>
-            </label>
-            <label className="boughtOption moreOk"> Bought, More Okay
-              <input
-                type="radio"
-                name="boughtStatus"
-                title="moreOk"
-                checked={boughtStatus === 'moreOk'}
-                onChange={() => setBoughtStatus('moreOk')}
-              />
-              <span>
-              </span>
-            </label>
-            <label className="boughtOption noMore"> Bought, No More
-              <input
-                type="radio"
-                name="boughtStatus"
-                value="noMore"
-                checked={boughtStatus === 'noMore'}
-                onChange={() => setBoughtStatus('noMore')}
-              />
-              <span>
-              </span>
-            </label>
-          </div>
-        )}
-        {isSelfView && (
+    <div className="modalBackground">
+      <div className="handleGiftBox">
+        <h1>Add gift for {member.member_name}</h1>
+        <form onSubmit={handleSubmit}>
           <div className="addGiftGroup">
-            <label>Visible to:</label>
-            <label>All
-            <input type="checkbox" name="allMembers" checked={allSelected} onChange={handleAllChange} />
-            </label>
-            <div>
-              {allMembers.map(member => (
-                <label key={member.member_id}>
-                  {member.member_name}
-                  <input
-                    type="checkbox"
-                    name="user"
-                    value={member.member_id}
-                    checked={selectedMembers[member.member_id] || false}
-                    onChange={() => handleMemberChange(member.member_id)}
-                  />
-                </label>
-              ))}
-            </div>
+          <label>Gift Name:</label>
+            <input
+              type="text"
+              name="itemName"
+              value={itemName}
+              onChange={e => setItemName(e.target.value)}
+              required
+            />
           </div>
-        )}
-        
-        
-        <div className="buttonContainer">
-          <button type="submit">Submit Gift</button>
-          <button type="button" onClick={closePopup}>Cancel</button>
+          <div className="addGiftGroup">
+            <label>Exact Item
+            <input
+              type="radio"
+              name="exactItem"
+              checked={exactItem === true}
+              onChange={() => setExactItem(true)}
+              required
+            />
+            </label>
+            <label>Similar Items Okay
+            <input
+              type="radio"
+              name="exactItem"
+              checked={exactItem === false}
+              onChange={() => setExactItem(false)}
+              required
+            />
+            </label>
+          </div>
+          <div className="addGiftGroup">
+            <label>Multiple Items
+            <input
+              type="radio"
+              name="multiple"
+              checked={multiple === true}
+              onChange={() => setMultiple(true)}
+              required
+            />
+            </label>
+            <label>Single Item
+            <input
+              type="radio"
+              name="multiple"
+              checked={multiple === false}
+              onChange={() => setMultiple(false)}
+              required
+            />
+            </label>
+          </div>
+          <div className="addGiftGroup">
+            <label>Notes:</label>
+            <textarea
+              name="notes"
+              value={notes}
+              onChange={e => setNotes(e.target.value)}
+            ></textarea>
+          </div>
+          {!isSelfView && (
+            <div>
+              <div className="addGiftGroup">
+                <label>Notes (not visible to {member.member_name}):</label>
+                <textarea
+                  name="otherNotes"
+                  value={otherNotes}
+                  onChange={e => setOtherNotes(e.target.value)}
+                ></textarea>
+              </div>
+            </div>
+          )}
+          <div className="addGiftGroup">
+            <label>Link URL:</label>
+            <textarea
+              type="text"
+              name="linkURL"
+              value={linkURL}
+              onChange={e => setLinkURL(e.target.value)}
+            />
+            <label>Link Name:</label>
+            <textarea
+              type="text"
+              name="linkName"
+              value={linkName}
+              onChange={e => setLinkName(e.target.value)}
+            />
+          </div>
+          {!isSelfView && (
+            <div className="boughtStatus">
+              <label className="boughtOption none"> None Bought
+                <input
+                  type="radio"
+                  name="boughtStatus"
+                  title="none"
+                  checked={boughtStatus === 'none'}
+                  onChange={() => setBoughtStatus('none')}
+                />
+                <span>
+                </span>
+              </label>
+              <label className="boughtOption moreOk"> Bought, More Okay
+                <input
+                  type="radio"
+                  name="boughtStatus"
+                  title="moreOk"
+                  checked={boughtStatus === 'moreOk'}
+                  onChange={() => setBoughtStatus('moreOk')}
+                />
+                <span>
+                </span>
+              </label>
+              <label className="boughtOption noMore"> Bought, No More
+                <input
+                  type="radio"
+                  name="boughtStatus"
+                  value="noMore"
+                  checked={boughtStatus === 'noMore'}
+                  onChange={() => setBoughtStatus('noMore')}
+                />
+                <span>
+                </span>
+              </label>
+            </div>
+          )}
+          {isSelfView && (
+            <div className="addGiftGroup">
+              <label>Visible to:</label>
+              <label>All
+              <input type="checkbox" name="allMembers" checked={allSelected} onChange={handleAllChange} />
+              </label>
+              <div>
+                {allMembers.map(member => (
+                  <label key={member.member_id}>
+                    {member.member_name}
+                    <input
+                      type="checkbox"
+                      name="user"
+                      value={member.member_id}
+                      checked={selectedMembers[member.member_id] || false}
+                      onChange={() => handleMemberChange(member.member_id)}
+                    />
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          
+          <div className="buttonContainer">
+            <button type="submit">Submit Gift</button>
+            <button type="button" onClick={closePopup}>Cancel</button>
+          </div>
+          </form>
         </div>
-        </form>
       </div>
     );
 };

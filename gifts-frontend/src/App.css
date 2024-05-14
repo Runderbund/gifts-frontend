@@ -79,22 +79,17 @@ html, body {
   width: 30%;
 }
 
-.addGiftBox {
-  margin-top: 3em;
-  width: 60%;
-  min-width: 500px;   /* Interim solution to keep background > table width */
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 1em;
+/* Used for adding, editing, and deleting gifts */
+.handleGiftBox {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
   background-color: rgb(49, 113, 170);
-  padding: 1em;
-  border-radius: 1em;
-  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0px 4px 6px -2px rgba(0, 0, 0, 0.05);
-  outline: black solid 1px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  outline: black solid 2px;
 }
 
 .addGiftGroup {
@@ -231,4 +226,13 @@ html, body {
 .navBar a:hover {
   background-color: #b0b0b0;
   color: #1E90FF;
+}
+
+.modalBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
 }
