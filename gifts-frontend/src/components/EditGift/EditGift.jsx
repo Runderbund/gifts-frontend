@@ -51,6 +51,9 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
         setLinkURL(giftData.links[0].url);
         setLinkName(giftData.links[0].name);
       }
+      // setSelectedMembers();
+      // Set checkboxes to visible_to members
+      // Set allSelected to false if visible_to excludes any members
     } catch (error) {
       console.error('Error fetching gift:', error);
     }
@@ -108,7 +111,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
 
   return (
     <div className="addGiftBox">
-      <h1>Edit gift for {member.name}</h1>
+      <h1>Edit gift for {member.member_name}</h1>
       <form onSubmit={handleSubmit}>
         <div className="addGiftGroup">
           <label>Gift Name:</label>
@@ -121,7 +124,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
           />
         </div>
         <div className="addGiftGroup">
-          <label>Exact Item
+          <label>Exact Item?
           <input
             type="radio"
             name="exactItem"
@@ -130,7 +133,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
             required
           />
           </label>
-          <label>Similar Items Okay
+          <label>Similar Items Okay?
           <input
             type="radio"
             name="exactItem"
@@ -141,7 +144,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
           </label>
         </div>
         <div className="addGiftGroup">
-          <label>Multiple Items
+          <label>Multiple Items?
           <input
             type="radio"
             name="multiple"
@@ -150,7 +153,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
             required
           />
           </label>
-          <label>Single Item
+          <label>Single Item?
           <input
             type="radio"
             name="multiple"
@@ -257,7 +260,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
         )}
         
         <div className="buttonContainer">
-          <button type="submit">Edit Gift</button>
+          <button type="submit">Submit Edit</button>
           <button type="button" onClick={closePopup}>Cancel</button>
         </div>
       </form>

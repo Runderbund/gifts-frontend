@@ -233,7 +233,7 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
         
         
         <div className="buttonContainer">
-          <button type="submit">Add Gift</button>
+          <button type="submit">Submit Gift</button>
           <button type="button" onClick={closePopup}>Cancel</button>
         </div>
         </form>

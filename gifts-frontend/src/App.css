@@ -60,8 +60,13 @@ html, body {
     color: white;
 }
 
-.giftBox .row {
+.giftBox .row:nth-child(odd){
   background-color: rgb(46, 126, 158);
+  color: white;
+}
+
+.giftBox .row:nth-child(even){
+  background-color: rgb(77, 143, 168);
   color: white;
 }
 
@@ -173,7 +178,6 @@ html, body {
   height: 30px;
   color: white;
   line-height: 50px;
-  cursor: pointer;
 }
 .boughtBox.none {
   background-color: green;
