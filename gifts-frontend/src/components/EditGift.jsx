@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import { useEffect } from 'react';
 import "../App.css";
 
-const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
+const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id, hoverTexts}) => {
 
   const { selfMember, allMembers } = useContext(MemberContext);
   const [allSelected, setAllSelected] = useState(true); // Default visibility is all members
@@ -115,7 +115,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
         <h1>Edit gift for {member.member_name}</h1>
         <form onSubmit={handleSubmit}>
           <div className="addGiftGroup">
-            <label>Gift Name:</label>
+          <label>Gift Name:</label>
             <input
               type="text"
               name="itemName"
@@ -124,8 +124,8 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
               required
             />
           </div>
-          <div className="addGiftGroup">
-            <label>Exact Item?
+          <div className="addGiftGroup" title={hoverTexts.exactHoverText}>
+            <label>Exact Item
             <input
               type="radio"
               name="exactItem"
@@ -134,7 +134,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
               required
             />
             </label>
-            <label>Similar Items Okay?
+            <label>Similar Items Okay
             <input
               type="radio"
               name="exactItem"
@@ -144,8 +144,8 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
             />
             </label>
           </div>
-          <div className="addGiftGroup">
-            <label>Multiple Items?
+          <div className="addGiftGroup" title={hoverTexts.multipleHoverText}>
+            <label>Multiple Items
             <input
               type="radio"
               name="multiple"
@@ -154,7 +154,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
               required
             />
             </label>
-            <label>Single Item?
+            <label>Single Item
             <input
               type="radio"
               name="multiple"
@@ -164,7 +164,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
             />
             </label>
           </div>
-          <div className="addGiftGroup">
+          <div className="addGiftGroup" title={hoverTexts.notesHoverText}>
             <label>Notes:</label>
             <textarea
               name="notes"
@@ -174,7 +174,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
           </div>
           {!isSelfView && (
             <div>
-              <div className="addGiftGroup">
+              <div className="addGiftGroup" title={hoverTexts.otherNotesHoverText}>
                 <label>Notes (not visible to {member.member_name}):</label>
                 <textarea
                   name="otherNotes"
@@ -184,16 +184,16 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
               </div>
             </div>
           )}
-          <div className="addGiftGroup">
+          <div className="addGiftGroup" title={hoverTexts.linkHoverText}>
             <label>Link URL:</label>
-            <input
+            <textarea
               type="text"
               name="linkURL"
               value={linkURL}
               onChange={e => setLinkURL(e.target.value)}
             />
             <label>Link Name:</label>
-            <input
+            <textarea
               type="text"
               name="linkName"
               value={linkName}
@@ -201,7 +201,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
             />
           </div>
           {!isSelfView && (
-            <div className="boughtStatus">
+            <div className="boughtStatus" title={hoverTexts.boughtHoverText}>
               <label className="boughtOption none"> None Bought
                 <input
                   type="radio"
@@ -213,7 +213,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
                 <span>
                 </span>
               </label>
-              <label className="boughtOption moreOk"> Bought - More Okay
+              <label className="boughtOption moreOk"> Bought, More Okay
                 <input
                   type="radio"
                   name="boughtStatus"
@@ -224,7 +224,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
                 <span>
                 </span>
               </label>
-              <label className="boughtOption noMore"> Bought - No More
+              <label className="boughtOption noMore"> Bought, No More
                 <input
                   type="radio"
                   name="boughtStatus"
@@ -257,7 +257,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id}) => {
                   </label>
                 ))}
               </div>
-            </div>
+          </div>
           )}
           
           <div className="buttonContainer">

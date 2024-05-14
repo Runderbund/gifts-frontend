@@ -4,7 +4,7 @@ import { MemberContext } from '../context/MemberContext';
 import { useContext } from 'react';
 import "../App.css";
 
-const AddGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit}) => {
+const AddGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, hoverTexts}) => {
 
   const { selfMember, allMembers } = useContext(MemberContext);
   const [allSelected, setAllSelected] = useState(true); // Default visibility is all members

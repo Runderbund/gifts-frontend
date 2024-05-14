@@ -33,6 +33,16 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
     setShowDeleteGift(!showDeleteGift);
   };
 
+  const hoverTexts = {
+    exactHoverText: "Do you want the exact model you're listing (e.g. Sony WF-1000XM5 Earbuds) or any similar item (e.g. any wireless earbuds)?",
+    multipleHoverText: "Do you mind getting multiple copies of the same item? E.g., if you want multiple copies of a book, or if you only want one of each item.",
+    notesHoverText: "Any additional notes you want people to see. E.g., if you want a specific color, size, or brand.",
+    otherNotesHoverText: "These notes are not available to the gift receiver. E.g., if you want to tell people which type of fuzzy socks you got the person, so you don't overlap, without telling the person getting the socks.",
+    linkHoverText: "Any links to the item you want. E.g., Amazon, Etsy, or a specific store.",
+    boughtHoverText: "Mark as not bought (green), bought but more okay (yellow), or bought and no more should be (red)."
+};
+
+
   return (
     <div>
       <h1>{member.member_name}'s Gifts</h1>
@@ -43,16 +53,16 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
                 <th className="noBorderColumn"></th>
                 <th className="noBorderColumn"></th>
                 <th>Gift Name</th>
-                <th title="Do you want the exact model you're listing (e.g. Sony WF-1000XM5 Earbuds) or any similar item (e.g. any wireless earbuds)?">Exact or Similar Item?</th>
-                <th title="Do you mind multiple people getting you the same thing?">Multiple Copies </th>
-                <th className="linksAndNotes" title="Any additional notes you want people to see.">Notes</th>
+                <th title={hoverTexts.exactHoverText}>Exact or Similar Item?</th>
+                <th title={hoverTexts.multipleHoverText}>Multiple Copies </th>
+                <th className="linksAndNotes" title={hoverTexts.notesHoverText}>Notes</th>
                 {!isSelfView && ( 
-                  <th className="linksAndNotes" title="These notes are not available to the gift receiver. E.g., if you want to tell people which type of fuzzy socks you got the person, so you don't overlap, without telling the person getting the socks.">Notes (Not visible to receiver)</th>
+                  <th className="linksAndNotes" title={hoverTexts.otherNotesHoverText}>Notes (Not visible to receiver)</th>
                 )}
-                <th className="linksAndNotes">Link(s)</th>
+                <th className="linksAndNotes" title={hoverTexts.linkHoverText}>Link(s)</th>
                 {isSelfView && <th>Visibility</th>}
                 {!isSelfView && ( 
-                  <th title="Mark as not bought (green), bought but more okay (yellow), or bought and no more should be (red).">Bought</th>
+                  <th title={hoverTexts.boughtHoverText}>Bought</th>
                 )}
                 <th className="noBorderColumn"></th>
                 {/* Only shows this column if the selfMember is the same as the member the giftBox is being called for. This should only be called from the selfView  */}
@@ -110,8 +120,8 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
         </table>
         </div>
       <button onClick={toggleAddGiftPopup}>Add Gift</button>
-      {showAddGift && <AddGift member={member} isSelfView={isSelfView} closePopup={toggleAddGiftPopup} fetchGifts={fetchGifts}/>}
-      {showEditGift && <EditGift member={member} isSelfView={isSelfView} closePopup={toggleEditGiftPopup} fetchGifts={fetchGifts} gift_id={giftId}/>}
+      {showAddGift && <AddGift member={member} isSelfView={isSelfView} closePopup={toggleAddGiftPopup} fetchGifts={fetchGifts} addOrEdit="add" hoverTexts={hoverTexts}/>}
+      {showEditGift && <EditGift member={member} isSelfView={isSelfView} closePopup={toggleEditGiftPopup} fetchGifts={fetchGifts} gift_id={giftId}  addOrEdit="edit" hoverTexts={hoverTexts}/>}
       {showDeleteGift && <DeleteGift member={member} closePopup={toggleDeleteGiftPopup} fetchGifts={fetchGifts} gift_id={giftId}/>}
     </div>
   );

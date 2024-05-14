@@ -4,7 +4,7 @@ import { MemberContext } from '../context/MemberContext';
 import { useContext } from 'react';
 import "../App.css";
 
-const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
+const AddGift = ({ member, isSelfView, closePopup, fetchGifts, hoverTexts}) => {
 
   const { selfMember, allMembers } = useContext(MemberContext);
   const [allSelected, setAllSelected] = useState(true); // Default visibility is all members
@@ -96,7 +96,7 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
               required
             />
           </div>
-          <div className="addGiftGroup">
+          <div className="addGiftGroup" title={hoverTexts.exactHoverText}>
             <label>Exact Item
             <input
               type="radio"
@@ -116,7 +116,7 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
             />
             </label>
           </div>
-          <div className="addGiftGroup">
+          <div className="addGiftGroup" title={hoverTexts.multipleHoverText}>
             <label>Multiple Items
             <input
               type="radio"
@@ -136,7 +136,7 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
             />
             </label>
           </div>
-          <div className="addGiftGroup">
+          <div className="addGiftGroup" title={hoverTexts.notesHoverText}>
             <label>Notes:</label>
             <textarea
               name="notes"
@@ -146,7 +146,7 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
           </div>
           {!isSelfView && (
             <div>
-              <div className="addGiftGroup">
+              <div className="addGiftGroup" title={hoverTexts.otherNotesHoverText}>
                 <label>Notes (not visible to {member.member_name}):</label>
                 <textarea
                   name="otherNotes"
@@ -156,7 +156,7 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
               </div>
             </div>
           )}
-          <div className="addGiftGroup">
+          <div className="addGiftGroup" title={hoverTexts.linkHoverText}>
             <label>Link URL:</label>
             <textarea
               type="text"
@@ -173,7 +173,7 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
             />
           </div>
           {!isSelfView && (
-            <div className="boughtStatus">
+            <div className="boughtStatus" title={hoverTexts.boughtHoverText}>
               <label className="boughtOption none"> None Bought
                 <input
                   type="radio"
@@ -229,18 +229,17 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts}) => {
                   </label>
                 ))}
               </div>
-            </div>
+          </div>
           )}
-          
           
           <div className="buttonContainer">
             <button type="submit">Submit Gift</button>
             <button type="button" onClick={closePopup}>Cancel</button>
           </div>
-          </form>
-        </div>
+        </form>
       </div>
-    );
+    </div>
+  );
 };
 
 export default AddGift;
