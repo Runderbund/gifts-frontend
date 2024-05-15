@@ -11,7 +11,7 @@ const ViewOtherPage = () => {
   // State for storing all the gifts fetched from the database.
   const [otherGifts, setOtherGifts] = useState([]);
   const navigate = useNavigate();
-  
+
   const fetchOtherGifts = async () => {
     try {
       const response = await axios.get(`http://localhost:8000/get_gifts_other/${selfMember.member_id}/`, {
@@ -35,7 +35,7 @@ const ViewOtherPage = () => {
 
   return (
     <div  className="container">
-      <h1>Viewing as {selfMember.member_name}</h1>
+      {selfMember && (<h1>Viewing as {selfMember.member_name}</h1>)}
       {/* Map over `otherMembers` to render a GiftBox for each member */}
       {otherMembers.map((member) => {
         // Filter `otherGifts` to only include gifts where `gift_receiver` matches `member.member_id`
