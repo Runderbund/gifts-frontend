@@ -44,7 +44,6 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
       setNotes(giftData.notes);
       setOtherNotes(giftData.other_notes);
       setBoughtStatus(giftData.bought);
-      console.log("bought:", giftData.bought);
       if (giftData.links && giftData.links.length > 0) {
         setLinkURL(giftData.links[0].url);
         setLinkName(giftData.links[0].name);
@@ -58,8 +57,10 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
   };
   
   useEffect(() => {
-    fetchGift();
-  }, [gift_id]); // Re-fetch if gift_id changes
+    if (addOrEdit === 'Edit') {
+      fetchGift();
+    }
+  }, [addOrEdit, gift_id]); // Re-fetch if gift_id changes
 
   const handleSubmit = (event) => {
     event.preventDefault();
