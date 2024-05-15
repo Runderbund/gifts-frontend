@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { MemberContext } from '../context/MemberContext'; 
-import { useContext } from 'react';
+import { useContext, useEffect} from 'react';
 import "../App.css";
 
-const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, hoverTexts}) => {
+const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, gift_id, hoverTexts}) => {
 
   const { selfMember, allMembers } = useContext(MemberContext);
   const [visibleToAll, setVisibleToAll] = useState(true); // Default visibility is all members
@@ -68,7 +68,7 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
     const formData = new FormData();
 
     // Do not change giftAdder on edit
-    if (addOrEdit === 'add') {
+    if (addOrEdit === 'Add') {
       formData.append("giftAdder", selfMember.member_id);
     }
     formData.append("giftReceiver", member.member_id);
@@ -100,7 +100,7 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
     //formData can't handle lists. Turn back into a list on backend.
 
     // Axios request for add or edit
-      if (addOrEdit === 'add') {
+      if (addOrEdit === 'Add') {
         axios.post('http://localhost:8000/add_gift/', formData)
           .then((response) => {
             console.log('Gift added successfully');
@@ -126,161 +126,163 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
   };
 
   return (
-    <div className="handleGiftBox">
-      <h1>Add gift for {member.member_name}</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="handleGiftBox">
-        <label>Gift Name:</label>
-          <input
-            type="text"
-            name="itemName"
-            value={itemName}
-            onChange={e => setItemName(e.target.value)}
-            required
-          />
-        </div>
+    <div className="modalBackground">
+      <div className="handleGiftBox">
+        <h1>{addOrEdit} gift for {member.member_name}</h1>
+        <form onSubmit={handleSubmit}>
         <div className="handleGiftGroup">
-          <label>Exact Item
-          <input
-            type="radio"
-            name="exactItem"
-            checked={exactItem === true}
-            onChange={() => setExactItem(true)}
-            required
-          />
-          </label>
-          <label>Similar Items Okay
-          <input
-            type="radio"
-            name="exactItem"
-            checked={exactItem === false}
-            onChange={() => setExactItem(false)}
-            required
-          />
-          </label>
-        </div>
-        <div className="handleGiftGroup">
-          <label>Multiple Items
-          <input
-            type="radio"
-            name="multiple"
-            checked={multiple === true}
-            onChange={() => setMultiple(true)}
-            required
-          />
-          </label>
-          <label>Single Item
-          <input
-            type="radio"
-            name="multiple"
-            checked={multiple === false}
-            onChange={() => setMultiple(false)}
-            required
-          />
-          </label>
-        </div>
-        <div className="handleGiftGroup">
-          <label>Notes:</label>
-          <textarea
-            name="notes"
-            value={notes}
-            onChange={e => setNotes(e.target.value)}
-          ></textarea>
-        </div>
-        {!isSelfView && (
-          <div>
-            <div className="handleGiftGroup">
-              <label>Notes (not visible to {member.member_name}):</label>
-              <textarea
-                name="otherNotes"
-                value={otherNotes}
-                onChange={e => setOtherNotes(e.target.value)}
-              ></textarea>
-            </div>
+          <label>Gift Name:</label>
+            <input
+              type="text"
+              name="itemName"
+              value={itemName}
+              onChange={e => setItemName(e.target.value)}
+              required
+            />
           </div>
-        )}
-        <div className="handleGiftGroup">
-          <label>Link URL:</label>
-          <textarea
-            type="text"
-            name="linkURL"
-            value={linkURL}
-            onChange={e => setLinkURL(e.target.value)}
-          />
-          <label>Link Name:</label>
-          <textarea
-            type="text"
-            name="linkName"
-            value={linkName}
-            onChange={e => setLinkName(e.target.value)}
-          />
-        </div>
-        {!isSelfView && (
-          <div className="boughtStatus">
-            <label className="boughtOption none"> None Bought
-              <input
-                type="radio"
-                name="boughtStatus"
-                title="none"
-                checked={boughtStatus === 'none'}
-                onChange={() => setBoughtStatus('none')}
-              />
-              <span>
-              </span>
+          <div className="handleGiftGroup" title={hoverTexts.exactHoverText}>
+            <label>Exact Item
+            <input
+              type="radio"
+              name="exactItem"
+              checked={exactItem === true}
+              onChange={() => setExactItem(true)}
+              required
+            />
             </label>
-            <label className="boughtOption moreOk"> Bought, More Okay
-              <input
-                type="radio"
-                name="boughtStatus"
-                title="moreOk"
-                checked={boughtStatus === 'moreOk'}
-                onChange={() => setBoughtStatus('moreOk')}
-              />
-              <span>
-              </span>
-            </label>
-            <label className="boughtOption noMore"> Bought, No More
-              <input
-                type="radio"
-                name="boughtStatus"
-                value="noMore"
-                checked={boughtStatus === 'noMore'}
-                onChange={() => setBoughtStatus('noMore')}
-              />
-              <span>
-              </span>
+            <label>Similar Items Okay
+            <input
+              type="radio"
+              name="exactItem"
+              checked={exactItem === false}
+              onChange={() => setExactItem(false)}
+              required
+            />
             </label>
           </div>
-        )}
-        {isSelfView && (
-          <div className="handleGiftGroup">
-            <label>Visible to:</label>
-            <label>All
-            <input type="checkbox" name="allMembers" checked={visibleToAll} onChange={handleAllChange} />
+          <div className="handleGiftGroup" title={hoverTexts.multipleHoverText}>
+            <label>Multiple Items
+            <input
+              type="radio"
+              name="multiple"
+              checked={multiple === true}
+              onChange={() => setMultiple(true)}
+              required
+            />
             </label>
+            <label>Single Item
+            <input
+              type="radio"
+              name="multiple"
+              checked={multiple === false}
+              onChange={() => setMultiple(false)}
+              required
+            />
+            </label>
+          </div>
+          <div className="handleGiftGroup" title={hoverTexts.notesHoverText}>
+            <label>Notes:</label>
+            <textarea
+              name="notes"
+              value={notes}
+              onChange={e => setNotes(e.target.value)}
+            ></textarea>
+          </div>
+          {!isSelfView && (
             <div>
-              {allMembers.map(member => (
-                <label key={member.member_id}>
-                  {member.member_name}
-                  <input
-                    type="checkbox"
-                    name="user"
-                    value={member.member_id}
-                    checked={visibleToMembers[member.member_id] || false}
-                    onChange={() => handleSelectedMemberChange(member.member_id)}
-                  />
-                </label>
-              ))}
+              <div className="handleGiftGroup" title={hoverTexts.otherNotesHoverText}>
+                <label>Notes (not visible to {member.member_name}):</label>
+                <textarea
+                  name="otherNotes"
+                  value={otherNotes}
+                  onChange={e => setOtherNotes(e.target.value)}
+                ></textarea>
+              </div>
             </div>
+          )}
+          <div className="handleGiftGroup" title={hoverTexts.linkHoverText}>
+            <label>Link URL:</label>
+            <textarea
+              type="text"
+              name="linkURL"
+              value={linkURL}
+              onChange={e => setLinkURL(e.target.value)}
+            />
+            <label>Link Name:</label>
+            <textarea
+              type="text"
+              name="linkName"
+              value={linkName}
+              onChange={e => setLinkName(e.target.value)}
+            />
           </div>
-        )}
-        
-        
-        <div className="buttonContainer">
-          <button type="submit">Submit Gift</button>
-          <button type="button" onClick={closePopup}>Cancel</button>
+          {!isSelfView && (
+            <div className="boughtStatus" title={hoverTexts.boughtHoverText}>
+              <label className="boughtOption none"> None Bought
+                <input
+                  type="radio"
+                  name="boughtStatus"
+                  title="none"
+                  checked={boughtStatus === 'none'}
+                  onChange={() => setBoughtStatus('none')}
+                />
+                <span>
+                </span>
+              </label>
+              <label className="boughtOption moreOk"> Bought, More Okay
+                <input
+                  type="radio"
+                  name="boughtStatus"
+                  title="moreOk"
+                  checked={boughtStatus === 'moreOk'}
+                  onChange={() => setBoughtStatus('moreOk')}
+                />
+                <span>
+                </span>
+              </label>
+              <label className="boughtOption noMore"> Bought, No More
+                <input
+                  type="radio"
+                  name="boughtStatus"
+                  value="noMore"
+                  checked={boughtStatus === 'noMore'}
+                  onChange={() => setBoughtStatus('noMore')}
+                />
+                <span>
+                </span>
+              </label>
+            </div>
+          )}
+          {isSelfView && (
+            <div className="handleGiftGroup">
+              <label>Visible to:</label>
+              <label>All
+              <input type="checkbox" name="allMembers" checked={visibleToAll} onChange={handleAllChange} />
+              </label>
+              <div>
+                {allMembers.map(member => (
+                  <label key={member.member_id}>
+                    {member.member_name}
+                    <input
+                      type="checkbox"
+                      name="user"
+                      value={member.member_id}
+                      checked={visibleToMembers[member.member_id] || false}
+                      onChange={() => handleSelectedMemberChange(member.member_id)}
+                    />
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          
+          <div className="buttonContainer">
+            <button type="submit">Submit Gift</button>
+            <button type="button" onClick={closePopup}>Cancel</button>
+          </div>
+          </form>
         </div>
-        </form>
       </div>
     );
 };

@@ -1,32 +1,28 @@
 import React, { useContext, useState} from 'react';
 import { MemberContext } from '../context/MemberContext';
-import EditGift from './EditGift';
-import AddGift from './AddGift';
+import AddOrEditGift from './AddOrEditGift';
 import DeleteGift from './DeleteGift';
 import "../App.css";
 
-// The GiftBox component takes in two props: 
+// The GiftBox component takes in three props: 
 // `member` - an object containing information about a member,
 // `gifts` - an array of gifts related to that member.
+// `fetchGifts` - a function to fetch gifts for the member.
 // Creates a table structure for displaying gifts for each member
 const GiftBox = ({ member, gifts, fetchGifts }) => {
 
   const { selfMember, allMembers } = useContext(MemberContext);
-  const [ showAddGift, setShowAddGift ] = useState(false);
-  const [ showEditGift, setShowEditGift ] = useState(false);
-  const [ showDeleteGift, setShowDeleteGift ] = useState(false);
+  const [showGiftPopup, setShowGiftPopup] = useState(false);
+  const [showDeleteGift, setShowDeleteGift] = useState(false);
   const [addOrEdit, setAddOrEdit] = useState('');
-  const [ giftId, setGiftId ] = useState(null);
+  const [giftId, setGiftId] = useState(null);
 
   const isSelfView = selfMember && selfMember === member;
 
-  const toggleAddGiftPopup = (operation) => {
-    setShowAddGift(!showAddGift);
-  };
-
-  const toggleEditGiftPopup = (giftId) => {
-    setGiftId(giftId)
-    setShowEditGift(!showEditGift);
+  const handleToggleGiftPopup = (mode, id = null) => {
+    setAddOrEdit(mode);
+    setGiftId(id);
+    setShowGiftPopup(!showGiftPopup);
   };
 
   const toggleDeleteGiftPopup = (giftId) => {
@@ -41,8 +37,7 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
     otherNotesHoverText: "These notes are not available to the gift receiver. E.g., if you want to tell people which type of fuzzy socks you got the person, so you don't overlap, without telling the person getting the socks.",
     linkHoverText: "Any links to the item you want. E.g., Amazon, Etsy, or a specific store.",
     boughtHoverText: "Mark as not bought (green), bought but more okay (yellow), or bought and no more should be (red)."
-};
-
+  };
 
   return (
     <div>
@@ -65,7 +60,6 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
                 {!isSelfView && ( 
                   <th title={hoverTexts.boughtHoverText}>Bought</th>
                 )}
-                <th className="noBorderColumn"></th>
                 {/* Only shows this column if the selfMember is the same as the member the giftBox is being called for. This should only be called from the selfView  */}
               </tr>
             </thead>
@@ -73,14 +67,14 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
             {gifts.map((gift) => (
               <tr key={gift.gift_id} className="row">
                 <td className="noBorderColumn">
-                <button key={gift.id} onClick={ () => toggleDeleteGiftPopup(gift.gift_id)}>
-                Delete
-                </button>
+                  <button onClick={ () => toggleDeleteGiftPopup(gift.gift_id)}>
+                  Delete
+                  </button>
                 </td>
                 <td className="noBorderColumn">
-                <button key={gift.id} onClick={ () => toggleEditGiftPopup(gift.gift_id)}>
-                Edit
-                </button>
+                  <button onClick={ () => handleToggleGiftPopup('Edit', gift.gift_id)}>
+                  Edit
+                  </button>
                 </td>
                 <td>{gift.item_name}</td>
                 <td>{gift.exact_item ? 'Exact' : 'Similar'}</td>
@@ -108,7 +102,7 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
                     <div 
                     className={`boughtBox ${gift.bought}`} 
                     title={
-                      gift.bought === 'none' ? "None bought" :
+                      gift.bought === 'none' ? "Don't buy any more" :
                       gift.bought === 'moreOk' ? "More OK" :
                       gift.bought === 'noMore' ? "No more" : ""
                     }>
@@ -120,10 +114,14 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
           </tbody>
         </table>
         </div>
-      <button onClick={toggleAddGiftPopup}>Add Gift</button>
-      {showAddGift && <AddGift member={member} isSelfView={isSelfView} closePopup={toggleAddGiftPopup} fetchGifts={fetchGifts} addOrEdit="add" hoverTexts={hoverTexts}/>}
-      {showEditGift && <EditGift member={member} isSelfView={isSelfView} closePopup={toggleEditGiftPopup} fetchGifts={fetchGifts} gift_id={giftId}  addOrEdit="edit" hoverTexts={hoverTexts}/>}
-      {showDeleteGift && <DeleteGift member={member} closePopup={toggleDeleteGiftPopup} fetchGifts={fetchGifts} gift_id={giftId}/>}
+      <button onClick={() => handleToggleGiftPopup('Add')}>Add Gift for {member.member_name}</button>
+
+      {/* Modal popups for adding, editing, or deleting a gift. */}
+      <div>
+        {showGiftPopup && <AddOrEditGift member={member} isSelfView={isSelfView} closePopup={handleToggleGiftPopup} fetchGifts={fetchGifts} addOrEdit={addOrEdit} gift_id={giftId} hoverTexts={hoverTexts}/>}
+        {showDeleteGift && <DeleteGift member={member} closePopup={toggleDeleteGiftPopup} fetchGifts={fetchGifts} gift_id={giftId}/>}
+      </div>
+
     </div>
   );
 };
