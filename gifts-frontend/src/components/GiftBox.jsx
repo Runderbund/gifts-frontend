@@ -15,9 +15,10 @@ const GiftBox = ({ member, gifts, fetchGifts }) => {
   const [ showAddGift, setShowAddGift ] = useState(false);
   const [ showEditGift, setShowEditGift ] = useState(false);
   const [ showDeleteGift, setShowDeleteGift ] = useState(false);
-  const [ giftId, setGiftId ] = useState(0);
+  const [addOrEdit, setAddOrEdit] = useState('');
+  const [ giftId, setGiftId ] = useState(null);
 
-  const isSelfView = selfMember && selfMember === member
+  const isSelfView = selfMember && selfMember === member;
 
   const toggleAddGiftPopup = (operation) => {
     setShowAddGift(!showAddGift);

@@ -4,7 +4,7 @@ import { MemberContext } from '../context/MemberContext';
 import { useContext } from 'react';
 import "../App.css";
 
-const AddGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, hoverTexts}) => {
+const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, hoverTexts}) => {
 
   const { selfMember, allMembers } = useContext(MemberContext);
   const [allSelected, setAllSelected] = useState(true); // Default visibility is all members
@@ -24,7 +24,7 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, hoverT
     setSelectedMembers({});
   };
 
-  const handleMemberChange = (memberId) => {
+  const handleSelectedMemberChange = (memberId) => {
     // If any member is selected, uncheck 'All'
     setAllSelected(false);
     // Update the selected members state
@@ -32,53 +32,6 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, hoverT
       ...prevSelectedMembers,
       [memberId]: !prevSelectedMembers[memberId]
     }));
-  };
-
-  const handleAddSubmit = (event) => {
-    event.preventDefault();
-
-    // Form data for file upload
-    const formData = new FormData();
-    formData.append("giftAdder", selfMember.member_id);
-    formData.append("giftReceiver", member.member_id);
-    formData.append("itemName", itemName);
-    formData.append("exactItem", exactItem);
-    formData.append("multiple", multiple);
-    formData.append("notes", notes);
-    formData.append("otherNotes", otherNotes);
-    formData.append("linkURL", linkURL);
-    formData.append("linkName", linkName);
-    formData.append("boughtStatus", boughtStatus);
-
-    let visibleTo;
-    if (allSelected) {
-      visibleTo = '0';
-    } else if (selfMember !== member) {
-      visibleTo = '0'; // If it's a ViewOther, assign '0' (no match to member_id) automatically to signal Visible to All
-    } else {
-      visibleTo = Object.entries(selectedMembers)
-        .filter(([_, isSelected]) => isSelected)
-        .map(([id, _]) => id);
-      // Always add selfMember to the list of visible members
-      if (!visibleTo.includes(selfMember.member_id))
-        visibleTo.push(selfMember.member_id);
-    }
-    
-    formData.append("visibility", JSON.stringify(visibleTo));
-    //formData can't handle lists. Turn back into a list on backend.
-
-    // Axios post request to upload the file
-    // POST
-    axios.post("http://localhost:8000/add_gift/", formData)
-    .then((response) => {
-      console.log("Gift added successfully");
-      fetchGifts(); // Fetch gifts again to update the list
-      closePopup(); // Close the popup on successful add
-    })
-    .catch((error) => {
-      console.log("Gift add failed");
-      console.log(error);
-    });
   };
 
   const fetchGift = async () => {
@@ -107,13 +60,18 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, hoverT
   useEffect(() => {
     fetchGift();
   }, [gift_id]); // Re-fetch if gift_id changes
-  
 
-  const handleEditSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     // Form data for file upload
     const formData = new FormData();
+
+    // Do not change giftAdder on edit
+    if (addOrEdit === 'add') {
+      formData.append("giftAdder", selfMember.member_id);
+    }
+    formData.append("giftReceiver", member.member_id);
     formData.append("itemName", itemName);
     formData.append("exactItem", exactItem);
     formData.append("multiple", multiple);
@@ -123,17 +81,17 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, hoverT
     formData.append("linkName", linkName);
     formData.append("boughtStatus", boughtStatus);
 
+    // Setting visibility
     let visibleTo;
     if (allSelected) {
       visibleTo = '0';
     } else if (selfMember !== member) {
       visibleTo = '0'; // If it's a ViewOther, assign '0' (no match to member_id) automatically to signal Visible to All
-      // Probably a smoother/clearer way to do this.
     } else {
       visibleTo = Object.entries(selectedMembers)
         .filter(([_, isSelected]) => isSelected)
         .map(([id, _]) => id);
-      // Always adds selfMember to the list of visible members
+      // Always add selfMember to the list of visible members
       if (!visibleTo.includes(selfMember.member_id))
         visibleTo.push(selfMember.member_id);
     }
@@ -141,24 +99,37 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, hoverT
     formData.append("visibility", JSON.stringify(visibleTo));
     //formData can't handle lists. Turn back into a list on backend.
 
-    // Axios put request to upload the gift
-    axios.put(`http://localhost:8000/edit_gift_by_id/${gift_id}/`, formData)
-    .then((response) => {
-      console.log("Gift edited successfully");
-      fetchGifts(); // Fetch gifts again to update the list
-      closePopup(); // Close the popup on successful add
-    })
-    .catch((error) => {
-      console.log("Gift edit failed");
-      console.log(error);
-    });
+    // Axios request for add or edit
+      if (addOrEdit === 'add') {
+        axios.post('http://localhost:8000/add_gift/', formData)
+          .then((response) => {
+            console.log('Gift added successfully');
+            fetchGifts();
+            closePopup();
+          })
+          .catch((error) => {
+            console.log('Gift add failed');
+            console.log(error);
+          });
+      } else {
+        axios.put(`http://localhost:8000/edit_gift_by_id/${gift_id}/`, formData)
+          .then((response) => {
+            console.log('Gift edited successfully');
+            fetchGifts(); // Fetch gifts again to update the list
+            closePopup(); // Close the popup on successful add
+          })
+          .catch((error) => {
+            console.log('Gift edit failed');
+            console.log(error);
+          });
+      }
   };
 
   return (
     <div className="handleGiftBox">
       <h1>Add gift for {member.member_name}</h1>
       <form onSubmit={handleSubmit}>
-        <div className="addGiftGroup">
+        <div className="handleGiftBox">
         <label>Gift Name:</label>
           <input
             type="text"
@@ -168,7 +139,7 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, hoverT
             required
           />
         </div>
-        <div className="addGiftGroup">
+        <div className="handleGiftGroup">
           <label>Exact Item
           <input
             type="radio"
@@ -188,7 +159,7 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, hoverT
           />
           </label>
         </div>
-        <div className="addGiftGroup">
+        <div className="handleGiftGroup">
           <label>Multiple Items
           <input
             type="radio"
@@ -208,7 +179,7 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, hoverT
           />
           </label>
         </div>
-        <div className="addGiftGroup">
+        <div className="handleGiftGroup">
           <label>Notes:</label>
           <textarea
             name="notes"
@@ -218,7 +189,7 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, hoverT
         </div>
         {!isSelfView && (
           <div>
-            <div className="addGiftGroup">
+            <div className="handleGiftGroup">
               <label>Notes (not visible to {member.member_name}):</label>
               <textarea
                 name="otherNotes"
@@ -228,7 +199,7 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, hoverT
             </div>
           </div>
         )}
-        <div className="addGiftGroup">
+        <div className="handleGiftGroup">
           <label>Link URL:</label>
           <textarea
             type="text"
@@ -282,7 +253,7 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, hoverT
           </div>
         )}
         {isSelfView && (
-          <div className="addGiftGroup">
+          <div className="handleGiftGroup">
             <label>Visible to:</label>
             <label>All
             <input type="checkbox" name="allMembers" checked={allSelected} onChange={handleAllChange} />
@@ -296,7 +267,7 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, hoverT
                     name="user"
                     value={member.member_id}
                     checked={selectedMembers[member.member_id] || false}
-                    onChange={() => handleMemberChange(member.member_id)}
+                    onChange={() => handleSelectedMemberChange(member.member_id)}
                   />
                 </label>
               ))}
@@ -314,4 +285,4 @@ const AddGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, hoverT
     );
 };
 
-export default AddGift;
+export default AddOrEditGift;

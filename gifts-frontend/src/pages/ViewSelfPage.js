@@ -38,6 +38,7 @@ const ViewSelfPage = () => {
 
   return (
     <div className="container">
+      <h1>Viewing as {selfMember.member_name}</h1>
       {selfMember && (
         <GiftBox member={selfMember} gifts={selfGifts} fetchGifts={fetchSelfGifts}/>
       )}

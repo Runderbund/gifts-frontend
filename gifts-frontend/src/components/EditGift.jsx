@@ -114,7 +114,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id, hoverTe
       <div className="handleGiftBox">
         <h1>Edit gift for {member.member_name}</h1>
         <form onSubmit={handleSubmit}>
-          <div className="addGiftGroup">
+          <div className="handleGiftGroup">
           <label>Gift Name:</label>
             <input
               type="text"
@@ -124,7 +124,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id, hoverTe
               required
             />
           </div>
-          <div className="addGiftGroup" title={hoverTexts.exactHoverText}>
+          <div className="handleGiftGroup" title={hoverTexts.exactHoverText}>
             <label>Exact Item
             <input
               type="radio"
@@ -144,7 +144,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id, hoverTe
             />
             </label>
           </div>
-          <div className="addGiftGroup" title={hoverTexts.multipleHoverText}>
+          <div className="handleGiftGroup" title={hoverTexts.multipleHoverText}>
             <label>Multiple Items
             <input
               type="radio"
@@ -164,7 +164,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id, hoverTe
             />
             </label>
           </div>
-          <div className="addGiftGroup" title={hoverTexts.notesHoverText}>
+          <div className="handleGiftGroup" title={hoverTexts.notesHoverText}>
             <label>Notes:</label>
             <textarea
               name="notes"
@@ -174,7 +174,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id, hoverTe
           </div>
           {!isSelfView && (
             <div>
-              <div className="addGiftGroup" title={hoverTexts.otherNotesHoverText}>
+              <div className="handleGiftGroup" title={hoverTexts.otherNotesHoverText}>
                 <label>Notes (not visible to {member.member_name}):</label>
                 <textarea
                   name="otherNotes"
@@ -184,7 +184,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id, hoverTe
               </div>
             </div>
           )}
-          <div className="addGiftGroup" title={hoverTexts.linkHoverText}>
+          <div className="handleGiftGroup" title={hoverTexts.linkHoverText}>
             <label>Link URL:</label>
             <textarea
               type="text"
@@ -238,7 +238,7 @@ const EditGift = ({ member, isSelfView, closePopup, fetchGifts, gift_id, hoverTe
             </div>
           )}
           {isSelfView && (
-            <div className="addGiftGroup">
+            <div className="handleGiftGroup">
               <label>Visible to:</label>
               <label>All
               <input type="checkbox" name="allMembers" checked={allSelected} onChange={handleAllChange} />
