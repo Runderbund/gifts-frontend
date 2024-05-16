@@ -48,9 +48,35 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
         setLinkURL(giftData.links[0].url);
         setLinkName(giftData.links[0].name);
       }
-      // setVisibleToMembers();
-      // Set checkboxes to visible_to members
-      // Set visibleToAll to false if visible_to excludes any members
+      // setVisibleToMembers(giftData.visible_to);
+      // console.log("visible to", giftData.visible_to);
+      // setVisibleToAll(giftData.visible_to.length === allMembers.length);
+      // console.log("visibleToAll", visibleToAll);
+
+      // console.log("giftData.visible_to.length", giftData.visible_to.length);
+      // console.log("allMembers.length", allMembers.length);
+      // console.log("giftData.visible_to.length === allMembers.length", giftData.visible_to.length === allMembers.length);
+
+      // Update individual member visibility based on gift data
+      const memberVisibility = {};
+      giftData.visible_to.forEach(memberName => {
+        const member = allMembers.find(m => m.member_name === memberName);
+        if (member) {
+          memberVisibility[member.member_id] = true;
+        }
+      });
+
+      console.log("giftData.visible_to", giftData.visible_to);
+      setVisibleToMembers(memberVisibility);
+      console.log("Member visibility:", memberVisibility);
+      console.log("visibleToMembers", visibleToMembers);
+
+      // Determine if visible to all
+      const isVisibleToAll = giftData.visible_to.length === allMembers.length;
+      setVisibleToAll(isVisibleToAll);
+
+      console.log("visible to", giftData.visible_to);
+      console.log("visibleToAll", isVisibleToAll);
     } catch (error) {
       console.error('Error fetching gift:', error);
     }
@@ -268,7 +294,8 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
                       type="checkbox"
                       name="user"
                       value={member.member_id}
-                      checked={visibleToMembers[member.member_id] || false}
+                      checked={(visibleToMembers[member.member_id] && !visibleToAll) || false }
+                      // Should be checked only if the gift is visible to the member, but not visible to all members.
                       onChange={() => handleSelectedMemberChange(member.member_id)}
                     />
                   </label>
