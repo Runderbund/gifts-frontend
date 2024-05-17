@@ -19,13 +19,20 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
   const [boughtStatus, setBoughtStatus] = useState('none');
 
   const handleVisibleToAllChange = () => {
-    setVisibleToAll(!visibleToAll);
-    // When All is selected, uncheck  individual member selections
-    setVisibleToMembers(new Set());
+    if (!visibleToAll) {
+      setVisibleToAll(true);
+      const allMemberIds = new Set(allMembers.map(member => member.member_id));
+      setVisibleToMembers(allMemberIds);
+    } else {
+      setVisibleToAll(false);
+      setVisibleToMembers(new Set());  // Clear all individual checkboxes
+    }
   };
 
   const handleSelectedMemberChange = (memberId) => {
-    setVisibleToAll(false); // Uncheck 'All' when any specific member is selected
+    if (visibleToAll) {
+      handleVisibleToAllChange(); // Uncheck 'All' when any specific member is selected
+    } 
     setVisibleToMembers(currentVisibleToMembers => {
       const newVisibleToMembers = new Set(currentVisibleToMembers);
       if (newVisibleToMembers.has(memberId)) {
@@ -35,6 +42,30 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
       }
       return newVisibleToMembers;
     });
+  };
+  
+  const handleCheckboxChange = (type, memberId = null) => {
+    if (type === 'member') {
+      setVisibleToAll(false); // Uncheck 'All' when any specific member is selected
+
+      if (visibleToMembers.length === 0){
+        setVisibleToMembers(new Set([memberId]));
+      } else {
+        if (visibleToMembers.has(memberId)) {
+          visibleToMembers.delete(memberId); // Remove memberId if it's already present.
+        } else {
+          visibleToMembers.add(memberId); // Add memberId if it's not already present.
+        };
+      };
+    } else if (type === 'all') {
+      setVisibleToAll(!visibleToAll);
+      if (visibleToAll) {
+        const allMemberIds = new Set(allMembers.map(member => member.member_id));
+        setVisibleToMembers(allMemberIds);
+      } else {
+        setVisibleToMembers(new Set());
+      };
+    };
   };
 
   const fetchGift = async () => {
