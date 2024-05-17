@@ -53,23 +53,15 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
       }
 
       // Update individual member visibility based on gift data
-      const memberVisibility = {};
-      giftData.visible_to.forEach(memberName => {
-        const member = allMembers.find(m => m.member_name === memberName);
-        if (member) {
-          memberVisibility[member.member_id] = true;
-        }
-      });
+      const newVisibleToMembers = new Set(giftData.visible_to);
+      setVisibleToMembers(newVisibleToMembers);
+      setVisibleToAll(giftData.visible_to.length === allMembers.length);
 
-      setVisibleToMembers(memberVisibility);
-      const VisibleToAll = giftData.visible_to.length === allMembers.length;
-      setVisibleToAll(VisibleToAll);
-
-      // console.log("giftData.visible_to", giftData.visible_to);
-      // console.log("memberVisibility:", memberVisibility);
-      // console.log("visibleToMembers", visibleToMembers);
-      // console.log("giftData.visible_to", giftData.visible_to);
-      // console.log("VisibleToAll", VisibleToAll);
+      // console.log("giftData.visible_to: ", giftData.visible_to);
+      // console.log("newVisibleToMembers: ", newVisibleToMembers);
+      // console.log("visibleToMembers: ", visibleToMembers);
+      // console.log("giftData.visible_to: ", giftData.visible_to);
+      // console.log("VisibleToAll: ", VisibleToAll);
 
     } catch (error) {
       console.error('Error fetching gift:', error);
@@ -84,14 +76,11 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    // Form data for file upload
     const formData = new FormData();
 
-    // Do not change giftAdder on edit
     if (addOrEdit === 'Add') {
       formData.append("giftAdder", selfMember.member_id);
-    }
+    }// Do not change giftAdder on edit
     formData.append("giftReceiver", member.member_id);
     formData.append("itemName", itemName);
     formData.append("exactItem", exactItem);
@@ -109,16 +98,14 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
     } else if (selfMember !== member) {
       visibleTo = '0'; // If it's a ViewOther, assign '0' (no match to member_id) automatically to signal Visible to All
     } else {
-      
       // Always add selfMember to the list of visible members
-      if (!visibleTo.has(selfMember.member_id)) {
-        visibleTo.add(selfMember.member_id);
-      }
+        if (!visibleTo.has(selfMember.member_id)) {
+          visibleTo.add(selfMember.member_id);
+        }
       visibleTo = Array.from(visibleToMembers);
     }
     
     formData.append("visibility", JSON.stringify(visibleTo));
-    //formData can't handle lists. Turn back into a list on backend.
 
     // Axios request for add or edit
       if (addOrEdit === 'Add') {
