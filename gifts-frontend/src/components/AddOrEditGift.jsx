@@ -48,14 +48,6 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
         setLinkURL(giftData.links[0].url);
         setLinkName(giftData.links[0].name);
       }
-      // setVisibleToMembers(giftData.visible_to);
-      // console.log("visible to", giftData.visible_to);
-      // setVisibleToAll(giftData.visible_to.length === allMembers.length);
-      // console.log("visibleToAll", visibleToAll);
-
-      // console.log("giftData.visible_to.length", giftData.visible_to.length);
-      // console.log("allMembers.length", allMembers.length);
-      // console.log("giftData.visible_to.length === allMembers.length", giftData.visible_to.length === allMembers.length);
 
       // Update individual member visibility based on gift data
       const memberVisibility = {};
@@ -66,17 +58,16 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
         }
       });
 
-      console.log("giftData.visible_to", giftData.visible_to);
       setVisibleToMembers(memberVisibility);
-      console.log("Member visibility:", memberVisibility);
-      console.log("visibleToMembers", visibleToMembers);
-
-      // Determine if visible to all
       const isVisibleToAll = giftData.visible_to.length === allMembers.length;
       setVisibleToAll(isVisibleToAll);
 
-      console.log("visible to", giftData.visible_to);
-      console.log("visibleToAll", isVisibleToAll);
+      // console.log("giftData.visible_to", giftData.visible_to);
+      // console.log("memberVisibility:", memberVisibility);
+      // console.log("visibleToMembers", visibleToMembers);
+      // console.log("giftData.visible_to", giftData.visible_to);
+      // console.log("isVisibleToAll", isVisibleToAll);
+
     } catch (error) {
       console.error('Error fetching gift:', error);
     }
