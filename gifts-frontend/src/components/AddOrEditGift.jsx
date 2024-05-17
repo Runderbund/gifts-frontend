@@ -8,7 +8,7 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
 
   const { selfMember, allMembers } = useContext(MemberContext);
   const [visibleToAll, setVisibleToAll] = useState(true); // Default visibility is all members
-  const [visibleToMembers, setVisibleToMembers] = useState({});
+  const [visibleToMembers, setVisibleToMembers] = useState(new Set());
   const [itemName, setItemName] = useState('');
   const [exactItem, setExactItem] = useState(false);
   const [multiple, setMultiple] = useState(false);
@@ -18,20 +18,23 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
   const [linkName, setLinkName] = useState('');
   const [boughtStatus, setBoughtStatus] = useState('none');
 
-  const handleAllChange = () => {
+  const handleVisibleToAllChange = () => {
     setVisibleToAll(!visibleToAll);
     // When All is selected, uncheck  individual member selections
-    setVisibleToMembers({});
+    setVisibleToMembers(Set());
   };
 
   const handleSelectedMemberChange = (memberId) => {
-    // If any member is selected, uncheck 'All'
-    setVisibleToAll(false);
-    // Update the selected members state
-    setVisibleToMembers(prevVisibleToMembers => ({
-      ...prevVisibleToMembers,
-      [memberId]: !prevVisibleToMembers[memberId]
-    }));
+    setVisibleToAll(false); // Uncheck 'All' when any specific member is selected
+    setVisibleToMembers(currentVisibleToMembers => {
+      const newVisibleToMembers = new Set(currentVisibleToMembers);
+      if (newVisibleToMembers.has(memberId)) {
+        newVisibleToMembers.delete(memberId); // Remove memberId if it's already present.
+      } else {
+        newVisibleToMembers.add(memberId); // Add memberId if it's not already present.
+      }
+      return newVisibleToMembers;
+    });
   };
 
   const fetchGift = async () => {
@@ -59,14 +62,14 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
       });
 
       setVisibleToMembers(memberVisibility);
-      const isVisibleToAll = giftData.visible_to.length === allMembers.length;
-      setVisibleToAll(isVisibleToAll);
+      const VisibleToAll = giftData.visible_to.length === allMembers.length;
+      setVisibleToAll(VisibleToAll);
 
       // console.log("giftData.visible_to", giftData.visible_to);
       // console.log("memberVisibility:", memberVisibility);
       // console.log("visibleToMembers", visibleToMembers);
       // console.log("giftData.visible_to", giftData.visible_to);
-      // console.log("isVisibleToAll", isVisibleToAll);
+      // console.log("VisibleToAll", VisibleToAll);
 
     } catch (error) {
       console.error('Error fetching gift:', error);
@@ -106,12 +109,12 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
     } else if (selfMember !== member) {
       visibleTo = '0'; // If it's a ViewOther, assign '0' (no match to member_id) automatically to signal Visible to All
     } else {
-      visibleTo = Object.entries(visibleToMembers)
-        .filter(([_, isSelected]) => isSelected)
-        .map(([id, _]) => id);
+      
       // Always add selfMember to the list of visible members
-      if (!visibleTo.includes(selfMember.member_id))
-        visibleTo.push(selfMember.member_id);
+      if (!visibleTo.has(selfMember.member_id)) {
+        visibleTo.add(selfMember.member_id);
+      }
+      visibleTo = Array.from(visibleToMembers);
     }
     
     formData.append("visibility", JSON.stringify(visibleTo));
@@ -275,7 +278,7 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
             <div className="handleGiftGroup">
               <label>Visible to:</label>
               <label>All
-              <input type="checkbox" name="allMembers" checked={visibleToAll} onChange={handleAllChange} />
+              <input type="checkbox" name="allMembers" checked={visibleToAll} onChange={handleVisibleToAllChange} />
               </label>
               <div>
                 {allMembers.map(member => (
@@ -285,7 +288,7 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
                       type="checkbox"
                       name="user"
                       value={member.member_id}
-                      checked={(visibleToMembers[member.member_id] && !visibleToAll) || false }
+                      checked={visibleToMembers.has(member.member_id) && !visibleToAll}
                       // Should be checked only if the gift is visible to the member, but not visible to all members.
                       onChange={() => handleSelectedMemberChange(member.member_id)}
                     />
