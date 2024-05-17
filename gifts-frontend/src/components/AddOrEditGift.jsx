@@ -21,7 +21,7 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
   const handleVisibleToAllChange = () => {
     setVisibleToAll(!visibleToAll);
     // When All is selected, uncheck  individual member selections
-    setVisibleToMembers(Set());
+    setVisibleToMembers(new Set());
   };
 
   const handleSelectedMemberChange = (memberId) => {
@@ -91,21 +91,10 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
     formData.append("linkName", linkName);
     formData.append("boughtStatus", boughtStatus);
 
-    // Setting visibility
-    let visibleTo;
-    if (visibleToAll) {
-      visibleTo = '0';
-    } else if (selfMember !== member) {
-      visibleTo = '0'; // If it's a ViewOther, assign '0' (no match to member_id) automatically to signal Visible to All
-    } else {
-      // Always add selfMember to the list of visible members
-        if (!visibleTo.has(selfMember.member_id)) {
-          visibleTo.add(selfMember.member_id);
-        }
-      visibleTo = Array.from(visibleToMembers);
-    }
-    
-    formData.append("visibility", JSON.stringify(visibleTo));
+    // Setting visibility - Always add selfMember to avoid invisible gifts
+    visibleToMembers.add(selfMember.member_id);
+    const visibleMemberArray = Array.from(visibleToMembers); // Convert Set to Array to pass to Django
+    formData.append("visibility", JSON.stringify(visibleMemberArray));
 
     // Axios request for add or edit
       if (addOrEdit === 'Add') {
