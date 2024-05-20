@@ -287,7 +287,7 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
               <label>All
               <input type="checkbox" name="allMembers" checked={visibleToAll} onChange={handleVisibleToAllChange} />
               </label>
-              <div>
+              <div className="checkboxesVertical">
                 {allMembers.map(member => (
                   <label key={member.member_id}>
                     {member.member_name}

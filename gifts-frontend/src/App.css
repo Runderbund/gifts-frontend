@@ -30,7 +30,7 @@ html, body {
 
 .giftBox {
   width: 80%;
-  min-width: 600px;   /* Interim solution to keep background > table width */
+  min-width: 800px;   /* Interim solution to keep background > table width */
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 10px;
@@ -44,6 +44,8 @@ html, body {
     0px 4px 6px -2px rgba(0, 0, 0, 0.05);
   outline: black solid 1px;
 }
+
+
 
 .giftBox table {
     border-collapse: collapse; /* Makes box borders merge into a single border */
@@ -94,13 +96,19 @@ html, body {
 
 .handleGiftGroup {
   display: flex;
-  flex-direction:row;
+  flex-direction:column;
   align-items: center;
   justify-content: center;
   gap: 10px;
   margin-bottom: 10px;
 }
 
+.checkboxesVertical {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-direction: column; /* Aligns checkboxes vertically, but not under All*/ 
+}
 .memberSelectBox {
   width: 30%;
   margin: 0 auto;
