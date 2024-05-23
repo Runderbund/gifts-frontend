@@ -87,7 +87,6 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
       const newVisibleToMembers = new Set(giftData.visible_to);
       setVisibleToMembers(newVisibleToMembers);
       setVisibleToAll(giftData.visible_to.length === allMembers.length);
-
       // console.log("giftData.visible_to: ", giftData.visible_to);
       // console.log("newVisibleToMembers: ", newVisibleToMembers);
       // console.log("visibleToMembers: ", visibleToMembers);
