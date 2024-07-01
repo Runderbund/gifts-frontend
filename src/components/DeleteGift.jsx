@@ -1,11 +1,14 @@
 import axios from 'axios';
 import "../App.css";
+import { MemberContext } from '../context/MemberContext';
+
 
 const DeleteGift = ({ member, closePopup, fetchGifts, gift_id }) => {
+  const { BASE_URL } = useContext(MemberContext);
     
   const deleteGift = async () => {
     try {
-      await axios.delete(`http://localhost:8000/delete_gift_by_id/${gift_id}`);
+      await axios.delete(`${BASE_URL}/delete_gift_by_id/${gift_id}`);
       fetchGifts();
       closePopup();
       console.log("Gift deleted successfully");

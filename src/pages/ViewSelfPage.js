@@ -14,10 +14,12 @@ const ViewSelfPage = () => {
   // State for storing all the gifts fetched from the database.
   const [selfGifts, setSelfGifts] = useState([]);
   const navigate = useNavigate();
+  const { BASE_URL } = useContext(MemberContext);
+
 
   const fetchSelfGifts = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/get_gifts_self/${selfMember.member_id}/`, {
+      const response = await axios.get(`${BASE_URL}/get_gifts_self/${selfMember.member_id}/`, {
       }, [selfMember]);
       const giftsData = response.data.gifts;
     

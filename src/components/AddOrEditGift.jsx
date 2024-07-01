@@ -19,6 +19,8 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
   const [linkURL, setLinkURL] = useState('');
   const [linkName, setLinkName] = useState('');
   const [boughtStatus, setBoughtStatus] = useState('none');
+  const { BASE_URL } = useContext(MemberContext);
+
 
   const handleVisibleToAllChange = () => {
     if (!visibleToAll) {
@@ -72,7 +74,7 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
 
   const fetchGift = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/get_gift_by_id/${gift_id}`);
+      const response = await axios.get(`${BASE_URL}/get_gift_by_id/${gift_id}`);
       const giftData = response.data.gift;
       setItemName(giftData.item_name);
       setExactItem(giftData.exact_item);
@@ -130,7 +132,7 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
 
     // Axios request for add or edit
       if (addOrEdit === 'Add') {
-        axios.post('http://localhost:8000/add_gift/', formData)
+        axios.post(`${BASE_URL}/add_gift/`, formData)
           .then((response) => {
             console.log('Gift added successfully');
             fetchGifts();
@@ -141,7 +143,7 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
             console.log(error);
           });
       } else {
-        axios.put(`http://localhost:8000/edit_gift_by_id/${gift_id}/`, formData)
+        axios.put(`${BASE_URL}${gift_id}/`, formData)
           .then((response) => {
             console.log('Gift edited successfully');
             fetchGifts(); // Fetch gifts again to update the list
