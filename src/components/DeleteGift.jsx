@@ -1,6 +1,8 @@
 import axios from 'axios';
 import "../App.css";
 import { MemberContext } from '../context/MemberContext';
+import { useContext } from 'react';
+
 
 
 const DeleteGift = ({ member, closePopup, fetchGifts, gift_id }) => {
