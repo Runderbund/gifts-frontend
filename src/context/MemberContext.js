@@ -10,6 +10,7 @@ export const MemberProvider = ({ children }) => {
   const [selfMember, setSelfMember] = useState(null);
   const [otherMembers, setOtherMembers] = useState([]);
   const [allMembers, setAllMembers] = useState([]);
+  const BASE_URL = "http://connect-front-1.eba-hzzsfpac.us-west-2.elasticbeanstalk.com/"
 
   const contextValue = {
     allMembers,
@@ -17,7 +18,8 @@ export const MemberProvider = ({ children }) => {
     selfMember,
     setSelfMember, 
     otherMembers,
-    setOtherMembers
+    setOtherMembers,
+    BASE_URL,
   };
 
   return (

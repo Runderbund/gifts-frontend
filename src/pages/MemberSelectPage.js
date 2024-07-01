@@ -10,6 +10,7 @@ const MemberSelectPage = () => {
   const {setSelfMember} = useContext(MemberContext);
   const {setOtherMembers} = useContext(MemberContext);
   const {setAllMembers} = useContext(MemberContext);
+  const { BASE_URL } = useContext(MemberContext);
   const navigate = useNavigate();
 
 
@@ -17,7 +18,7 @@ const MemberSelectPage = () => {
     // Function to fetch members
     const fetchMembers = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/get_all_members/`);
+        const response = await axios.get(`${BASE_URL}/get_all_members/`);
         // Sort members alphabetically by member_name
         // localCompare makes sure sorting varies by locale, probably not important for just a few people, but good practice
         // console.log('Response:', response.data);
