@@ -16,8 +16,11 @@ const MemberSelectPage = () => {
 
   useEffect(() => {
     // Function to fetch members
+    console.log('In useEffect - outside fetchMembers - BASE_URL:', BASE_URL);
     const fetchMembers = async () => {
+      console.log('In useEffect - inside fetchMembers - BASE_URL:', BASE_URL);
       try {
+        console.log('In fetchMembers - inside try - BASE_URL:', BASE_URL);
         const response = await axios.get(`${BASE_URL}/get_all_members/`);
         // Sort members alphabetically by member_name
         // localCompare makes sure sorting varies by locale, probably not important for just a few people, but good practice
@@ -28,6 +31,7 @@ const MemberSelectPage = () => {
         setMembers(sortedMembers);
         // console.log('Members:', sortedMembers);
       } catch (error) {
+        console.log('In fetchMembers - inside catch - BASE_URL:', BASE_URL);
         console.error('Error fetching members:', error);
       }
     };
