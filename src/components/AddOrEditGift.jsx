@@ -143,7 +143,7 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
             console.log(error);
           });
       } else {
-        axios.put(`${BASE_URL}${gift_id}/`, formData)
+        axios.put(`${BASE_URL}/${gift_id}/`, formData)
           .then((response) => {
             console.log('Gift edited successfully');
             fetchGifts(); // Fetch gifts again to update the list
