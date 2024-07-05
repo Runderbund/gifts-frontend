@@ -10,7 +10,7 @@ export const MemberProvider = ({ children }) => {
   const [selfMember, setSelfMember] = useState(null);
   const [otherMembers, setOtherMembers] = useState([]);
   const [allMembers, setAllMembers] = useState([]);
-  const BASE_URL = "http://ssl3.us-west-2.elasticbeanstalk.com/"
+  const BASE_URL = "ssl3.us-west-2.elasticbeanstalk.com/"
 
   const contextValue = {
     allMembers,
