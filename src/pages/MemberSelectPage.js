@@ -18,16 +18,7 @@ const MemberSelectPage = () => {
     // Function to fetch members
     const fetchMembers = async () => {
       try {
-        console.log('BASE_URL:', BASE_URL);
-        console.log('GET Request Full URL:', `${BASE_URL}/get_all_members/`);
         const response = await axios.get(`${BASE_URL}/get_all_members/`);
-        console.log('Response:', response.data);
-
-        // get_request_url = `${BASE_URL}/get_all_members/`
-        // console.log('GET Request Full URL:', get_request_url);
-
-        // const response = await axios.get(get_request_url);
-        // console.log('Response:', response.data);
 
         // Sort members alphabetically by member_name
         // localCompare makes sure sorting varies by locale, probably not important for just a few people, but good practice
