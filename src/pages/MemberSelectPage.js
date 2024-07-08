@@ -20,6 +20,7 @@ const MemberSelectPage = () => {
       try {
         const response = await axios.get(`${BASE_URL}/get_all_members/`);
         console.log('Response:', response.data);
+        console.log('GET Request Full URL:', `${BASE_URL}/get_all_members/`);
         // Sort members alphabetically by member_name
         // localCompare makes sure sorting varies by locale, probably not important for just a few people, but good practice
         // console.log('Response:', response.data);
