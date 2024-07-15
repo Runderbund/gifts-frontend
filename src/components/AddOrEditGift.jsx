@@ -126,6 +126,8 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
     formData.append("boughtStatus", boughtStatus);
 
     // Setting visibility - Always add selfMember to avoid invisible gifts
+      // If starting with visibleToAll true, the set should have everyone.
+        // Change this and just start with selfMember checked?
     visibleToMembers.add(selfMember.member_id);
     const visibleMemberArray = Array.from(visibleToMembers); // Convert Set to Array to pass to Django
     formData.append("visibility", JSON.stringify(visibleMemberArray));
@@ -290,6 +292,8 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
               <label>Visible to:</label>
               <label>All
               <input type="checkbox" name="allMembers" checked={visibleToAll} onChange={handleVisibleToAllChange} />
+              {/* Starting checked, but then only setting to self.
+              Where is visibleToMembers changing and visibleToAll is not? */}
               </label>
               <div className="checkboxesVertical">
                 {allMembers.map(member => (
