@@ -9,8 +9,8 @@ import "../App.css";
 const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, gift_id, hoverTexts}) => {
 
   const { selfMember, allMembers } = useContext(MemberContext);
-  const [visibleToAll, setVisibleToAll] = useState(true); // Default visibility is all members
-  const [visibleToMembers, setVisibleToMembers] = useState(new Set());
+  const [visibleToAll, setVisibleToAll] = useState(false); // Default visibility is all members
+  const [visibleToMembers, setVisibleToMembers] = useState(new Set([member.member_id]));
   // Change to selfMember?
   const [itemName, setItemName] = useState('');
   const [exactItem, setExactItem] = useState(false);
@@ -49,6 +49,7 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
     });
   };
   
+  // Remove?
   const handleCheckboxChange = (type, memberId = null) => {
     if (type === 'member') {
       setVisibleToAll(false); // Uncheck 'All' when any specific member is selected
