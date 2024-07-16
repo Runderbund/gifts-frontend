@@ -11,6 +11,7 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
   const { selfMember, allMembers } = useContext(MemberContext);
   const [visibleToAll, setVisibleToAll] = useState(true); // Default visibility is all members
   const [visibleToMembers, setVisibleToMembers] = useState(new Set());
+  // Change to selfMember?
   const [itemName, setItemName] = useState('');
   const [exactItem, setExactItem] = useState(false);
   const [multiple, setMultiple] = useState(false);
