@@ -4,14 +4,11 @@ import { MemberContext } from '../context/MemberContext';
 import { useContext, useEffect} from 'react';
 import "../App.css";
 
-// New Branch
-
 const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, gift_id, hoverTexts}) => {
 
   const { selfMember, allMembers } = useContext(MemberContext);
-  const [visibleToAll, setVisibleToAll] = useState(false); // Default visibility is all members
+  const [visibleToAll, setVisibleToAll] = useState(false);
   const [visibleToMembers, setVisibleToMembers] = useState(new Set([member.member_id]));
-  // Change to selfMember?
   const [itemName, setItemName] = useState('');
   const [exactItem, setExactItem] = useState(false);
   const [multiple, setMultiple] = useState(false);
@@ -48,31 +45,6 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
       return newVisibleToMembers;
     });
   };
-  
-  // Remove?
-  const handleCheckboxChange = (type, memberId = null) => {
-    if (type === 'member') {
-      setVisibleToAll(false); // Uncheck 'All' when any specific member is selected
-
-      if (visibleToMembers.length === 0){
-        setVisibleToMembers(new Set([memberId]));
-      } else {
-        if (visibleToMembers.has(memberId)) {
-          visibleToMembers.delete(memberId); // Remove memberId if it's already present.
-        } else {
-          visibleToMembers.add(memberId); // Add memberId if it's not already present.
-        };
-      };
-    } else if (type === 'all') {
-      setVisibleToAll(!visibleToAll);
-      if (visibleToAll) {
-        const allMemberIds = new Set(allMembers.map(member => member.member_id));
-        setVisibleToMembers(allMemberIds);
-      } else {
-        setVisibleToMembers(new Set());
-      };
-    };
-  };
 
   const fetchGift = async () => {
     try {
@@ -93,11 +65,6 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
       const newVisibleToMembers = new Set(giftData.visible_to);
       setVisibleToMembers(newVisibleToMembers);
       setVisibleToAll(giftData.visible_to.length === allMembers.length);
-      // console.log("giftData.visible_to: ", giftData.visible_to);
-      // console.log("newVisibleToMembers: ", newVisibleToMembers);
-      // console.log("visibleToMembers: ", visibleToMembers);
-      // console.log("giftData.visible_to: ", giftData.visible_to);
-      // console.log("VisibleToAll: ", VisibleToAll);
 
     } catch (error) {
       console.error('Error fetching gift:', error);
@@ -128,8 +95,6 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
     formData.append("boughtStatus", boughtStatus);
 
     // Setting visibility - Always add selfMember to avoid invisible gifts
-      // If starting with visibleToAll true, the set should have everyone.
-        // Change this and just start with selfMember checked?
     visibleToMembers.add(selfMember.member_id);
     const visibleMemberArray = Array.from(visibleToMembers); // Convert Set to Array to pass to Django
     formData.append("visibility", JSON.stringify(visibleMemberArray));
@@ -294,8 +259,6 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
               <label>Visible to:</label>
               <label>All
               <input type="checkbox" name="allMembers" checked={visibleToAll} onChange={handleVisibleToAllChange} />
-              {/* Starting checked, but then only setting to self.
-              Where is visibleToMembers changing and visibleToAll is not? */}
               </label>
               <div className="checkboxesVertical">
                 {allMembers.map(member => (
@@ -306,7 +269,6 @@ const AddOrEditGift = ({ member, isSelfView, closePopup, fetchGifts, addOrEdit, 
                       name="user"
                       value={member.member_id}
                       checked={visibleToMembers.has(member.member_id) && !visibleToAll}
-                      // Should be checked only if the gift is visible to the member, but not visible to all members.
                       onChange={() => handleSelectedMemberChange(member.member_id)}
                     />
                   </label>
