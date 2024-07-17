@@ -1,4 +1,49 @@
-/* Removes broswer defaults */
+:root {
+  --giftblue:rgb(49, 113, 170);
+}
+
+.navBar {
+  display: flex;
+  justify-content: space-around; 
+  /* I see no difference with center or nothing at all. */
+  align-items: center;
+  /* Same without */
+  background: url("./assets/images/Christmas.png") no-repeat center center/cover;
+  box-shadow: 4px 4px 5px rgba(204, 116, 57, 0.5);
+  /* Barely visible change, need to understand better */
+  color: white;
+  height: 100px;
+  /* There has to be a way of setting main page height to automatically account for a change here. */
+}
+
+.navBarSasha {
+  display: flex;
+  justify-content: space-around; 
+  /* I see no difference with center or nothing at all. */
+  align-items: center;
+  /* Same without */
+  background: url("./assets/images/Banner.jpg") no-repeat center center/cover;
+  box-shadow: 4px 4px 5px rgba(204, 116, 57, 0.5);
+  /* Barely visible change, need to understand better */
+  color: white;
+  height: 100px;
+  /* There has to be a way of setting main page height to automatically account for a change here. */
+}
+
+.container {
+  margin: 0 auto;
+  overflow: auto;
+  text-align: center;
+  /* overflow: auto; Scroll only if content exceeds container height. Doesn't seem needed with current vh -100 setup.*/
+  min-height: calc(100vh - 100px);
+  /* 100 make scroll bar, because of header at top. How do I do 100%-header? */
+  padding-top: 1vh;
+  background: linear-gradient(to bottom, rgb(84, 231, 224), rgb(27, 185, 124));
+  font-family: Arial, sans-serif;
+}
+
+
+/* Removes browser defaults */
 html, body {
   margin: 0;
   padding: 0;
@@ -11,7 +56,7 @@ html, body {
   box-sizing: inherit;
 }
 
-.container {
+.container_init {
   margin: 0 auto;
   overflow: auto;
   text-align: center;
@@ -37,7 +82,7 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 1em;
-  background-color: rgb(49, 113, 170);
+  background-color: var(--giftblue);
   padding: 1em;
   border-radius: 1em;
   box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1),
@@ -74,7 +119,7 @@ html, body {
 
 .giftBox table .noBorderColumn {
   border: none;
-  background-color: rgb(49, 113, 170);
+  background-color: var(--giftblue);
 }
 
 .linksAndNotes{
@@ -89,7 +134,7 @@ html, body {
   transform: translate(-50%, -50%);
   background: white;
   padding: 20px;
-  background-color: rgb(49, 113, 170);
+  background-color: var(--giftblue);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   outline: black solid 2px;
 }
@@ -117,7 +162,7 @@ html, body {
   flex-direction: column;
   align-items: center;
   gap: 1em;
-  background-color: rgb(49, 113, 170);
+  background-color: var(--giftblue);
   padding: 1em;
   border-radius: 1em;
   box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1),
@@ -196,7 +241,7 @@ html, body {
 
 
 /* NavBar Styling */
-.navBar {
+.navBar_init{
   display: flex;
   justify-content: space-around; 
   /* I see no difference with center or nothing at all. */
@@ -207,9 +252,11 @@ html, body {
   /* Barely visible change, need to understand better */
   color: white;
   height: 100px;
+  /* There has to be a way of setting main page height to automatically account for a change here. */
 }
 
-.navBar ul {
+.navBar ul, .navBarSasha ul {
+  list-style-type: none;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -218,20 +265,20 @@ html, body {
 }
 
 
-.navBar li {
-  background: gray;
-  border-radius: 5px;
-  margin: 0 10px;
+.navItem {
+  background: var(--giftblue);
+  border-radius: 25px;
+  margin: 0 40px;
 }
 
-.navBar a {
+.navBar a, .navBarSasha a {
   color: white;
   text-decoration: none;
   padding: 0.5rem 1rem;
   display: block;
 }
 
-.navBar a:hover {
+.navBar a:hover, .navBarSasha a:hover {
   background-color: #b0b0b0;
   color: #1E90FF;
 }
