@@ -10,7 +10,8 @@ export const MemberProvider = ({ children }) => {
   const [selfMember, setSelfMember] = useState(null);
   const [otherMembers, setOtherMembers] = useState([]);
   const [allMembers, setAllMembers] = useState([]);
-  const BASE_URL = "http://localhost:8000"
+  const BASE_URL = "http://aws.seanherbison.com"
+  // const BASE_URL = "http://localhost:8000"
 
   const contextValue = {
     allMembers,
