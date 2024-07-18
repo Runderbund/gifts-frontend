@@ -12,7 +12,9 @@ const NavBar = () => {
     if (selfMember){
       if (selfMember.member_id === 2) {
         setBackgroundImage('navBarSasha');
-      }
+      } else {
+        setBackgroundImage('navBar');
+      } 
     }
   }, [selfMember])
   

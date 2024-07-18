@@ -38,7 +38,7 @@
   min-height: calc(100vh - 100px);
   /* 100 make scroll bar, because of header at top. How do I do 100%-header? */
   padding-top: 1vh;
-  background: linear-gradient(to bottom, rgb(84, 231, 224), rgb(27, 185, 124));
+  background: linear-gradient(to bottom, rgb(84, 231, 224), rgb(59, 82, 182));
   font-family: Arial, sans-serif;
 }
 
