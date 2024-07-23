@@ -281,6 +281,7 @@ html, body {
 .navBar a:hover, .navBarSasha a:hover {
   background-color: #b0b0b0;
   color: #1E90FF;
+  border-radius: 25px;
 }
 
 .modalBackground {
