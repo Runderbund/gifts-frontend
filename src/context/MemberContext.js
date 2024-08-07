@@ -10,7 +10,7 @@ export const MemberProvider = ({ children }) => {
   const [selfMember, setSelfMember] = useState(null);
   const [otherMembers, setOtherMembers] = useState([]);
   const [allMembers, setAllMembers] = useState([]);
-  const BASE_URL = "https://gifts.seanherbison.com"
+  const BASE_URL = "https://security.seanherbison.com"
   // const BASE_URL = "http://localhost:8000"
 
   const contextValue = {
